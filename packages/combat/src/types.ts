@@ -67,6 +67,15 @@ export interface Move {
   delivery_modalities?: StrikeModalities;
   /** From template cooldown_scaling × base_power at equip time (turn scheduler; not read in resolveHit). */
   cooldown_turns?: number;
+  /**
+   * Planned — hydrated from `attack_templates.catalog.json` customization bands (COMBAT-MODEL §3).
+   * Resolver applies after hit confirmation; shape finalized with `status_catalog`.
+   */
+  status_payloads?: unknown;
+  /** Per-event Layer 3 impulses (e.g. on_hit heat_load Δ); see GAMEPLAY-SYSTEMS §2.1. */
+  accumulator_impulses?: unknown;
+  /** Slot-bound passive affinity ε / stance coupling; optional. */
+  passive_hooks?: unknown;
 }
 
 export interface BattleContext {

@@ -148,6 +148,55 @@
         "infusion_coeffs": {
           "type": "object",
           "additionalProperties": { "$ref": "#/$defs/numericRange" }
+        },
+        "status_payloads": {
+          "type": "object",
+          "description": "Bounds for attaching status_catalog effects — COMBAT-MODEL §3, ATTACK-CATALOG status section.",
+          "required": ["max_attachments", "help"],
+          "properties": {
+            "max_attachments": { "type": "integer", "minimum": 0, "maximum": 8 },
+            "potency": { "$ref": "#/$defs/numericRange" },
+            "duration_subticks": { "$ref": "#/$defs/numericRange" },
+            "proc_chance": { "$ref": "#/$defs/numericRange" },
+            "allowed_proc_lanes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["on_hit", "on_crit", "channel_tick", "self", "target"]
+              },
+              "uniqueItems": true
+            },
+            "help": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "accumulator_impulses": {
+          "type": "object",
+          "description": "Layer 3 Δ bands keyed by event lane — GAMEPLAY-SYSTEMS §2.1.",
+          "required": ["help", "on_hit"],
+          "properties": {
+            "help": { "type": "string" },
+            "on_hit": {
+              "type": "object",
+              "description": "Impulses when the move connects (resolver applies after modality pipeline).",
+              "additionalProperties": { "$ref": "#/$defs/numericRange" }
+            },
+            "on_crit": {
+              "type": "object",
+              "additionalProperties": { "$ref": "#/$defs/numericRange" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "passive_hooks": {
+          "type": "object",
+          "description": "Optional slot-bound passive affinity shaping — GAMEPLAY-SYSTEMS §1.3.",
+          "properties": {
+            "allow_slot_passive": { "type": "boolean" },
+            "emphasis_tail_budget": { "$ref": "#/$defs/numericRange" },
+            "help": { "type": "string" }
+          },
+          "additionalProperties": false
         }
       }
     },
@@ -194,6 +243,25 @@
         "tags": {
           "type": "array",
           "items": { "type": "string" }
+        },
+        "status_payloads_note": {
+          "type": "string",
+          "description": "Illustrative — resolved selections reference status_catalog ids at equip time."
+        },
+        "accumulator_impulses_selection": {
+          "type": "object",
+          "description": "Resolved on_hit / on_crit deltas for tooling mocks.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": { "type": "number" }
+          }
+        },
+        "passive_hooks_selection": {
+          "type": "object",
+          "properties": {
+            "emphasis_tail_budget": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": true
         }
       }
     }

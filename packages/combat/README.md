@@ -2,7 +2,7 @@
 
 Pure, deterministic combat math aligned with [`docs/COMBAT-MODEL.md`](../../docs/COMBAT-MODEL.md).
 
-- **`types.ts`** — immutable snapshot interfaces (`Combatant` with `CoreStats`; `Move` including optional **`affinity`**, **`strike_modalities`**, **`delivery_modalities`**, **`cooldown_turns`**; `HitResult.stamina_loss`, …).
+- **`types.ts`** — immutable snapshot interfaces (`Combatant` with `CoreStats`; `Move` including optional **`affinity`**, **`strike_modalities`**, **`delivery_modalities`**, **`cooldown_turns`**, and planned **`status_payloads` / `accumulator_impulses` / `passive_hooks`** hydrated from [`attack_templates.catalog.json`](../../data/moves/attack_templates.catalog.json); `HitResult.stamina_loss`, …).
 - **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`; **`resolveCooldownTurnsFromPower`** (cooldown vs **`base_power`**); **`expectedDamageMeanBeforeFloor`**, **`coreSaturationOffenseLogElasticity`** / **`coreSaturationDefenseLogElasticity`** (§5.8 / §13).
 - **`pipeline.ts`** — `resolveHit`; §5.4b blend on strikes and surges via **`strike_modalities` / `delivery_modalities`**; chart/rules stubbed.
 

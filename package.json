@@ -4,6 +4,7 @@
   "workspaces": ["packages/*"],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "gen:species": "node scripts/gen-species-catalog.mjs"
+    "gen:species": "node scripts/gen-species-catalog.mjs",
+    "catalog:attack-effects": "node scripts/augment-attack-catalog-effect-bands.mjs"
   }
 }

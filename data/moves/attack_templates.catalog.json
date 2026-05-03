@@ -1,6 +1,6 @@
 {
-  "schema_version": "1.0.0",
-  "content_note": "Composable attack frames — display_name without affinity in title. Affinity slots optional. Surge frames expose delivery_modalities (concussive/piercing/slashing ω) like strikes; flat pierce still applies per-channel. cooldown_scaling derives cooldown_turns from base_power (anti-spam). See docs/ATTACK-CATALOG.md.",
+  "schema_version": "1.1.0",
+  "content_note": "Composable attack frames — see docs/ATTACK-CATALOG.md. Templates expose affinity/power/modality bands plus status_payloads, accumulator_impulses, passive_hooks (COMBAT-MODEL §3). Surge frames use delivery_modalities ω; cooldown_scaling derives cooldown_turns from base_power.",
   "template_schema_ref": "./attack_template.schema.json",
   "affinity_ref": "./affinity_ids.json",
   "templates": [
@@ -97,6 +97,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1 — player shapes concussive vs piercing vs slashing coupling on special mitigation (same ψ kernels as strikes)."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -141,6 +226,15 @@
           "infusion_coeffs": {
             "tag_pressure": 0.55,
             "layer1_soft_amp": 0.04
+          },
+          "status_payloads_note": "Illustrative — attach burn DoT via status_catalog when available.",
+          "accumulator_impulses_selection": {
+            "on_hit": {
+              "heat_load": 8
+            }
+          },
+          "passive_hooks_selection": {
+            "emphasis_tail_budget": 0.06
           },
           "tags": [
             "thermal",
@@ -263,6 +357,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -377,6 +556,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -493,6 +757,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -607,6 +956,91 @@
           "max_turns": 3,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -725,6 +1159,91 @@
           "max_turns": 3,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -846,6 +1365,91 @@
           "max_turns": 3,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -963,6 +1567,91 @@
           "max_turns": 3,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1057,6 +1746,91 @@
           "max_turns": 7,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1168,6 +1942,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1284,6 +2143,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1399,6 +2343,91 @@
             "step": 0.02
           },
           "normalize_to_simplex_note": "Renormalize ω to sum 1."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1510,6 +2539,91 @@
           "max_turns": 3,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 96,
+            "default": 24,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.3,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "self",
+            "target"
+          ],
+          "help": "Attach status_catalog effects within bands; competes with power/pierce/infusion under loadout budget."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 22,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 16,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 18,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1616,6 +2730,91 @@
           "max_turns": 6,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 3,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.28,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 180,
+            "default": 48,
+            "step": 6
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "channel_tick",
+            "self",
+            "target"
+          ],
+          "help": "Field/channel shells emphasize sustained ticks — longer durations; channel_tick lane enabled."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 26,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 24,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 9,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1722,6 +2921,91 @@
           "max_turns": 5,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 3,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.28,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 180,
+            "default": 48,
+            "step": 6
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.35,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "channel_tick",
+            "self",
+            "target"
+          ],
+          "help": "Field/channel shells emphasize sustained ticks — longer durations; channel_tick lane enabled."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 26,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 24,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 9,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 12,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 14,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [
@@ -1840,6 +3124,90 @@
           "max_turns": 4,
           "scales_with": "base_power",
           "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "status_payloads": {
+          "max_attachments": 2,
+          "potency": {
+            "min": 0,
+            "max": 1,
+            "default": 0.32,
+            "step": 0.05
+          },
+          "duration_subticks": {
+            "min": 0,
+            "max": 72,
+            "default": 20,
+            "step": 4
+          },
+          "proc_chance": {
+            "min": 0,
+            "max": 1,
+            "default": 0.42,
+            "step": 0.05
+          },
+          "allowed_proc_lanes": [
+            "on_hit",
+            "on_crit",
+            "target"
+          ],
+          "help": "Reactive timing favors decisive proc windows — resolver binds lanes to counter phase when implemented."
+        },
+        "accumulator_impulses": {
+          "help": "Layer-3 impulse budgets per successful hit (resolver clamps vs defender caps). Keys align with GAMEPLAY-SYSTEMS §2.1.",
+          "on_hit": {
+            "heat_load": {
+              "min": 0,
+              "max": 13,
+              "default": 0,
+              "step": 1
+            },
+            "wetness": {
+              "min": 0,
+              "max": 11,
+              "default": 0,
+              "step": 1
+            },
+            "fracture": {
+              "min": 0,
+              "max": 9,
+              "default": 0,
+              "step": 1
+            },
+            "corrosion": {
+              "min": 0,
+              "max": 7,
+              "default": 0,
+              "step": 1
+            },
+            "concussion": {
+              "min": 0,
+              "max": 10,
+              "default": 0,
+              "step": 1
+            },
+            "laceration": {
+              "min": 0,
+              "max": 11,
+              "default": 0,
+              "step": 1
+            },
+            "charge_buildup": {
+              "min": 0,
+              "max": 6,
+              "default": 0,
+              "step": 1
+            }
+          }
+        },
+        "passive_hooks": {
+          "allow_slot_passive": true,
+          "emphasis_tail_budget": {
+            "min": 0,
+            "max": 0.18,
+            "default": 0,
+            "step": 0.02
+          },
+          "help": "Optional passive affinity ε allocated to this slot’s shell — normalized with move emphasis (GAMEPLAY-SYSTEMS §1.3)."
         }
       },
       "suggested_tags": [

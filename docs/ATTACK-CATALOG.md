@@ -23,6 +23,9 @@ There is **no** separate “abilities catalog” with hundreds of pre-filled row
 | **`delivery_modalities` ω** | **Surges** (Blast, Lance, …): same ω simplex — splits how the hit couples to blunt vs pierce vs slash **into special mitigation**, alongside the global **`pierce`** scalar (per-channel armor bypass §5.4b). Lets a Blast read as needle beam vs shockwave vs slashy arc per player. |
 | **`cooldown_scaling`** | Every template: **`min_turns`** … **`max_turns`** mapped linearly from **`base_power`** slider within that frame’s band — higher power ⇒ longer cooldown (anti-spam). Hydrate **`Move.cooldown_turns`** via **`resolveCooldownTurnsFromPower`** ([`packages/combat`](../packages/combat/README.md)). |
 | **`infusion_coeffs`** | Per-template knobs — each has numeric bounds |
+| **`status_payloads`** | **`max_attachments`**, potency / duration / proc bands, **`allowed_proc_lanes`** — attaches **`status_catalog`** effects within template ceilings ([COMBAT-MODEL §3](./COMBAT-MODEL.md)) |
+| **`accumulator_impulses`** | Per-hit Layer 3 Δ bands (`heat_load`, `wetness`, `fracture`, …) — same keys as creature accumulators ([GAMEPLAY-SYSTEMS §2.1](./GAMEPLAY-SYSTEMS.md)) |
+| **`passive_hooks`** | Slot **`emphasis_tail_budget`** ε for passive affinity shaping — optional shell bound to the move ([GAMEPLAY-SYSTEMS §1.3](./GAMEPLAY-SYSTEMS.md)) |
 
 **`damage_kind`** for resolved combat payloads follows **`damage_kind_default`** on the template (`endurance`, `status`, `utility`) unless extended pipelines remap it.
 
@@ -81,6 +84,12 @@ So: **nothing “hidden” in `attack_templates.catalog.json` stops someone from
 - **Strike:** `strike_slam`, `strike_thrust`, `strike_rend`, `strike_tempered`, `strike_gale_drive` — physical-offense path + modality ω where present.
 - **True:** `true_spike` — bypass path.
 - **Extended:** `field_gradient_seed`, `channel_focus_bridge`, `reactive_parried_arc` — utility / scheduling / counter shells.
+
+---
+
+## Resolved instances (examples)
+
+Four fully-filled **Blast** (`surge_blast`) builds — neutral vs mono vs fusion vs high-commit — live in [`data/moves/examples/resolved_blast_variants.sample.yaml`](../data/moves/examples/resolved_blast_variants.sample.yaml). Same template frame; different **`affinity_weights`**, **`delivery_modalities`**, **`status_payloads`**, **`accumulator_impulses`**, and **`passive_hooks`** so you can diff what players can tune. **`PLACEHOLDER_*`** status ids stand in until `status_catalog` ships.
 
 ---
 

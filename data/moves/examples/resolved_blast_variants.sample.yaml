@@ -1,0 +1,359 @@
+# -----------------------------------------------------------------------------
+# Resolved Blast (surge_blast) — four player-built variants
+# -----------------------------------------------------------------------------
+# NOT loaded by runtime today: authoring / fixtures / UI mocks only.
+#
+# Frame + numeric bands live in:
+#   data/moves/attack_templates.catalog.json → template_id: surge_blast
+#
+# Each variant below is one legal *resolved* build: knobs the player (or resolver)
+# locks in at equip time. Compare to creatures in data/species/examples/, which roll
+# from biome+seed; moves only pull from template bounds + loadout budget (design).
+#
+# Glossary (resolved_move block):
+#   • affinity / affinity_weights — Layer 1 chart inputs (COMBAT-MODEL §5.5).
+#   • delivery_modalities — ω simplex on surge path (concussive / piercing / slashing).
+#   • infusion_coeffs — frame-specific scalars from template (tag_pressure, …).
+#   • cooldown_turns — hydrated from cooldown_scaling × base_power (catalog help text).
+#   • status_payloads.assignments — placeholder status_id strings until status_catalog ships.
+#   • accumulator_impulses.on_hit — Layer 3 deltas on connect (GAMEPLAY-SYSTEMS §2.1).
+#   • passive_hooks — slot passive affinity ε + optional emphasis vector tail.
+# -----------------------------------------------------------------------------
+
+meta:
+  template_id: surge_blast
+  frame_display_name: Blast
+  category: surge
+  damage_kind_default: endurance
+  docs:
+    - ../../docs/ATTACK-CATALOG.md
+    - ../../docs/COMBAT-MODEL.md
+  notes:
+    - Status IDs prefixed PLACEHOLDER_ — replace when data/status/status_catalog.json exists.
+    - Values chosen to sit inside surge_blast customization min/max bands in catalog v1.1.0.
+
+# Quick scan: what differs between the four rows (see full payloads under variants).
+cross_variant_axes:
+  columns:
+    - variant_key
+    - elemental_identity
+    - base_power
+    - cooldown_turns
+    - pierce
+    - delivery_shape
+    - status_count
+    - impulses_highlight
+    - passive_emphasis_budget
+  rows:
+    - variant_key: neutral_shock_core
+      elemental_identity: none (neutral vertex)
+      base_power: 48
+      cooldown_turns: 1
+      pierce: 0.12
+      delivery_shape: blunt-heavy ω
+      status_count: 0
+      impulses_highlight: concussion only
+      passive_emphasis_budget: "0 (no slot tail)"
+    - variant_key: thermal_needle_burn
+      elemental_identity: thermal mono
+      base_power: 82
+      cooldown_turns: 3
+      pierce: 0.22
+      delivery_shape: pierce-heavy ω
+      status_count: 1
+      impulses_highlight: heat_load + tiny wetness
+      passive_emphasis_budget: "0.08 → thermal tail"
+    - variant_key: storm_surge_fusion
+      elemental_identity: galvanic + aqueous (η=0.28)
+      base_power: 64
+      cooldown_turns: 2
+      pierce: 0.14
+      delivery_shape: balanced ω
+      status_count: 2
+      impulses_highlight: wetness + charge_buildup
+      passive_emphasis_budget: "0.04 split two affinities"
+    - variant_key: vitriol_glass_push
+      elemental_identity: corrosive mono
+      base_power: 108
+      cooldown_turns: 5
+      pierce: 0.38
+      delivery_shape: slash-skew ω
+      status_count: 2
+      impulses_highlight: corrosion + fracture + heat
+      passive_emphasis_budget: "0.14 → corrosive tail"
+
+variants:
+  neutral_shock_core:
+    player_label: Neutral shock-core Blast
+    intent: >-
+      Non-elemental pressure: skew delivery to concussive (shockwave read),
+      no riders, tiny concussion impulse — trades chart scaling for tempo.
+
+    resolved_move:
+      template_id: surge_blast
+      instance_id: ex_blast_neutral_shock_01
+      category: surge
+      damage_kind: endurance
+      tags:
+        - ranged
+        - surge
+        - neutral_build
+        - shockwave_shape
+
+      primary_affinity: null
+      secondary_affinity: null
+      blend_eta: null
+      affinity_weights: {}
+
+      base_power: 48
+      pierce: 0.12
+      accuracy: 88
+
+      infusion_coeffs:
+        tag_pressure: 0.38
+        layer1_soft_amp: 0
+
+      delivery_modalities:
+        concussive: 0.62
+        piercing: 0.26
+        slashing: 0.12
+
+      cooldown_turns: 1
+
+      status_payloads:
+        max_attachments_allowed_by_frame: 2
+        assignments: []
+
+      accumulator_impulses:
+        on_hit:
+          concussion: 10
+          heat_load: 0
+          wetness: 0
+          fracture: 0
+          corrosion: 0
+          laceration: 0
+          charge_buildup: 0
+
+      passive_hooks:
+        emphasis_tail_budget: 0
+        passive_affinity_emphasis: {}
+
+    tradeoffs_note: >-
+      Low base_power ⇒ shortest cooldown on this frame; zero status budget spent;
+      passive ε unused — room for loadout budget elsewhere on the creature.
+
+  thermal_needle_burn:
+    player_label: Thermal needle + ignite rider
+    intent: >-
+      Mono thermal with pierce-skew ω — stacks an on-hit burn rider (placeholder id),
+      pumps heat_load, spends passive ε into thermal tail.
+
+    resolved_move:
+      template_id: surge_blast
+      instance_id: ex_blast_thermal_burn_01
+      category: surge
+      damage_kind: endurance
+      tags:
+        - ranged
+        - surge
+        - thermal
+        - rider_damage
+
+      primary_affinity: thermal
+      secondary_affinity: null
+      blend_eta: null
+      affinity_weights:
+        thermal: 1
+
+      base_power: 82
+      pierce: 0.22
+      accuracy: 91
+
+      infusion_coeffs:
+        tag_pressure: 0.58
+        layer1_soft_amp: 0.05
+
+      delivery_modalities:
+        concussive: 0.18
+        piercing: 0.66
+        slashing: 0.16
+
+      cooldown_turns: 3
+
+      status_payloads:
+        max_attachments_allowed_by_frame: 2
+        assignments:
+          - lane: on_hit
+            status_id: PLACEHOLDER_burn_tick
+            potency: 0.55
+            duration_subticks: 56
+            proc_chance: 0.35
+            stacking_rule_ref: ignite_stack_cap_3
+
+      accumulator_impulses:
+        on_hit:
+          heat_load: 14
+          wetness: 2
+          fracture: 0
+          corrosion: 0
+          concussion: 3
+          laceration: 0
+          charge_buildup: 0
+
+      passive_hooks:
+        emphasis_tail_budget: 0.08
+        passive_affinity_emphasis:
+          thermal: 0.08
+
+    tradeoffs_note: >-
+      Higher tag_pressure + rider competes with raw poke builds on same budget;
+      cooldown_steps up vs neutral variant because base_power is higher.
+
+  storm_surge_fusion:
+    player_label: Galvanic–aqueous fusion Blast
+    intent: >-
+      Dual emphasis via blend η — two lightweight statuses (chain humidity + self polarity),
+      impulses push wetness and charge for Layer 2/3 interactions.
+
+    resolved_move:
+      template_id: surge_blast
+      instance_id: ex_blast_storm_fusion_01
+      category: surge
+      damage_kind: endurance
+      tags:
+        - ranged
+        - surge
+        - galvanic
+        - aqueous
+        - fusion
+
+      primary_affinity: galvanic
+      secondary_affinity: aqueous
+      blend_eta: 0.28
+      affinity_weights:
+        galvanic: 0.72
+        aqueous: 0.28
+
+      base_power: 64
+      pierce: 0.14
+      accuracy: 90
+
+      infusion_coeffs:
+        tag_pressure: 0.46
+        layer1_soft_amp: 0.02
+
+      delivery_modalities:
+        concussive: 0.32
+        piercing: 0.34
+        slashing: 0.34
+
+      cooldown_turns: 2
+
+      status_payloads:
+        max_attachments_allowed_by_frame: 2
+        assignments:
+          - lane: on_hit
+            status_id: PLACEHOLDER_chain_conduct_hint
+            potency: 0.42
+            duration_subticks: 40
+            proc_chance: 0.28
+            stacking_rule_ref: conductive_carry_max_2
+          - lane: self
+            status_id: PLACEHOLDER_polarize_weapon_self
+            potency: 0.22
+            duration_subticks: 24
+            proc_chance: 1
+            stacking_rule_ref: self_buff_refresh
+
+      accumulator_impulses:
+        on_hit:
+          wetness: 11
+          charge_buildup: 7
+          heat_load: 4
+          concussion: 2
+          fracture: 0
+          corrosion: 0
+          laceration: 0
+
+      passive_hooks:
+        emphasis_tail_budget: 0.04
+        passive_affinity_emphasis:
+          galvanic: 0.025
+          aqueous: 0.015
+
+    tradeoffs_note: >-
+      Uses both attachment slots; self lane status can impose opportunity cost in UI copy.
+      Split passive ε shows how small tails span multiple affinities under normalization rules.
+
+  vitriol_glass_push:
+    player_label: Corrosive glass push (high commitment)
+    intent: >-
+      Near-max base_power on frame ⇒ longest cooldown; heavy pierce + slash-skew;
+      double target statuses; impulses chip corrosion/fracture/heat together.
+
+    resolved_move:
+      template_id: surge_blast
+      instance_id: ex_blast_vitriol_glass_01
+      category: surge
+      damage_kind: endurance
+      tags:
+        - ranged
+        - surge
+        - corrosive
+        - high_commit
+
+      primary_affinity: corrosive
+      secondary_affinity: null
+      blend_eta: null
+      affinity_weights:
+        corrosive: 1
+
+      base_power: 108
+      pierce: 0.38
+      accuracy: 82
+
+      infusion_coeffs:
+        tag_pressure: 0.72
+        layer1_soft_amp: -0.06
+
+      delivery_modalities:
+        concussive: 0.22
+        piercing: 0.38
+        slashing: 0.4
+
+      cooldown_turns: 5
+
+      status_payloads:
+        max_attachments_allowed_by_frame: 2
+        assignments:
+          - lane: on_hit
+            status_id: PLACEHOLDER_corrode_armor_shred
+            potency: 0.62
+            duration_subticks: 72
+            proc_chance: 0.45
+            stacking_rule_ref: shred_decay_refresh
+          - lane: on_crit
+            status_id: PLACEHOLDER_rupture_exposure
+            potency: 0.38
+            duration_subticks: 16
+            proc_chance: 0.55
+            stacking_rule_ref: crit_only_trigger
+
+      accumulator_impulses:
+        on_hit:
+          corrosion: 9
+          fracture: 5
+          heat_load: 6
+          wetness: 3
+          concussion: 4
+          laceration: 2
+          charge_buildup: 1
+
+      passive_hooks:
+        emphasis_tail_budget: 0.14
+        passive_affinity_emphasis:
+          corrosive: 0.14
+
+    tradeoffs_note: >-
+      Accuracy slid down to fund tag_pressure / pierce / riders within an imaginary budget;
+      longest cooldown on surge_blast band — illustrates anti-spam coupling with base_power.
