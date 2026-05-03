@@ -16,7 +16,7 @@
 
 ### 1.2 “Calculus-forward” vs linear bookkeeping
 
-Layer 1 (affinity chart) stays **algebraic** for readability. Depth lives where **marginal effects change over state**:
+Layer 1 in **full simulation** is a **smooth function** of matchup priors + creature vectors (see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5); **novice HUD** may still show a **single collapsed multiplier** (“sharp / neutral / weak”) computed from the same resolver output—algebraic **lookup-only** charts are a teaching shortcut, not the authority boundary.
 
 - **Accumulators** evolve over subticks as flows (sources − sinks ± coupling).
 - **Damage saturation** is a smooth nonlinear map (already in COMBAT-MODEL §5.4).
@@ -214,3 +214,4 @@ Marketing avoids implying laboratory-grade simulation.
 | 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |
 | 2026-05-03 | §1.3 endurance-first metaphor; §2 explicit \(\mathrm{d}S/\mathrm{d}t\) alongside \(\mathbf{u}\); \(\tau_C(\texttt{stamina},\texttt{tempo})\); literacy hooks |
+| 2026-05-03 | §1.2 Layer 1 described as dynamic \(m_1\) + collapsed UI; aligns with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 |

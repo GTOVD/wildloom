@@ -1,6 +1,6 @@
 # Wildloom — gameplay systems (affinities, field, progression)
 
-**Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 chart values and rule IDs remain **data-driven** until balance passes.
+**Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 uses a **dynamic `m1`** (§5.5) anchored by a **`CHART₀` baseline** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §2); rule IDs remain **data-driven** until balance passes.
 
 **Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
 
@@ -27,6 +27,18 @@ To keep the matchup chart readable (under ~10 affinities) while supporting physi
 **Open decision:** Keep this “physics-first” naming, push further into non-element metaphors, or split “identity” vs “damage flavor” for readability—finalize before shipping tutorial copy.
 
 **Post-MVP expansion:** Three additional affinities (**Sonic**, **Corrosive**, **Plasmic**), dual-affinity blend defaults, and the complete matchup matrix are specified in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2—implement after the nine-type chart ships.
+
+---
+
+## 1.1 Procedural uniqueness, composed typings, and move authoring
+
+**Creature instances:** Each animal is a **draw from continuous distributions** across stats, materials, training emphasis, genes, and learned abilities—not a fixed spreadsheet row per species. Same **species line** can yield vastly different builds ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1).
+
+**Typing:** Prefer **`affinity_emphasis` vectors** (and display labels like “floral–luminous jellyfish”) over locking every individual into a canonical dual-type cliché. Chart **`CHART₀`** supplies metaphor anchors; **effective matchup feel** slides with build ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2.3, §5.5).
+
+**Abilities & moves:** Templates (**Blast**, **Veil**, …) accept **infusions** and **`affinity_weights`** so authored or player-facing names (**Void Blast**, **Luminous–Mineral Blast**) map to **sliding coefficients**—power, pierce bias, tags, modality mix—within authored ceilings. **Soft unlock gates** use stats/materials/emphasis; avoid hard “only species X learns move Y” except where narrative demands.
+
+**Battles:** Arenas compose from **biome / field primitives** with procedural seeds while replay stays deterministic ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12; [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 *World & battles*).
 
 ---
 
@@ -175,3 +187,4 @@ Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-
 | 2026-05-03 | `concussion` / `laceration`; modality reaction sketches; §5.2 strike modality literacy |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §1 post-MVP twelve-affinity pointer |
 | 2026-05-03 | Void / bleed copy aligned with endurance pool \(S\) and **`stamina`** ceiling ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2, §6). |
+| 2026-05-03 | §1.1 procedural uniqueness, composed typings, infusion moves, procedural arenas; Layer 1 dynamic `m1` note in header |

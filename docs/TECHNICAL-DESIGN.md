@@ -29,6 +29,18 @@ Wildloom is a large, multi-subsystem game: sessions, world sync, combat authorit
 - **100** unique species lines; each line has **3 stages** (working names: e.g. morph → ascension → zenith — finalize naming outside franchise-adjacent terms).
 - “Exclusive” can mean limited cosmetic variants, seasonal distribution, or per-room spawns — **design choice later**.
 
+#### Procedural identity (every instance is its own build)
+
+**Intent:** Avoid “same jellyfish, same Galvanic/Aero spread” clones. At generation and again when a battle instance is created, creatures draw from **continuous distributions** so **core stats**, **material profiles** (all axes), **training emphasis**, **appearance genes**, and **learned move loadouts** can differ widely—even within one species line.
+
+- **Typing as composition, not a preset pair:** Display names combine biology/flavor + **multiple affinity emphases** (e.g. “floral–luminous jellyfish”) backed by data **vectors or weights**, not only `primary`/`secondary` enums. Two individuals of the same species can sit at different points in that space.
+- **Ability acquisition:** Moves and passives come from a **broad learnable pool**; soft gates use stats, materials, and affinity emphasis (e.g. high `conductivity` + Galvanic tendency unlocks chain arcs faster)—not a single rigid tree per species. Players and procedural trainers both assign **sliding coefficients** within authored bounds (`base_power`, modality weights, tag intensities).
+- **Moves as authored compositions:** A frame like **“Blast”** is a template; infusion layers add affinity flavor (**Void Blast**, **Luminous–Mineral Blast**, …) with **continuous knobs** that feed Layer 1 shaping, Layer 2 predicates, and Layer 3 impulses—see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5, §3 and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md).
+
+### World & battles
+
+- Overworld and **battle arenas** assemble from **biome primitives** (field scalars, terrain ids, passive ticks, evolution rules — [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12): procedural draws keep encounters tactically fresh while staying replay-deterministic given a stored seed.
+
 ### Progression (infinite levels, two-phase curve)
 
 - **No fixed level cap.** Levels run **1 → ∞**, but growth is tuned so power and labels do not “run away” casually to absurd numbers without a **modern MMO–style grind** past the early curve.
@@ -91,7 +103,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 2. **Room server** — tick loop (e.g. 10–20 Hz simulation), interest management (who sees whom), anti-cheat (server validates movement).
 3. **World state** — tiles, collisions, spawns (species, rarity), interactables; **room scaling config** feeding spawn resolution.
 4. **Encounter model** — wild encounters optional; **PvP:** propose → accept → battle instance.
-5. **Battle engine** — deterministic, server-authoritative, seedable RNG; resolver [`COMBAT-MODEL.md`](./COMBAT-MODEL.md); continuous flows [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
+5. **Battle engine** — deterministic, server-authoritative, seedable RNG; resolver [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (dynamic **`m1`**, continuous flows [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md)); **arena field state** from procedural biome composition.
 6. **Creature model** — species, stage, level, deep stat blocks, training vectors, moves, held item, **appearance seed**, **variant flags** (e.g. lustrous/coveted).
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
@@ -158,7 +170,7 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 
 Summary:
 
-- **Layer 1:** Familiar effectiveness multipliers (baseline balance).
+- **Layer 1:** Effectiveness is **not** only a flat table lookup: a **baseline chart** (optional prior) is **reshaped by creature stats, material profiles, affinity emphasis vectors, move composition, and field state** into a bounded multiplier—typically **smooth in inputs** so “super effective” **slides** with build and context (details [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5). Beginner UI may still show a single collapsed chip.
 - **Layer 2:** **Predicate → modifier** rules authored in data: e.g. `(affinity_fire ∧ surface_glass ∧ ΔT > θ) ⇒ bonus_shatter_chance + armor_saturation drop`.
 - **Layer 3:** Small integrated **ODE-ish accumulators** for cracks, corrosion, overheating—reuse patterns from §4.
 
@@ -195,7 +207,7 @@ Inspired by **inspectable float ranges** in competitive shooters (every instance
 
 1. Monorepo (`apps/web`, `apps/server`, `packages/*`) + shared types.
 2. Room join + movement sync on a tiny test map (no creatures yet); **`RoomConfig` stub** for future scaling.
-3. Battle engine v0 (1v1, shared TS, unit tests, logging); **simple affinity chart** before full reaction engine.
+3. Battle engine v0 (1v1, shared TS, unit tests, logging); **`CHART₀` baseline** + (later) **dynamic `m1` reshape** per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 before relying on tournament fairness.
 4. Creatures v0 (~10 species × 3 stages); **`appearanceGene` persisted** with placeholder rendering.
 5. PvP challenge flow wired to battle.
 6. Trading v0 (items/creatures with server journal); **lustrous flag + gene** in trade payloads.
@@ -249,3 +261,4 @@ Choose one to lock into design before heavy implementation:
 | 2026-05-03 | Infinite progression; scaling; procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) incl. strike modalities §5.4b; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |
 | 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
 | 2026-05-03 | §4 endurance-first framing: DoT as \(\mathrm{d}S/\mathrm{d}t\); core stat **`stamina`** (replaces HP metaphor in progression spread). |
+| 2026-05-03 | Creatures: procedural per-instance stats/materials/typing composition; broad ability learning; compositional moves. Battles: procedural biome assembly. Layer 1: stat-shaped multiplier (not flat-only chart). |

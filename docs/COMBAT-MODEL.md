@@ -2,7 +2,7 @@
 
 **Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — full 12×12 chart, nine stats, statuses, stances, expanded artifacts. Code: [`packages/combat`](../packages/combat/README.md).
 
-**Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (chart + stats); optional depth from **material traits** and **field scalars**; no duplicated formulas across tiers.
+**Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (collapsed matchup chip + stats); optional depth from **material traits**, **field scalars**, and **continuous Layer 1 shaping**; no duplicated formulas across tiers.
 
 **Design principle:** Fights are modeled **calculus-forward**: discrete actions inject **impulses** into continuous state, and **damage-over-time** channels are explicit \(\mathrm{d}S/\mathrm{d}t\) terms—not afterthoughts. The primary battle pool is **current endurance** \(S(t)\), capped by the **`stamina`** stat (capacity to keep fighting). When \(S \le 0\), the combatant is **incapacitated** (unable to continue)—the usual JRPG “HP bar” is deliberately avoided as the core metaphor; narration can still imply lethal outcomes without centering “fatality” as a separate meter.
 
@@ -15,7 +15,7 @@
 | **Affinity** | Primary combat element on a creature or move (discrete enum). |
 | **Tags** | Extra labels on a move (`contact`, `thermal`, `crystalline`, …) used by reaction rules—not necessarily tied to affinity. |
 | **Material profile** | Normalized latent attributes on a creature used only by Layers 2–3 (not the beginner chart). |
-| **Layer 1** | Classic effectiveness multipliers from affinity matchup. |
+| **Layer 1** | Matchup multiplier \(m_1\) — **continuous function** of baseline tendencies plus attacker/defender stats, materials, affinity emphasis, move composition, and field (**bounded**, often \(\approx [0,2]\)); collapsed table view optional for onboarding ([§5.5](#55-layer-1--affinity-multiplier-m1)). |
 | **Layer 2** | Data-driven predicate rules (physics-flavored hooks). |
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
 | **Strike modality** | How a **strike** splits across **concussive / piercing / slashing** channels (physics-flavored wound mechanics). Distinct from move-field **`pierce`** (numeric armor bypass). |
@@ -49,7 +49,9 @@ Used everywhere in damage coupling, speed order, and **endurance pool** sizing.
 
 ### 2.2 Material profile (latent vector)
 
-Per creature (species base ± small training/item deltas). Components are **roughly in [0, 1]** after normalization.
+**Distribution intent:** Species templates define **mean/variance or spline-controlled ranges** for each axis—not fixed integers per species line. Training and procedural rolls shift individuals continuously—see [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 (*Procedural identity*).
+
+Per creature (species base ± training/item/procedural deltas). Components are **roughly in [0, 1]** after normalization.
 
 | Component | Meaning (design) |
 |-----------|------------------|
@@ -59,12 +61,13 @@ Per creature (species base ± small training/item deltas). Components are **roug
 | `porosity` | Holds moisture, corrodes, wicks. |
 | `polarity` | Charge buildup / discharge interactions. |
 
-**Rule:** Material profile **does not** replace core stats; it keys **Layer 2–3** only. New players can ignore it until inspect/advanced UI.
+**Rule:** Material profile **does not** replace core stats; it keys **Layer 2–3** and contributes terms to **dynamic Layer 1** (§5.5). New players can ignore it until inspect/advanced UI.
 
 ### 2.3 Identity flags (combat-relevant)
 
-- `primary_affinity`, optional `secondary_affinity` (secondary typically weaker STAB—**Open decision**: half STAB vs chart-only).
-- `species_tags` optional defaults for rules (e.g. many Mineral species tag `crystalline_body`).
+- **`affinity_emphasis`** (recommended): vector or normalized weights over affinity IDs—implements **composed typings** (e.g. Flora + Luminous both strong on one individual). `primary_affinity` / `secondary_affinity` remain optional **UI summaries** or tournament collapsed view.
+- **`species_tags`** optional defaults for rules (e.g. `crystalline_body`).
+- Pass emphasis vectors + materials into **`m1`**; static charts alone are insufficient for target dynamism (§5.5).
 
 ---
 
@@ -76,13 +79,18 @@ Each move carries:
 |-------|---------|
 | `category` | `strike` \| `surge` \| `true` |
 | `base_power` | Non-negative scalar; can be 0 for utility. |
-| `affinity` | Chart element for Layer 1 / STAB. |
+| `affinity` | Primary chart key for Layer 1 / display; fused moves may still carry secondary weights below. |
+| `affinity_weights` | Optional simplex over affinity IDs (sums to `1`) — **Luminous–Mineral Blast** style fusion; feeds §5.5 with `affinity`. |
+| `template_id` | Optional frame (`blast`, `lash`, …) for authoring pipelines, tutorials, and combo detection. |
+| `infusion_coeffs` | Optional bag of **continuous** tuning knobs (e.g. tag intensity, modality tilt, pierce bias)—serialized for replay; bounded per move family. |
 | `tags` | Set of strings for predicates (`thermal`, `aqueous`, `contact`, …). |
 | `pierce` | Fraction in `[0, 1]` — geometric / armor bypass applied **per modality** (§5.4b); strongest on the **piercing** channel by default. |
 | `strike_modalities` | Optional simplex weights `{ concussive, piercing, slashing }` summing to `1` on **strike** moves; omit ⇒ `{1,0,0}` (legacy blunt-only path). |
 | `damage_kind` | Usually `endurance` (depletes \(S\)); some moves only tick accumulators or apply disables (`status`, `utility`). |
 
 **True damage:** Skips **saturation path using bulwark/ward** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
+
+**Compositional moves:** Players and designers assemble **display names** from template + infusions (“Void Blast”, “Floral Surge”, …). Mechanics depend on **`affinity_weights`**, **`infusion_coeffs`**, and stats—not on the display string alone.
 
 **Naming:** **`pierce` (field)** = scalar bypass knob on data. **“Piercing” modality** = localized stress concentration / stab geometry feeding its **own** saturation branch—do not conflate the two in authoring tools.
 
@@ -94,7 +102,7 @@ Immutable snapshot per resolution step (plus RNG stream):
 
 - Attacker/defender **stats effective** after temporary buffs.
 - **Level** `L_a`, `L_d` (for scaling guardrails).
-- **Affinity** IDs.
+- **Affinity emphasis** vectors (and optional primary/secondary summaries).
 - **Material** vectors `M_a`, `M_d`.
 - **Field scalars:** `ambient_temp`, `humidity`, `terrain_id`, etc.
 - **Per-combatant scalars:** `wetness`, `heat_load`, `fracture`, `corrosion`, `charge_buildup` (Layer 3 accumulators).
@@ -117,7 +125,7 @@ flowchart TD
   F --> G[Apply pierce shares per channel → D_c,D_p,D_s]
   G --> H[Three σ saturations → blend by ω → D_core]
   H --> D
-  D --> I[Layer 1 affinity m1]
+  D --> I["Layer 1 m1 (dynamic — §5.5)"]
   I --> J[Layer 2 rules m2 + flats]
   J --> K[Layer 3 accumulator impulses]
   K --> L[Crit / spread RNG]
@@ -224,28 +232,36 @@ D_{\mathrm{core}} = \omega_c D_{\mathrm{core},\mathrm{con}} + \omega_p D_{\mathr
 
 **Layer 3 impulses:** concussive fraction feeds **`concussion`** accumulation (tempo/focus coupling — [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5); slashing feeds **`laceration`** bleed drivers §3.6; piercing modality spikes **`fracture`** when paired with rigid ceramics—author specific impulses in Layer 2 rules to avoid double-counting.
 
-### 5.5 Layer 1 — affinity multiplier `m1`
+### 5.5 Layer 1 — affinity multiplier `m1` (dynamic, bounded)
 
-Table lookup:
+**Goal:** “Super effective” is **not** a single baked scalar per cell. A **baseline chart** \(C_{a,d}\in\mathbb{R}^+\) (authoring prior — often near prior supplements’ \(0.5\ldots 2\) culture) is **continuously reshaped** by attacker/defender **stats**, **material profiles**, **`affinity_emphasis` vectors**, **move `affinity_weights` / infusions**, and **field scalars** so two different creatures in the “same” matchup can land at **different** \(m_1\). Typical shipped band: **`m_min` … `m_max`** with **`m_max ≈ 2`** and **`m_min` down to `0`** when tuning demands hard resist—exact floors are balance-owned.
 
-```
-m1 = CHART[move_affinity][defender_primary]
-```
-
-If defender has secondary affinity, optional blend:
+**Sketch (implement as pure function + tests):**
 
 ```
-m1 *= blend(CHART[move][def_ secondary], η)     -- η ∈ [0, 0.5] typical
+-- Baseline tendency from pairwise physics metaphor table (optional tensor + legacy dual blend)
+B = blend_chart(move_side, defender_side, η)        -- e.g. dual emphasis replaces single primary key
+
+-- Creature-specific alignment / resistance (smooth — prefer tanh/sigmoid, not step hacks)
+A_att = dot(normalize(attacker.affinity_emphasis), affinity_axis(move))   -- or kernel(move.affinity_weights)
+R_def = resist_kernel(defender.stats_eff, defender.materials, move.affinity, move.tags, field)
+
+-- Example multiplicative shaping (illustrative coefficients κ₁, κ₂ from JSON)
+m1_raw = B * exp( κ1 * tanh(A_att) ) * exp( -κ2 * tanh(R_def) ) * infusion_gate(move.infusion_coeffs)
+
+m1 = clamp(m_min, m_max, m1_raw)                  -- e.g. m_max = 2.0, m_min = 0.0
+
+-- Optional same-turn STAB / synergy as continuous bonus instead of only discrete ×1.15:
+m1 *= stab_factor(attacker.affinity_emphasis, move.affinity, move.affinity_weights)
 ```
 
-Clamp `m1` to designer bounds `[m_min, m_max]` to stop explosiveness.
+**Requirements:**
 
-**STAB (same-affinity bonus):**
+- **`m1`** must be **deterministic** given sealed battle snapshot + move instance (no hidden RNG in Layer 1 unless explicitly opted-in and logged).
+- **Beginner UI** may display **`round(m1, 2)`** and a color bucket (“weak / neutral / sharp”) while **Analyst** tier shows contributing terms for \(\partial m_1 / \partial\) stats (see [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §7 spirit).
+- **`packages/combat`** may stub **`lookupAffinityChart`** as constant until the dynamic resolver lands; production **`resolveHit`** consumes the full **`m1`** function output recorded in `HitResolved.breakdown.m1_terms` (**Open decision**: schema detail).
 
-```
-if move_affinity ∈ {attacker_primary, attacker_secondary}:
-  m1 *= stab_bonus          -- e.g. 1.15 primary, 1.08 secondary
-```
+**Legacy note:** Older docs that write `m1 = CHART[a][d]` describe the **baseline only**; they remain useful for balance spreadsheets and AI tutoring, not as the final shipped resolver.
 
 ### 5.6 Layer 2 — predicate rules
 
@@ -367,11 +383,9 @@ Document in schema so tools can simulate.
 | Artifact | Role |
 |----------|------|
 | `affinities.json` | Enum order + display strings + icon keys. |
-| `affinity_chart.json` | Matrix `[attack][defend] → multiplier`. |
-| `reaction_rules/*.yaml` | Predicate AST + effects + priority. |
-| `material_axes.json` | Names, defaults per species, normalization bounds. |
-| `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ coefficients & pierce shares \(\lambda_k\). |
-| `moves.json` | Fields in §3 (`damage_kind`: **`endurance`** depletes \(S\)) + `strike_modalities` + versioning hash per patch. |
+| `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
+| `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
+| `moves.json` | §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
 
 Version every artifact; bake hash into replay header.
 
@@ -394,8 +408,8 @@ Formal STEM knowledge is **never** required—copy ties metaphors to observable 
 Document chosen defaults after first Monte Carlo pass:
 
 - Saturation shape (`exp` vs rational).
-- Chart bounds `m_min`, `m_max`.
-- Secondary affinity contribution η.
+- Chart bounds `m_min`, `m_max` for **`m1`** and Layer 1 reshape coefficients (`κ₁`, `κ₂`, `stab_factor` curves, resist kernels).
+- Secondary affinity contribution η (baseline **`CHART₀`** blend only — full emphasis vectors may supersede).
 - Whether **true** bypasses Layer 2 (usually yes for simplicity; rare exceptions via rule flags).
 
 ---
@@ -459,7 +473,7 @@ An external chat proposed an embedded slider widget for \(\kappa\), pierce, stat
 
 ## 15. Calculus-forward modeling (summary)
 
-Layer 1 stays algebraic for onboarding; depth uses **smooth nonlinear maps** and **continuous flows**:
+Layer 1 uses a **smooth, bounded `m1`** tied to **`CHART₀` priors** and creature/move vectors (§5.5); novice UI **collapses** it to readable buckets. Depth uses **smooth nonlinear maps** and **continuous flows** everywhere else:
 
 - Saturation §13 gives bounded \(\sigma(A,D)\) with diminishing marginal returns vs armor.
 - §5.4b adds **three parallel saturation branches** for strike modalities, blended by \(\boldsymbol{\omega}\)—same asymptotics, different material-shaped defenses.
@@ -486,3 +500,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | §5.4b strike modalities (concussive / piercing / slashing); pierce vs modality clarified; pipeline + `math.ts` support |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
+| 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; distribution-first species templates §2. |

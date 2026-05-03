@@ -70,7 +70,9 @@ The original nine affinities cover thermodynamics, electromagnetism, matter phas
 
 ## 2. The complete 12×12 affinity chart
 
-`CHART[attacker][defender_primary]` — Layer 1 multiplier `m1` before STAB / Layer 2 / Layer 3.
+**Resolver contract:** This matrix is **`CHART₀` — a baseline prior** for physics metaphors and spreadsheet tuning. **Shipped `m1`** is **`reshape(CHART₀, attacker_stats, defender_stats, materials, affinity_emphasis, move fusion weights, field)`** per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5, typically **bounded** in a band such as **`[0, 2]`** (exact clamps balance-owned). Beginner UI may **collapse** the outcome to “weak / neutral / sharp.”
+
+`CHART₀[attacker_affinity][defender_primary]` — tendency **before** dynamic reshape (used inside §5.5’s `B` / `blend_chart` step).
 
 Values: `2.0` super effective · `1.5` effective · `1.0` neutral · `0.75` resistant · `0.5` very resistant · `0.0` immune.
 
@@ -104,10 +106,11 @@ Values: `2.0` super effective · `1.5` effective · `1.0` neutral · `0.75` resi
 
 ### 2.2 Dual-affinity blend (secondary)
 
-Per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 — suggested default \(\eta = 0.35\):
+Suggested **baseline blend** before dynamic **`m1`** reshape — default \(\eta = 0.35\) ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5):
 
 ```
-m1_final = m1_primary * (1 - η) + CHART[attack][defender_secondary] * η
+B = CHART₀[attack][def_primary] * (1 - η) + CHART₀[attack][def_secondary] * η
+-- then m1 = clamp(m_min, m_max, reshape(B, stats, materials, emphasis, move, field))
 ```
 
 ---
@@ -377,7 +380,8 @@ Deepened hooks for TH–VO; dedicated rows for **SO**, **CR**, **PL** (resonance
 | Artifact | Role |
 |----------|------|
 | `affinities.json` | 12 entries + IDs |
-| `affinity_chart.json` | **§2 matrix — source of truth** |
+| `affinity_chart.json` | **`CHART₀` baseline** matrix + metadata — feeds §5.5; **not** the sole `m1` |
+| `layer1_shape.json` *(or fold into `scaling_curves.json`)* | κ₁, κ₂, `m_min`, `m_max`, `stab_factor` curves, `resist_kernel` weights — dynamic multiplier tuning |
 | `status_conditions.json` | §8 registry |
 | `accumulators.json` | §9 ODE + coupling |
 | `stances.json` | §6 |
@@ -385,7 +389,7 @@ Deepened hooks for TH–VO; dedicated rows for **SO**, **CR**, **PL** (resonance
 | `combos.json` | §13 |
 | `biomes.json` | §12 + evolution |
 | `moves/*.yaml` | Split by category optional |
-| `species/*.yaml` | 12-component `material_profile`, abilities |
+| `species/*.yaml` | Template **distributions** + 12-component `material_profile` ranges; abilities pools — instances roll unique builds |
 
 Continue content hashing + `schema_version` per replay header.
 
@@ -416,3 +420,4 @@ Chart symmetry, \(\kappa\) saturation bounds, status permanence without reinvest
 | 2026-05-03 | Initial comprehensive expansion imported into repo (affinities 12, chart, stats, materials, moves, stances, abilities, statuses, accumulators, phases, team, biomes, combos, pedagogy, artifacts, balance) |
 | 2026-05-03 | Biome schema + preset bullets; full combo table §13; cross-links from TECH/COMBAT/GAMEPLAY/SIMULATION/README/PROJECT-BRIEF |
 | 2026-05-03 | Aligned with endurance-first combat: **`stamina`**, \(\mathrm{d}S/\mathrm{d}t\) DoT language; faint → incapacitation |
+| 2026-05-03 | §2: `CHART₀` = baseline prior; shipped **`m1`** dynamic per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5; artifact split (`layer1_shape`); species as distribution templates |
