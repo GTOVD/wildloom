@@ -150,8 +150,8 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 **Concrete pattern (fully rolled budgets):**
 
 - Define total stat budget **B(L)** per level (same global formula for every creature at `L`; see §1 for two-phase behavior).
-- **Per instance**, sample how **B(L)** is **partitioned** across the core stat tuple (**stamina**, **might**, **bulwark**, **insight**, **ward**, **tempo**, …) using a **random compositional draw** (e.g. Dirichlet / bounded independent rolls), optionally conditioned only on **stage** **s ∈ {1,2,3}** via global hyperparameters—not on species id. Two Ash Mantles at the same level can land on opposite spreads.
-- **Extended stats** (**acuity**, **resilience**, **flux** — [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3) roll from their own distributions or derive from the rolled core tuple via **global** curves; species lines do not author per-line formulas.
+- **Per instance**, sample how **B(L)** is **partitioned** across the core stat tuple (**`stamina`**, **`physical_offense`**, **`physical_mitigation`**, **`special_offense`**, **`special_mitigation`**, **`initiative`**, …) using a **random compositional draw** (e.g. Dirichlet / bounded independent rolls), optionally conditioned only on **stage** **s ∈ {1,2,3}** via global hyperparameters—not on species id. Two Ash Mantles at the same level can land on opposite spreads.
+- **Extended stats** (**`precision`**, **`recovery`**, **`coupling`** — [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3) roll from their own distributions or derive from the rolled core tuple via **global** curves; species lines do not author per-line formulas.
 - **Training / Resonance** applies on top as a bounded tunable allocation **t(L)** with diminishing returns and bracket caps (percentage of **B(L)** or parallel budget pools—data-owned).
 - **Stage advancement** unlocks moves/passives and may widen/narrow roll variance or training caps via **global stage rules**, but **must not** bake a hidden higher **B(L)** than another creature at the same level under the same ruleset. Competitive meta = **roles and reactions**, not species-tier privilege.
 

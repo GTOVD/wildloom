@@ -4,7 +4,7 @@
 
 **Purpose:** Fills gaps and expands systems that are framework-only elsewhere. Sections are organized for implementation. Where existing docs define structure, this doc adds concrete first-pass targets, extra mechanics, and extended physics-education hooks.
 
-**Scope:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) describes the **nine-affinity MVP** and **twelve-ID** roster. This supplement defines the **twelve-affinity** chart (`CHART₀`), nine core stats (+ three extended), twelve material axes, extended move categories, stances, statuses, biomes, combos, and data artifacts—**phase in**; numbers require Monte Carlo before shipping. Stat naming follows [`COMBAT-MODEL.md`](./COMBAT-MODEL.md): **`stamina`** + **endurance** \(S(t)\), DoTs as \(\mathrm{d}S/\mathrm{d}t\).
+**Scope:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) describes the **nine-affinity MVP** and **twelve-ID** roster. This supplement defines the **twelve-affinity** chart (`CHART₀`), nine core stats (+ three extended), twelve material axes, extended move categories, stances, statuses, biomes, combos, and data artifacts—**phase in**; numbers require Monte Carlo before shipping. Stat naming follows [`COMBAT-MODEL.md`](./COMBAT-MODEL.md): schema ids **`stamina`** (endurance capacity), **`physical_offense`**, **`physical_mitigation`**, **`special_offense`**, **`special_mitigation`**, **`initiative`**, plus **`precision`**, **`recovery`**, **`coupling`** — plus **endurance** \(S(t)\), DoTs as \(\mathrm{d}S/\mathrm{d}t\).
 
 **Creature data rule:** Species catalog rows **never** author fixed stats, materials, or combat affinity weights — those properties exist **only** on rolled **instances** ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5). Examples: [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md).
 
@@ -60,7 +60,7 @@ The original nine affinities cover thermodynamics, electromagnetism, matter phas
 | `VO` | **Void** | Gravity, vacuum, isolation | Compression on **`stamina` / endurance ceiling**; removes medium | Gravitational potential, tidal stress |
 | `SO` | **Sonic** *(new)* | Sound, resonance, vibration | Setup / detonation; resonant shattering | Wave equation, impedance, resonance |
 | `CR` | **Corrosive** *(new)* | Acid/base, oxidation | Accumulator erosion; armor degradation over time | Rate laws, Arrhenius, Le Chatelier |
-| `PL` | **Plasmic** *(new)* | Ionized plasma, high-energy matter | Burst; breaches bulwark + ward angles | Ionization, Debye shielding; \(T^4\) radiative flavor |
+| `PL` | **Plasmic** *(new)* | Ionized plasma, high-energy matter | Burst; breaches **physical / special mitigation** angles | Ionization, Debye shielding; \(T^4\) radiative flavor |
 
 ### 1.3 Identity notes (new affinities)
 
@@ -124,27 +124,27 @@ B = CHART₀[attack][def_primary] * (1 - η) + CHART₀[attack][def_secondary] *
 
 ### 3.1 Nine-stat core
 
-| Id | Role | Combat use | Hook |
-|----|------|------------|------|
-| `stamina` | Endurance capacity | \(S_{\max}\); pool sized by stat + level/budget | — |
-| `might` | Physical offense | Strike | \(F = ma\) metaphor |
-| `bulwark` | Physical mitigation | Strike saturation | Stress–strain |
-| `insight` | Special offense | Surge / resonance moves | Energy / amplitude |
-| `ward` | Special mitigation | Surge | Absorption |
-| `tempo` | Speed / initiative | Turn order, evasion | Reaction time |
-| `acuity` *(new)* | Precision / focus | Accuracy; focused moves; Layer 2 quality | SNR / measurement precision |
-| `resilience` *(new)* | Recovery rate | Faster accumulator decay toward baseline | \(\tau\) homeostasis |
-| `flux` *(new)* | Rate coupling | Outgoing accumulator impulses; field adoption speed | \(\partial u/\partial t\) sensitivity |
+| Schema id | Name (player-facing) | Combat use | Hook |
+|-----------|----------------------|------------|------|
+| `stamina` | **Endurance capacity** | \(S_{\max}\); pool sized by stat + level/budget | — |
+| `physical_offense` | **Physical offense** | Strike | \(F = ma\) metaphor |
+| `physical_mitigation` | **Physical mitigation** | Strike saturation | Stress–strain |
+| `special_offense` | **Special offense** | Surge / resonance moves | Energy / amplitude |
+| `special_mitigation` | **Special mitigation** | Surge | Absorption / shielding metaphor |
+| `initiative` | **Initiative** | Turn order, evasion | Reaction time |
+| `precision` | **Precision** | Accuracy; focused moves; Layer 2 quality | SNR / measurement precision |
+| `recovery` | **Recovery** | Faster accumulator decay toward baseline | \(\tau\) homeostasis |
+| `coupling` | **Coupling** | Outgoing accumulator impulses; field adoption speed | \(\partial u/\partial t\) sensitivity |
 
 ### 3.2 New stat mechanics (sketch)
 
-- **Acuity:** while `focused`, next move power \(\times \bigl(1 + 0.4 \tanh(\mathrm{acuity}_{\mathrm{eff}}/100)\bigr)\) (tune).
-- **Resilience:** \(\tau_{\mathrm{eff}}(u) = \tau_{\mathrm{base}}(u)\cdot(1 + \alpha_{\mathrm{res}}\cdot \mathrm{resilience}_{\mathrm{eff}}/100)\).
-- **Flux:** outgoing impulses \(\times (1 + \beta_{\mathrm{flux}}\cdot\ldots)\); field adoption \(\times (1 + \gamma_{\mathrm{flux}}\cdot\ldots)\).
+- **Precision:** while `focused`, next move power \(\times \bigl(1 + 0.4 \tanh(\mathrm{precision}_{\mathrm{eff}}/100)\bigr)\) (tune).
+- **Recovery:** \(\tau_{\mathrm{eff}}(u) = \tau_{\mathrm{base}}(u)\cdot(1 + \alpha_{\mathrm{rec}}\cdot \mathrm{recovery}_{\mathrm{eff}}/100)\).
+- **Coupling:** outgoing impulses \(\times (1 + \beta_{\mathrm{cpl}}\cdot\ldots)\); field adoption \(\times (1 + \gamma_{\mathrm{cpl}}\cdot\ldots)\).
 
 ### 3.3 Migration defaults
 
-`acuity = insight * 0.6`, `resilience = stamina * 0.4`, `flux = (might + insight) * 0.2` — **migration baselines only** for tooling when extended stats are omitted; **individual creatures do not inherit these from a species row**—either roll the three stats directly or apply this map **globally** as a dev default. Optional **classic mode** fixes three stats to constants.
+`precision = special_offense * 0.6`, `recovery = stamina * 0.4`, `coupling = (physical_offense + special_offense) * 0.2` — **migration baselines only** for tooling when extended stats are omitted; **individual creatures do not inherit these from a species row**—either roll the three stats directly or apply this map **globally** as a dev default. Optional **classic mode** fixes three stats to constants.
 
 ---
 
@@ -226,13 +226,13 @@ void_compression_factor ≈ density * (1 - elasticity)
 
 | Category | Offense | Defense | Strike modalities? | Notes |
 |----------|---------|---------|---------------------|--------|
-| `strike` | `might_eff` | `bulwark_eff` | Yes (`COMBAT-MODEL` §5.4b) | Physical |
-| `surge` | `insight_eff` | `ward_eff` | No | Energy |
+| `strike` | `physical_offense_eff` | `physical_mitigation_eff` | Yes (`COMBAT-MODEL` §5.4b) | Physical |
+| `surge` | `special_offense_eff` | `special_mitigation_eff` | No | Energy |
 | `true` | — | — | No | Bypass saturation |
 | `field` | — | — | No | Context scalars |
 | `reactive` | Varies | Varies | Possible | Counter — Primed stance |
 | `channel` | Varies | Varies | Possible | Subtick partial hits |
-| `resonance` | `insight_eff * R_scale` | Varies | No | Training Resonance budget |
+| `resonance` | `special_offense_eff * R_scale` | Varies | No | Training Resonance budget |
 | `catalyst` | Partial | None | No | Primes reaction charge |
 
 ### 5.2 Extended move fields
@@ -366,7 +366,7 @@ Canonical shipped schema uses **`strike_modalities`** `{ concussive, piercing, s
 
 ### 6.1 Five stances — stat multipliers and rules
 
-| Stance | might/insight | bulwark/ward | tempo | acuity | Special |
+| Stance | physical_offense / special_offense | physical_mitigation / special_mitigation | initiative | precision | Special |
 |--------|----------------|--------------|-------|--------|---------|
 | **Grounded** | ×1.0 | ×1.0 | ×1.0 | ×1.0 | Default |
 | **Assault** | ×1.20 | ×0.80 | ×1.05 | ×0.90 | +crit%; no reactive declare |
@@ -430,12 +430,12 @@ Species expose **2–3 candidates per slot**; picked at advancement. Effects are
 | AQ | **Surface Tension** | Slashing modality rejects 20% laceration impulse |
 | GA | **Charge Accumulation** | `+0.015 charge_buildup` / subtick passive |
 | GA | **Arc Discharge** | Cross 0.75 charge → free surge (power ~60), drains charge toward 0.30 |
-| MI | **Load Bearing** | Bulwark saturation curve micro-shift (~+12% mid-band effective bulwark) |
-| MI | **Crystalline Memory** | Fracture \<0.10 recovery → bulwark ×1.15 two turns |
+| MI | **Load Bearing** | Physical mitigation saturation curve micro-shift (~+12% mid-band effective physical mitigation) |
+| MI | **Crystalline Memory** | Fracture \<0.10 recovery → physical mitigation ×1.15 two turns |
 | FL | **Photosynthesis** | Bright fields (`ambient_luminance > 0.50`) → +2% \(S_{\max}\) recovery / turn |
 | FL | **Spore Cloud** | Damage burst >15% \(S_{\max}\) → 30% corrosion impulse vs attacker if contact |
 | AE | **Low Profile** | +12% evasion; Void damage ×1.50 taken |
-| AE | **Vortex Drag** | Aero moves may impose −10% defender tempo 1 turn |
+| AE | **Vortex Drag** | Aero moves may impose −10% defender **initiative** 1 turn |
 | LU | **Photon Skin** | First LU hit each battle ×0.50 |
 | LU | **Coherent Pulse** | While focused: LU surges treated laser-like; pierce bonus |
 | VO | **Mass Distortion** | Tempo tie-breaking flavor (floor rounding narratively) |
@@ -468,16 +468,16 @@ Full predicates ship in `abilities/*.yaml`.
 | ID | Trigger | Active effects | Cure | Physics hook |
 |----|---------|----------------|------|----------------|
 | `seared` | `heat_load > 0.85` | DoT 3% \(S_{\max}\)/turn; move power −10%; blocks passive \(S\) regen unless noted | AQ move or ambient cooling trend ≥3 turns | Burn tolerance |
-| `hypothermic` | `heat_load < −0.60` | Tempo −25%; insight −15%; DoT 2% \(S_{\max}\)/turn | TH move or ambient warming | Enzyme cold slowdown |
-| `frozen` | hypothermic ∧ `cryo_load > 0.70` | 50% skip action; bulwark ×1.20, ward ×0.70 | TH breaking hit ×1.5 clears; or decay ≥3 turns | Solid-phase stiffness |
-| `waterlogged` | `wetness > 0.90` | GA in ×1.50; AE in ×1.30; sonic attacks +25%; tempo −10% | Aero field / sustained heat dry-down | Conduction + acoustic coupling |
-| `paralyzed` | `charge_buildup > 0.80` | Tempo −50%; 25% total action fail | MI grounding / timed decay | Runaway charge neuromuscular metaphor |
-| `fractured` | `fracture > 0.75` | Bulwark −30%; piercing modality ×1.30; slashing ×1.20 | Mend moves / slow natural decay | Stress concentrators |
-| `concussed` | `concussion > 0.70` | Accuracy −30%; tempo −20%; acuity specials halved | Resilience-scaled turns; focus restores | Neural impulse disruption |
+| `hypothermic` | `heat_load < −0.60` | Initiative −25%; special_offense −15%; DoT 2% \(S_{\max}\)/turn | TH move or ambient warming | Enzyme cold slowdown |
+| `frozen` | hypothermic ∧ `cryo_load > 0.70` | 50% skip action; physical_mitigation ×1.20, special_mitigation ×0.70 | TH breaking hit ×1.5 clears; or decay ≥3 turns | Solid-phase stiffness |
+| `waterlogged` | `wetness > 0.90` | GA in ×1.50; AE in ×1.30; sonic attacks +25%; initiative −10% | Aero field / sustained heat dry-down | Conduction + acoustic coupling |
+| `paralyzed` | `charge_buildup > 0.80` | Initiative −50%; 25% total action fail | MI grounding / timed decay | Runaway charge neuromuscular metaphor |
+| `fractured` | `fracture > 0.75` | Physical mitigation −30%; piercing modality ×1.30; slashing ×1.20 | Mend moves / slow natural decay | Stress concentrators |
+| `concussed` | `concussion > 0.70` | Accuracy −30%; initiative −20%; precision-tagged specials halved | Recovery-scaled turns; focus restores | Neural impulse disruption |
 | `bleeding` | `laceration > 0.65` | DoT 2.5% \(S_{\max}\)/turn; AQ hits extend | Cryo clot analogs / cautery / decay | Shear vessel damage |
-| `corroded` | `corrosion > 0.75` | Bulwark −20%; ward −20%; CR in ×1.35 | AQ flush / very slow decay | Section loss |
-| `irradiated` | `radiation > 0.60` | Ward −25%; recovery moves 50%; DoT 1.5% \(S_{\max}\)/turn | Time (~6t) / rad-flush | Repair inhibition |
-| `deafened` | `sonic_stress > 0.70` | Own sonic moves suppressed; acuity halved; inbound sonic −50% | VO strips medium / decay | Sensory saturation |
+| `corroded` | `corrosion > 0.75` | Physical mitigation −20%; special mitigation −20%; CR in ×1.35 | AQ flush / very slow decay | Section loss |
+| `irradiated` | `radiation > 0.60` | Special mitigation −25%; recovery moves 50%; DoT 1.5% \(S_{\max}\)/turn | Time (~6t) / rad-flush | Repair inhibition |
+| `deafened` | `sonic_stress > 0.70` | Own sonic moves suppressed; precision halved; inbound sonic −50% | VO strips medium / decay | Sensory saturation |
 | `ionized` | `ionization > 0.50` | GA & PL in ×1.25; leaks `+0.01 charge_buildup`/turn field-wide; ally GA/PL STAB ×1.10 | Ground / AQ flush | Plasma coupling reservoir |
 
 ### 8.3 Escalation tiers (examples)
@@ -485,7 +485,7 @@ Full predicates ship in `abilities/*.yaml`.
 ```
 hypothermic --(cryo_load pushes)--> frozen
 waterlogged --(GA hit)--> chain_lightning_rules (AoE surge hooks)
-paralyzed --(tempo hits 0)--> locked (full action loss 1 turn)
+paralyzed --(initiative hits 0)--> locked (full action loss 1 turn)
 bleeding --(laceration > 0.90)--> hemorrhage (DoT doubles; rescuetimer pressure)
 ```
 
@@ -506,7 +506,7 @@ UI should pulse / recolor icons at escalation so threshold dynamics read visuall
 | `fracture` | Strikes + Cryo rigid coupling | `fractured` | \(\mathrm{d}F=\eta I_\mathrm{strike}\psi(\mathrm{rigidity})-\lambda F\) |
 | `heat_load` | TH exertion + ambient | `seared` / `hypothermic` | Newton cooling toward \(T_a\) |
 | `wetness` | AQ + humidity | `waterlogged` | humidity exchange |
-| `concussion` | Concussive modality weight | `concussed` | decay \(\tau_C\) vitality/tempo flavored |
+| `concussion` | Concussive modality weight | `concussed` | decay \(\tau_C\) stamina/initiative flavored |
 | `laceration` | Slashing weight | `bleeding` | clotting \(\gamma_\mathrm{clot}\) |
 | `charge_buildup` | GA + leaks | `paralyzed` | leaky RC analogy |
 | `cryo_load` | CY sustained | enables `frozen` gate | coupled to low heat_load |
@@ -564,7 +564,7 @@ PRIORITY RESOLUTION
   Tier  0 standard / field / catalyst
   Tier −1 resonance / slow surges
   Tier −2 heavy channels / setups
-  Tie-break: tempo_eff then seeded RNG stream
+  Tie-break: initiative_eff then seeded RNG stream
 
 EXECUTION (per resolved action in priority order)
   1. Accuracy check (channel: once at start)
@@ -590,7 +590,7 @@ END-OF-TURN
 
 | Scenario | Resolution |
 |----------|------------|
-| Mirror tempo, same tier | RNG salt deterministically |
+| Mirror initiative, same tier | RNG salt deterministically |
 | Tier +2 quick vs Tier +1 switch | Quick resolves before switch completes targeting |
 | Reactive satisfied mid-execution | Fire reactive immediately after triggering slice; resume priority queue |
 | Active channel vs channel_break (+1) | Break cancels remainder; partial subtick effects retained |
@@ -827,10 +827,10 @@ Field-move counters (`cumulative_TH_PL_field_moves`, etc.) may shift biome scala
 | **Thermal Runaway** | Two TH hits same battle | PL while `heat_load > 0.70` | PL +50%; `ionization +0.30` | Positive feedback |
 | **Lightning Rod** | MI field / grounding move | GA next turn | GA ×1.70; target charge doubles | Ground path |
 | **Resonant Fracture** | SO: `sonic_stress > 0.30` | Physical strike next turn | Strike ×1.80; fracture impulse ×2 | Mechanical resonance |
-| **Acid Etch** | CR catalyst | MI / strike detonate | ×1.80; extra bulwark shred | Corrosion + stress concentration |
-| **Steam Explosion** | AQ `wetness > 0.70` | TH (hot field) | TH ×1.40; tempo debuff | Flash vapor expansion |
+| **Acid Etch** | CR catalyst | MI / strike detonate | ×1.80; extra physical mitigation shred | Corrosion + stress concentration |
+| **Steam Explosion** | AQ `wetness > 0.70` | TH (hot field) | TH ×1.40; initiative debuff | Flash vapor expansion |
 | **Void Silence** | VO vacuum field | SO vs same target | Sonic → 0; VO amp | No acoustic medium |
-| **Photoelectric Strike** | LU surge over ward threshold | GA ≤2 turns | GA ×1.45; target `charge_buildup +0.25` | Photoemission chain |
+| **Photoelectric Strike** | LU surge over special_mitigation threshold | GA ≤2 turns | GA ×1.45; target `charge_buildup +0.25` | Photoemission chain |
 | **Catalytic Oxidation** | Aero oxygen field | CR next turn | CR ×1.60; corrosion rate ×2 | Oxidizer availability |
 | **Cryo-Shock** | CY `cryo_load > 0.50` | TH same sequencing window | TH ×1.90; `fracture +0.30` | Thermal shock |
 
@@ -869,7 +869,7 @@ Author in `combos.json`; tie to `catalyst_id` / `combo_detonate` fields (`§5`).
 | Mechanic | Math concept | How players learn it |
 |----------|----------------|----------------------|
 | Saturation curves | Bounded smooth maps; asymptotes | Diminishing returns past high defense |
-| Accumulator decay | Exponential relaxation; \(\tau\) | Effects clear faster when resilience is high |
+| Accumulator decay | Exponential relaxation; \(\tau\) | Effects clear faster when **recovery** is high |
 | Combo thresholds | Piecewise / conditional gains | Priming before finishing hits harder |
 | Multi-hit exposure ramp | Discrete integration / buildup | Sequences beat isolated equal hits |
 | Corrosion kinetics | Coupled rates | Long fights amplify CR unless cleansed |
@@ -946,4 +946,4 @@ Chart symmetry, \(\kappa\) saturation bounds, status permanence without reinvest
 | 2026-05-03 | Aligned with endurance-first combat: **`stamina`**, \(\mathrm{d}S/\mathrm{d}t\) DoT language; faint → incapacitation |
 | 2026-05-03 | §2: `CHART₀` = baseline prior; shipped **`m1`** dynamic per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5; artifact split (`layer1_shape`); **catalog = identity only**, instances roll builds |
 | 2026-05-03 | Restored paste-depth §§5.3–5.7 YAML, §§6.2–6.4, §7 tables, §8–11 detail, §12 biome blobs, §14 tables; §5.8 modalities alignment; §15 artifact rows; link [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md) |
-| 2026-05-03 | §3.3 & §15: no species-authored stat templates; optional `species/*.yaml` = narrative/spawn only |
+| 2026-05-03 | **Stat schema ids** renamed for clarity — see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2.1 changelog; §3 tables & dependent prose updated (`physical_offense`, `physical_mitigation`, `special_offense`, `special_mitigation`, `initiative`, `precision`, `recovery`, `coupling`). |

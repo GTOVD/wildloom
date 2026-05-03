@@ -116,10 +116,10 @@ High rigidity raises \(\psi\) (brittle channels crack stress). Relaxation \(\lam
 Let \(C\) track neurologically flavored impairment meters (**game abstraction**, not medical realism):
 
 \[
-\frac{dC}{dt} = \zeta_{\text{in}}\,\omega_{\mathrm{con}}\!\cdot J_{\mathrm{hit}} - \frac{C}{\tau_C(\text{stamina},\mathrm{tempo})}
+\frac{dC}{dt} = \zeta_{\text{in}}\,\omega_{\mathrm{con}}\!\cdot J_{\mathrm{hit}} - \frac{C}{\tau_C(\text{stamina},\mathrm{initiative})}
 \]
 
-\(J_{\mathrm{hit}}\) is proportional to resolved concussive channel potency **before** optional stance shields—authors clamp \(\omega_{\mathrm{con}}\) coupling via Layer 2 to prevent tempo-lock exploits.
+\(J_{\mathrm{hit}}\) is proportional to resolved concussive channel potency **before** optional stance shields—authors clamp \(\omega_{\mathrm{con}}\) coupling via Layer 2 to prevent initiative-lock exploits.
 
 **Literacy hook:** Impulses accumulate and **decay**; mitigation stacks damp \(\zeta_{\text{in}}\)—players learn “inertial insult ≠ one-shot abstract HP”; it lingers and couples into **endurance** drain rates.
 
@@ -149,7 +149,7 @@ This avoids ambiguous “same-frame” races between continuous decay and discre
 
 ## 5. Damage pipeline coupling (where calculus meets hits)
 
-Per COMBAT-MODEL §5.7, accumulators **reshape effective stats** inside the saturation path (e.g. fracture reduces effective bulwark smoothly via \(\tanh\)). More generally:
+Per COMBAT-MODEL §5.7, accumulators **reshape effective stats** inside the saturation path (e.g. fracture reduces effective **physical mitigation** smoothly via \(\tanh\)). More generally:
 
 \[
 D_{\text{eff}} = D_{\text{base}} \cdot \prod_j \phi_j(u_j), \quad \phi_j \text{ smooth and bounded}
@@ -213,5 +213,5 @@ Marketing avoids implying laboratory-grade simulation.
 | 2026-05-03 | Initial pass: dynamical systems framing, toy flows, integration contract, pedagogy |
 | 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |
-| 2026-05-03 | §1.3 endurance-first metaphor; §2 explicit \(\mathrm{d}S/\mathrm{d}t\) alongside \(\mathbf{u}\); \(\tau_C(\texttt{stamina},\texttt{tempo})\); literacy hooks |
+| 2026-05-03 | §1.3 endurance-first metaphor; §2 explicit \(\mathrm{d}S/\mathrm{d}t\) alongside \(\mathbf{u}\); \(\tau_C(\texttt{stamina},\texttt{initiative})\); literacy hooks |
 | 2026-05-03 | §1.2 Layer 1 described as dynamic \(m_1\) + collapsed UI; aligns with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 |

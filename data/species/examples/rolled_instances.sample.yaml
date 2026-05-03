@@ -1,5 +1,9 @@
 # Sample procedural instances — NOT loaded by runtime; authoring / tests only.
 #
+# Stat schema ids (see docs/COMBAT-MODEL.md §2.1, DESIGN-SUPPLEMENT §3):
+#   stamina, physical_offense, physical_mitigation, special_offense, special_mitigation,
+#   initiative, precision, recovery, coupling
+#
 # Numbering (why ints vs ratios):
 #   - stats.*  → same family: effective combat budget units (UI often integers; resolver may use floats after buffs).
 #   - affinity_emphasis.* → weights on a simplex (each in [0,1], together sum to 1) for Layer 1 emphasis / typing display.
@@ -47,14 +51,14 @@ tortoise_comparison:
         plasmic: 0.003
     stats:
       stamina: 141
-      might: 71
-      bulwark: 127
-      insight: 51
-      ward: 76
-      tempo: 36
-      acuity: 31
-      resilience: 56
-      flux: 24
+      physical_offense: 71
+      physical_mitigation: 127
+      special_offense: 51
+      special_mitigation: 76
+      initiative: 36
+      precision: 31
+      recovery: 56
+      coupling: 24
     material_profile:
       thermal_mass: 0.84
       conductivity: 0.28
@@ -84,14 +88,14 @@ tortoise_comparison:
           "~1% (stellar tier baseline probability_mass demo)."
         population_percentiles_higher_stat_means_higher_percentile:
           stamina: 97
-          might: 72
-          bulwark: 96
-          insight: 38
-          ward: 62
-          tempo: 16
-          acuity: 41
-          resilience: 91
-          flux: 37
+          physical_offense: 72
+          physical_mitigation: 96
+          special_offense: 38
+          special_mitigation: 62
+          initiative: 16
+          precision: 41
+          recovery: 91
+          coupling: 37
         weakest_axis_percentile: 16
         tooltip_human_readable_spawn_joint_estimate_order_one:
           "Affinity geometry ~1 in 203 wild odds for exact ordered chip pair (reference rule); aptitude tier drawn separately (~1% stellar)."
@@ -126,14 +130,14 @@ tortoise_comparison:
         plasmic: 0.001
     stats:
       stamina: 118
-      might: 54
-      bulwark: 86
-      insight: 84
-      ward: 88
-      tempo: 64
-      acuity: 50
-      resilience: 47
-      flux: 28
+      physical_offense: 54
+      physical_mitigation: 86
+      special_offense: 84
+      special_mitigation: 88
+      initiative: 64
+      precision: 50
+      recovery: 47
+      coupling: 28
     material_profile:
       thermal_mass: 0.49
       conductivity: 0.36
@@ -159,14 +163,14 @@ tortoise_comparison:
           "~14% (rare tier baseline probability_mass demo)."
         population_percentiles_higher_stat_means_higher_percentile:
           stamina: 63
-          might: 38
-          bulwark: 52
-          insight: 88
-          ward: 92
-          tempo: 76
-          acuity: 81
-          resilience: 46
-          flux: 54
+          physical_offense: 38
+          physical_mitigation: 52
+          special_offense: 88
+          special_mitigation: 92
+          initiative: 76
+          precision: 81
+          recovery: 46
+          coupling: 54
         weakest_axis_percentile: 38
 
   rimeplate_wanderer:
@@ -199,14 +203,14 @@ tortoise_comparison:
         plasmic: 0.002
     stats:
       stamina: 131
-      might: 74
-      bulwark: 108
-      insight: 66
-      ward: 80
-      tempo: 43
-      acuity: 40
-      resilience: 52
-      flux: 28
+      physical_offense: 74
+      physical_mitigation: 108
+      special_offense: 66
+      special_mitigation: 80
+      initiative: 43
+      precision: 40
+      recovery: 52
+      coupling: 28
     material_profile:
       thermal_mass: 0.56
       conductivity: 0.24
@@ -232,14 +236,14 @@ tortoise_comparison:
           "~28% (uncommon tier baseline probability_mass demo)."
         population_percentiles_higher_stat_means_higher_percentile:
           stamina: 74
-          might: 79
-          bulwark: 71
-          insight: 58
-          ward: 81
-          tempo: 46
-          acuity: 52
-          resilience: 69
-          flux: 61
+          physical_offense: 79
+          physical_mitigation: 71
+          special_offense: 58
+          special_mitigation: 81
+          initiative: 46
+          precision: 52
+          recovery: 69
+          coupling: 61
         weakest_axis_percentile: 46
 
   echo_shell_sentinel:
@@ -272,14 +276,14 @@ tortoise_comparison:
         plasmic: 0.002
     stats:
       stamina: 96
-      might: 63
-      bulwark: 94
-      insight: 98
-      ward: 72
-      tempo: 71
-      acuity: 59
-      resilience: 38
-      flux: 32
+      physical_offense: 63
+      physical_mitigation: 94
+      special_offense: 98
+      special_mitigation: 72
+      initiative: 71
+      precision: 59
+      recovery: 38
+      coupling: 32
     material_profile:
       thermal_mass: 0.52
       conductivity: 0.31
@@ -304,17 +308,17 @@ tortoise_comparison:
         approximate_probability_exact_tier_spawn_only_mass_reference_table:
           "~5% (epic tier baseline probability_mass demo)."
         aptitude_tilt_note:
-          "Positive tempo/insight/acuity skew vs low stamina pool — Pokémon-style nature tilt illustration."
+          "Positive initiative/special_offense/precision skew vs low stamina pool — Pokémon-style nature tilt illustration."
         population_percentiles_higher_stat_means_higher_percentile:
           stamina: 21
-          might: 55
-          bulwark: 63
-          insight: 99
-          ward: 54
-          tempo: 93
-          acuity: 96
-          resilience: 35
-          flux: 68
+          physical_offense: 55
+          physical_mitigation: 63
+          special_offense: 99
+          special_mitigation: 54
+          initiative: 93
+          precision: 96
+          recovery: 35
+          coupling: 68
         weakest_axis_percentile: 21
         tooltip_human_readable_spawn_profile_estimate:
           "High-tier aptitude roll redistributed into speed/special stats — inspect percentiles + tier together."
@@ -347,14 +351,14 @@ example_primary_only_no_secondary_chip:
       plasmic: 0.005
   stats:
     stamina: 102
-    might: 58
-    bulwark: 79
-    insight: 71
-    ward: 62
-    tempo: 55
-    acuity: 48
-    resilience: 51
-    flux: 42
+    physical_offense: 58
+    physical_mitigation: 79
+    special_offense: 71
+    special_mitigation: 62
+    initiative: 55
+    precision: 48
+    recovery: 51
+    coupling: 42
   material_profile:
     thermal_mass: 0.41
     conductivity: 0.22
@@ -385,14 +389,14 @@ example_primary_only_no_secondary_chip:
         "~52% (common tier baseline probability_mass demo)."
       population_percentiles_higher_stat_means_higher_percentile:
         stamina: 44
-        might: 41
-        bulwark: 48
-        insight: 53
-        ward: 46
-        tempo: 52
-        acuity: 39
-        resilience: 43
-        flux: 51
+        physical_offense: 41
+        physical_mitigation: 48
+        special_offense: 53
+        special_mitigation: 46
+        initiative: 52
+        precision: 39
+        recovery: 43
+        coupling: 51
       weakest_axis_percentile: 39
       tooltip_human_readable_spawn_profile_estimate:
         "Single-chip spawn — affinity rarity from no-secondary branch; stats sit mid-pack (common tier illustration)."

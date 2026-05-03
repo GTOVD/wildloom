@@ -4,7 +4,7 @@
 
 **Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (collapsed matchup chip + stats); optional depth from **material traits**, **field scalars**, and **continuous Layer 1 shaping**; no duplicated formulas across tiers.
 
-**Design principle:** Fights are modeled **calculus-forward**: discrete actions inject **impulses** into continuous state, and **damage-over-time** channels are explicit \(\mathrm{d}S/\mathrm{d}t\) terms—not afterthoughts. The primary battle pool is **current endurance** \(S(t)\), capped by the **`stamina`** stat (capacity to keep fighting). When \(S \le 0\), the combatant is **incapacitated** (unable to continue)—the usual JRPG “HP bar” is deliberately avoided as the core metaphor; narration can still imply lethal outcomes without centering “fatality” as a separate meter.
+**Design principle:** Fights are modeled **calculus-forward**: discrete actions inject **impulses** into continuous state, and **damage-over-time** channels are explicit \(\mathrm{d}S/\mathrm{d}t\) terms—not afterthoughts. The primary battle pool is **current endurance** \(S(t)\), capped by **`stamina`** (schema id for **endurance capacity** — rolled aptitude + training). When \(S \le 0\), the combatant is **incapacitated** (unable to continue)—the usual JRPG “HP bar” is deliberately avoided as the core metaphor; narration can still imply lethal outcomes without centering “fatality” as a separate meter.
 
 ---
 
@@ -19,7 +19,7 @@
 | **Layer 2** | Data-driven predicate rules (physics-flavored hooks). |
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
 | **Strike modality** | How a **strike** splits across **concussive / piercing / slashing** channels (physics-flavored wound mechanics). Distinct from move-field **`pierce`** (numeric armor bypass). |
-| **`stamina`** | Stat: maximum **endurance pool** capacity (rolled aptitude + training)—how long the creature can sustain effort before collapse. |
+| **`stamina`** | Schema id for **endurance capacity**: maximum **endurance pool** (rolled aptitude + training)—how long the creature can sustain effort before collapse. |
 | **Current endurance** \(S(t)\) | Battle state scalar depleted by hits and continuous drains; UI may label “readiness” / “fight stamina.” Not “hit points” as a metaphor. |
 | **Incapacitated** | \(S \le 0\) — combat loss condition (collapse / exhaustion); switches and XP behave like a knockout. |
 
@@ -29,22 +29,22 @@ Affinity IDs in **content data**: **twelve-ID** roster in [`GAMEPLAY-SYSTEMS.md`
 
 ## 2. Creature attributes
 
-### 2.1 Core stats (six-tuple)
+### 2.1 Core combat stats (six-stat core — resolver)
 
-Used everywhere in damage coupling, speed order, and **endurance pool** sizing.
+Used everywhere in damage coupling, **initiative** order, and **endurance pool** sizing. **Schema ids** below match [`packages/combat`](../packages/combat/src/types.ts) (`CoreStats`). Player-facing copy should use the **name** column; extended stats (**precision**, **recovery**, **coupling**) live in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3.
 
-| Id | Role | Notes |
-|----|------|--------|
-| `stamina` | Endurance capacity | Sets maximum battle pool \(S_{\max}\); current endurance \(S\) is battle state (\(0 \le S \le S_{\max}\)). **Instance** rolled aptitude + level budget **`B(L)`** + training derive \(S_{\max}\) — not a species lookup ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §5). |
-| `might` | Physical offense | Used by **strike** moves. |
-| `bulwark` | Physical mitigation | Reduces strike **endurance loss** (with saturation). |
-| `insight` | Special offense | Used by **surge** moves. |
-| `ward` | Special mitigation | Reduces surge **endurance loss**. |
-| `tempo` | Speed / initiative | Turn order; optional accuracy/evasion hooks. |
+| Schema id | Name (player-facing) | Role | Notes |
+|-----------|----------------------|------|--------|
+| `stamina` | **Endurance capacity** | Pool ceiling \(S_{\max}\) | Current endurance \(S\) is battle state (\(0 \le S \le S_{\max}\)). **Instance** rolled aptitude + level budget **`B(L)`** + training derive \(S_{\max}\) — not a species lookup ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §5). |
+| `physical_offense` | **Physical offense** | Strike scaling | Used by **strike** moves in saturation vs **`physical_mitigation`**. |
+| `physical_mitigation` | **Physical mitigation** | Strike defense | Reduces strike **endurance loss** (with saturation); fracture/posture may reshape effective mitigation (§5.7). |
+| `special_offense` | **Special offense** | Surge scaling | Used by **surge** moves — field / non-contact potency (energy-amplitude metaphor). |
+| `special_mitigation` | **Special mitigation** | Surge defense | Reduces surge **endurance loss** (with saturation). |
+| `initiative` | **Initiative** | Speed / turn order | Turn order; optional accuracy/evasion hooks. |
 
 **Derived convenience (optional, recomputed each battle tick):**
 
-- `effective_might = might * product(modifiers)`
+- `effective_physical_offense = physical_offense * product(modifiers)`
 - Same pattern for other stats—buffs apply as multiplicative or additive stacks with declared precedence (see §8).
 
 ### 2.2 Material profile (latent vector)
@@ -90,7 +90,7 @@ Each move carries:
 | `strike_modalities` | Optional simplex weights `{ concussive, piercing, slashing }` summing to `1` on **strike** moves; omit ⇒ `{1,0,0}` (legacy blunt-only path). |
 | `damage_kind` | Usually `endurance` (depletes \(S\)); some moves only tick accumulators or apply disables (`status`, `utility`). |
 
-**True damage:** Skips **saturation path using bulwark/ward** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
+**True damage:** Skips **saturation path using `physical_mitigation` / `special_mitigation`** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
 
 **Compositional moves:** Players and designers assemble **display names** from template + infusions (“Void Blast”, “Floral Surge”, …). Mechanics depend on **`affinity_weights`**, **`infusion_coeffs`**, and stats—not on the display string alone.
 
@@ -122,8 +122,8 @@ flowchart TD
   B -->|miss| Z[0 damage]
   B -->|hit| C{strike vs surge vs true}
   C -->|surge / true| D[Single saturation path per §5.2–5.4]
-  C -->|strike| E[Fracture coupling on bulwark]
-  E --> F[Split bulwark into modality resistances R_c,R_p,R_s via material ψ_k]
+  C -->|strike| E[Fracture coupling on physical mitigation]
+  E --> F[Split physical mitigation into modality resistances R_c,R_p,R_s via material ψ_k]
   F --> G[Apply pierce shares per channel → D_c,D_p,D_s]
   G --> H[Three σ saturations → blend by ω → D_core]
   H --> D
@@ -149,8 +149,8 @@ If miss: emit `miss` event; no on-hit reactions.
 For **surge** (and single-path strike fallback):
 
 ```
-Def_eff = ward_eff or bulwark_eff
-Def_eff ← Def_eff * (1 - pierce_move * λ_p)    -- scalar bypass
+-- Strike → saturate vs physical_mitigation; surge → vs special_mitigation (after pierce trim)
+Def_eff ← relevant_defense_eff * (1 - pierce_move * λ_p)    -- scalar bypass
 ```
 
 For **strike modality blend** (§5.4b), the same `pierce_move` scalar is applied **after** splitting resistances, with **channel-specific weights** \(\lambda_{\mathrm{con}}, \lambda_{\mathrm{pier}}, \lambda_{\mathrm{slas}}\) (usually \(\lambda_{\mathrm{pier}} \approx 1\), smaller shares on blunt/slash—data-tuned).
@@ -173,7 +173,7 @@ Coefficients live in balance JSON. Alternative: match classic curves for `L ≤ 
 
 Let:
 
-- `A` = effective offense stat (`might_eff` or `insight_eff`).
+- `A` = effective offense stat (`physical_offense_eff` or `special_offense_eff`).
 - `D` = effective defense (`Def_eff` from §5.2).
 
 ```
@@ -197,7 +197,7 @@ D_core = F_scale * move_power_modified * sigma * S_L
 
 **Intent:** One **strike** can carry a mixture of **impulse** (concussive), **localized penetration** (piercing modality), and **shear / cutting** (slashing). Each channel gets its own smooth saturation against a **material-shaped** resistance before blending—same calculus spirit as §13, repeated three times with different \(D_k\).
 
-Let \(B_{\mathrm{eff}}\) be defender bulwark after fracture/posture hooks (§5.7) but **before** per-channel pierce. Let \(\mathbf{M}\) be defender material profile (`rigidity`, `porosity`, …—bounded \([0,1]\)).
+Let \(B_{\mathrm{eff}}\) be defender **effective physical mitigation** after fracture/posture hooks (§5.7) but **before** per-channel pierce. Let \(\mathbf{M}\) be defender material profile (`rigidity`, `porosity`, …—bounded \([0,1]\)).
 
 **Resistance shaping (examples — ship ψ from `scaling_curves.json`):**
 
@@ -232,7 +232,7 @@ D_{\mathrm{core}} = \omega_c D_{\mathrm{core},\mathrm{con}} + \omega_p D_{\mathr
 
 **Audit / replay:** store \(\boldsymbol{\omega}\), each \(\sigma_k\), and \(D_{\mathrm{core},k}\) in `HitResolved.breakdown.modalities` for competitive disputes—see [`packages/combat`](../packages/combat/README.md).
 
-**Layer 3 impulses:** concussive fraction feeds **`concussion`** accumulation (tempo/focus coupling — [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5); slashing feeds **`laceration`** bleed drivers §3.6; piercing modality spikes **`fracture`** when paired with rigid ceramics—author specific impulses in Layer 2 rules to avoid double-counting.
+**Layer 3 impulses:** concussive fraction feeds **`concussion`** accumulation (initiative / **precision** coupling — [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5); slashing feeds **`laceration`** bleed drivers §3.6; piercing modality spikes **`fracture`** when paired with rigid ceramics—author specific impulses in Layer 2 rules to avoid double-counting.
 
 ### 5.5 Layer 1 — affinity multiplier `m1` (dynamic, bounded)
 
@@ -304,7 +304,7 @@ u ← clamp(u + Δu, u_min, u_max)
 Damage coupling examples:
 
 ```
-fracture exposes defense: bulwark_eff *= (1 - γ * tanh(fracture))
+fracture exposes defense: physical_mitigation_eff *= (1 - γ * tanh(fracture))
 heat_load triggers overload moves or disables regeneration
 ```
 
@@ -373,7 +373,7 @@ Total damage is sum of hits; each hit runs §5 with shared RNG stream advancemen
 Declare globally:
 
 1. **Multiplicative buckets:** `item`, `terrain`, `ability`, `volatile` — multiply within bucket, then multiply buckets in fixed order.
-2. **Additive bonuses** to stat ratios (e.g. `+10% might`) convert to multiplier `(1 + Σ adds)` inside one bucket.
+2. **Additive bonuses** to stat ratios (e.g. `+10% physical_offense`) convert to multiplier `(1 + Σ adds)` inside one bucket.
 3. **Caps:** per-bucket and global—prevents runaway preview bugs.
 
 Document in schema so tools can simulate.
@@ -504,4 +504,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
-| 2026-05-03 | §9: [`data/species/catalog.json`](../data/species/catalog.json) + schema — 100 **identity** lines (`npm run gen:species`); combat stats on instances only. |
+| 2026-05-03 | **Stat vocabulary:** Renamed core schema ids for clarity — `might`→`physical_offense`, `bulwark`→`physical_mitigation`, `insight`→`special_offense`, `ward`→`special_mitigation`, `tempo`→`initiative`; **`stamina`** remains the schema id for **endurance capacity**. Extended stats: `acuity`→`precision`, `resilience`→`recovery`, `flux`→`coupling` ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3). |

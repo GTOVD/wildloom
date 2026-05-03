@@ -36,7 +36,7 @@ function computeStrikeDCore(
   D_raw: number,
   S_L: number
 ): Pick<DamageBreakdown, 'D_core' | 'sigma' | 'modalities'> {
-  const A = attacker.stats_eff.might;
+  const A = attacker.stats_eff.physical_offense;
 
   if (move.strike_modalities === undefined) {
     const D_eff = calcEffectiveDefense(D_raw, move.pierce);
@@ -115,7 +115,7 @@ export function resolveHit(
   const S_L = calcLevelScaling(attacker.level, defender.level);
 
   if (move.category === 'strike') {
-    let D_raw = defender.stats_eff.bulwark;
+    let D_raw = defender.stats_eff.physical_mitigation;
     const fracture = defender.accumulators.fracture ?? 0;
     D_raw *= 1 - FRACTURE_DEFENSE_GAMMA * Math.tanh(fracture);
 
@@ -124,8 +124,8 @@ export function resolveHit(
     sigma = sc.sigma;
     modalities = sc.modalities;
   } else {
-    const D_raw = defender.stats_eff.ward;
-    const A = attacker.stats_eff.insight;
+    const D_raw = defender.stats_eff.special_mitigation;
+    const A = attacker.stats_eff.special_offense;
     const D_eff = calcEffectiveDefense(D_raw, move.pierce);
     const core = calcCoreSaturation(A, D_eff, move.base_power, S_L);
     D_core = core.dCore;

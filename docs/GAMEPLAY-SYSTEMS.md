@@ -46,7 +46,7 @@ To keep the matchup chart readable during onboarding, tutorials may **collapse**
 | **Mineral** | Earth, crystal, metals | Physical mitigation; `rigidity` / shatter loops. |
 | **Flora** | Biomass, vines, spores | Sustain / drains (DoT); often higher `thermal_mass`. |
 | **Aero** | Gas, pressure waves, wind | Evasion hooks; spreads field accumulators. |
-| **Luminous** | Light, lasers, radiation | Surge-focused piercing; interacts with `ward` more than `bulwark`. |
+| **Luminous** | Light, lasers, radiation | Surge-focused piercing; interacts with **`special_mitigation`** more than **`physical_mitigation`**. |
 | **Void** | Gravity, vacuum, isolation | Compression on effective **`stamina` / endurance ceiling**; deliberately orthogonal physics hooks. |
 
 **Open decision:** Keep this “physics-first” naming, push further into non-element metaphors, or split “identity” vs “damage flavor” for readability—finalize before shipping tutorial copy.
@@ -73,7 +73,7 @@ Accumulators are continuous battle scalars (per combatant unless noted). They de
 
 | Key | Build sources (examples) | Mechanical role |
 |-----|--------------------------|-----------------|
-| `fracture` | Heavy **strike** stress on high-`rigidity` bodies | Reduces effective `bulwark` via saturation path coupling (tuning γ). |
+| `fracture` | Heavy **strike** stress on high-`rigidity` bodies | Reduces effective **`physical_mitigation`** via saturation path coupling (tuning γ). |
 | `heat_load` | Thermal moves, exertion, hot fields | DoT or overload thresholds; `thermal_mass` slows heating **and** cooling. |
 | `wetness` | Aqueous moves, humidity | Amplifies galvanic pathways; enables steam / shock rules. |
 | `concussion` | Concussive-heavy strikes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b; weight ω_con) | Tempo / accuracy decay via smooth coupling—[`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5. |
@@ -91,11 +91,11 @@ Author as data (`reaction_rules/*`) with priorities. Examples:
 
 2. **Superconduct**  
    - **When:** Galvanic move; defender `wetness > 0.5` **or** `conductivity > 0.8`.  
-   - **Then:** Temporary pierce on **ward** (not automatic everywhere—scope per rule), optional splash to bench (PvP ruleset gated).
+   - **Then:** Temporary pierce on **`special_mitigation`** (not automatic everywhere—scope per rule), optional splash to bench (PvP ruleset gated).
 
 3. **Steam expansion**  
    - **When:** Thermal move; defender `wetness > 0.5`.  
-   - **Then:** Consume/drain `wetness`, apply tempo penalty debuff, set Layer 2 multiplier bump (e.g. `m2 × 1.3` cap-checked).
+   - **Then:** Consume/drain `wetness`, apply **initiative** penalty debuff, set Layer 2 multiplier bump (e.g. `m2 × 1.3` cap-checked).
 
 4. **Armor pierce alignment**  
    - **When:** Move tag `armor_piercing` **and** defender `fracture > θ`.  
@@ -103,7 +103,7 @@ Author as data (`reaction_rules/*`) with priorities. Examples:
 
 5. **Concussion spike**  
    - **When:** `concussion` crosses threshold **and** defender lacks stance buff.  
-   - **Then:** Force slower tempo segment / accuracy slump—avoid hard stun RNG where possible (smooth debuffs).
+   - **Then:** Force slower **initiative** segment / accuracy slump—avoid hard stun RNG where possible (smooth debuffs).
 
 6. **Open shear**  
    - **When:** `laceration` rising **and** follow-up slashing hit while `wetness` high.  
@@ -144,7 +144,7 @@ Optional **derived field cues** (author decides whether to expose raw numbers): 
 Working name: **Resonance** — transparent spendable budget (replaces invisible EV grind).
 
 - **Accrual:** per level through phase boundaries; post-100 diminishing accrual consistent with grind philosophy (data-owned).
-- **Allocation:** hubs (“tuning stations”) into whichever stats the design exposes (six core + optional **acuity / resilience / flux**).
+- **Allocation:** hubs (“tuning stations”) into whichever stats the design exposes (six core + optional **precision / recovery / coupling**).
 - **Hard cap:** e.g. no single stat >40% of allocated pool at a snapshot — avoids breaking saturation math.
 
 ### 4.3 Combined stat formula (conceptual)
@@ -216,4 +216,4 @@ Full Layer 3 registry, cross-coupling notes, UI tiers: [`DESIGN-SUPPLEMENT.md`](
 | 2026-05-03 | `concussion` / `laceration`; modality reaction sketches; §5.2 strike modality literacy |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §1 post-MVP twelve-affinity pointer |
 | 2026-05-03 | Void / bleed copy aligned with endurance pool \(S\) and **`stamina`** ceiling ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2, §6). |
-| 2026-05-03 | §1 twelve-ID roster + MVP nine; Layer interaction paragraph; §4 **no species base stats**; §5.1 SO/CR/PL literacy; §6 → DESIGN-SUPPLEMENT §9 |
+| 2026-05-03 | Core stat vocabulary aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2.1 — **`physical_mitigation`**, **`special_mitigation`**, **`initiative`**, **`precision` / `recovery` / `coupling`** in prose |

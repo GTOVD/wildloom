@@ -5,13 +5,18 @@ export type Affinity = string;
 export type MoveCategory = 'strike' | 'surge' | 'true';
 
 export interface CoreStats {
-  /** Maximum endurance capacity — maps to battle pool size; see COMBAT-MODEL §2.1 */
+  /** Endurance capacity — maximum battle pool \(S_{\max}\); see COMBAT-MODEL §2.1 */
   stamina: number;
-  might: number;
-  bulwark: number;
-  insight: number;
-  ward: number;
-  tempo: number;
+  /** Strike scaling — physical offense */
+  physical_offense: number;
+  /** Strike saturation defense — physical mitigation */
+  physical_mitigation: number;
+  /** Surge scaling — special offense (field / non-contact potency) */
+  special_offense: number;
+  /** Surge saturation defense — special mitigation */
+  special_mitigation: number;
+  /** Turn order and tempo hooks — initiative */
+  initiative: number;
 }
 
 export interface MaterialProfile {

@@ -65,7 +65,7 @@ export function effectiveDefenseForModality(
 }
 
 export function calcStrikeResistanceTriplet(
-  bulwarkEff: number,
+  physicalMitigationEff: number,
   mat: { rigidity: number; porosity: number }
 ): { rCon: number; rPier: number; rSlas: number } {
   const R = mat.rigidity;
@@ -82,9 +82,9 @@ export function calcStrikeResistanceTriplet(
   );
 
   return {
-    rCon: bulwarkEff * psiCon,
-    rPier: bulwarkEff * psiPier,
-    rSlas: bulwarkEff * psiSlas,
+    rCon: physicalMitigationEff * psiCon,
+    rPier: physicalMitigationEff * psiPier,
+    rSlas: physicalMitigationEff * psiSlas,
   };
 }
 
