@@ -7,7 +7,8 @@
 - Player-driven world: no computer-controlled stand-ins for human rivals; PvP challenges and trading between players.
 - One hundred unique creature species lines; each line has three transformational stages (naming TBD — not using “evolve” as a franchise hook).
 - **Uncapped levels:** progression mirrors classic handheld pacing for early levels, then shifts to a deliberate super-grind curve; see [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1. Training budgets stay comparable across stages within a bracket so stage choice stays strategic, not a permanent handicap.
-- Systems modeling favors **continuous, coupled dynamics** (rates, equilibria) so engaged players build real-world physical intuition from mechanics—not from homework; see [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
+- Combat is **server-authoritative**, with continuous nonlinear mitigation and integrative effects ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md)).
+- Systems modeling favors **coupled flows and equilibria** so engaged players pick up physical intuition from mechanics—not from homework ([`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md)).
 
 ## Legal / branding
 
