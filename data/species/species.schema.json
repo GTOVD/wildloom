@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wildloom.dev/schemas/species-catalog.schema.json",
+  "title": "Wildloom species catalog",
+  "type": "object",
+  "required": ["schema_version", "species_count", "species"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schema_version": { "type": "string" },
+    "content_note": { "type": "string" },
+    "species_count": { "type": "integer", "minimum": 1 },
+    "species": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/speciesLine" }
+    }
+  },
+  "$defs": {
+    "affinity": {
+      "type": "string",
+      "enum": [
+        "thermal",
+        "cryo",
+        "aqueous",
+        "galvanic",
+        "mineral",
+        "flora",
+        "aero",
+        "luminous",
+        "void"
+      ]
+    },
+    "stage": {
+      "type": "object",
+      "required": ["stage", "code", "name"],
+      "properties": {
+        "stage": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "code": { "type": "string", "enum": ["morph", "ascension", "zenith"] },
+        "name": { "type": "string", "minLength": 1 }
+      }
+    },
+    "speciesLine": {
+      "type": "object",
+      "required": [
+        "id",
+        "catalog_number",
+        "name",
+        "stages",
+        "primary_affinity",
+        "affinity_emphasis_hint",
+        "habitat",
+        "blurb",
+        "species_tags"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+        "catalog_number": { "type": "integer", "minimum": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "stages": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/stage" }
+        },
+        "primary_affinity": { "$ref": "#/$defs/affinity" },
+        "secondary_affinity": {
+          "oneOf": [{ "$ref": "#/$defs/affinity" }, { "type": "null" }]
+        },
+        "affinity_emphasis_hint": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "habitat": { "type": "string" },
+        "blurb": { "type": "string" },
+        "species_tags": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

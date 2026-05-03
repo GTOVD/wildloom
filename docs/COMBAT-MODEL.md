@@ -382,7 +382,8 @@ Document in schema so tools can simulate.
 
 | Artifact | Role |
 |----------|------|
-| `affinities.json` | Enum order + display strings + icon keys. |
+| `species/catalog.json` | **100 species lines** — id, zenith name, 3 stages, affinities, `affinity_emphasis_hint`, habitat, blurb; instances extend with rolled stats/materials. |
+| `species/species.schema.json` | JSON Schema for catalog entries. |
 | `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
 | `moves.json` | §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
@@ -501,3 +502,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; distribution-first species templates §2. |
+| 2026-05-03 | §9: [`data/species/catalog.json`](../data/species/catalog.json) + schema — 100 species lines (`npm run gen:species`). |

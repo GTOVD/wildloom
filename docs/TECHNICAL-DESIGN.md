@@ -107,7 +107,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 6. **Creature model** — species, stage, level, deep stat blocks, training vectors, moves, held item, **appearance seed**, **variant flags** (e.g. lustrous/coveted).
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
-9. **Content pipeline** — data files for species × stages, moves, **reaction rules**, balance tooling (Monte Carlo / sensitivities).
+9. **Content pipeline** — data files for species × stages ([`data/species/catalog.json`](../data/species/catalog.json) — 100 lines, JSON Schema [`species.schema.json`](../data/species/species.schema.json)); moves, **reaction rules**, balance tooling (Monte Carlo / sensitivities).
 10. **Rendering hooks** — shader/uniform pipeline driven by **appearance genes** (§7); optional quality tiers for low-end devices.
 
 ---
@@ -262,3 +262,4 @@ Choose one to lock into design before heavy implementation:
 | 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
 | 2026-05-03 | §4 endurance-first framing: DoT as \(\mathrm{d}S/\mathrm{d}t\); core stat **`stamina`** (replaces HP metaphor in progression spread). |
 | 2026-05-03 | Creatures: procedural per-instance stats/materials/typing composition; broad ability learning; compositional moves. Battles: procedural biome assembly. Layer 1: stat-shaped multiplier (not flat-only chart). |
+| 2026-05-03 | Content: [`data/species/catalog.json`](../data/species/catalog.json) (100 lines) + [`species.schema.json`](../data/species/species.schema.json); `npm run gen:species` to regenerate from [`scripts/gen-species-catalog.mjs`](../scripts/gen-species-catalog.mjs). |
