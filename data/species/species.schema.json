@@ -43,17 +43,7 @@
     },
     "speciesLine": {
       "type": "object",
-      "required": [
-        "id",
-        "catalog_number",
-        "name",
-        "stages",
-        "primary_affinity",
-        "affinity_emphasis_hint",
-        "habitat",
-        "blurb",
-        "species_tags"
-      ],
+      "required": ["id", "catalog_number", "name", "stages", "habitat", "blurb", "species_tags"],
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
         "catalog_number": { "type": "integer", "minimum": 1 },
@@ -64,11 +54,16 @@
           "maxItems": 3,
           "items": { "$ref": "#/$defs/stage" }
         },
-        "primary_affinity": { "$ref": "#/$defs/affinity" },
+        "primary_affinity": {
+          "description": "Optional dex/UI collapsed chip — omit or null = no catalog-level typing (authoritative affinities live on creature instances only).",
+          "oneOf": [{ "$ref": "#/$defs/affinity" }, { "type": "null" }]
+        },
         "secondary_affinity": {
+          "description": "Optional second dex chip when mirroring instance summaries into catalog tooling.",
           "oneOf": [{ "$ref": "#/$defs/affinity" }, { "type": "null" }]
         },
         "affinity_emphasis_hint": {
+          "description": "Optional seed vector for procedural naming/tutorials — never authoritative for combat.",
           "type": "object",
           "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
         },

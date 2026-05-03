@@ -47,7 +47,7 @@ Layer 1 **`m1`** consumes **`affinity_emphasis`** + reshape rules ([`COMBAT-MODE
 
 ### 3.2 Independent of catalog
 
-On spawn, **do not read** `species.primary_affinity` / `secondary_affinity` / `affinity_emphasis_hint` for combat. Those fields remain **sorting / lore / generator fluff** only.
+On spawn, **do not read** `species.primary_affinity` / `secondary_affinity` / `affinity_emphasis_hint` for combat. In the shipped catalog those keys are **`null`** or omitted—never authoritative.
 
 Optional **biome bias:** multiply Dirichlet `α` or categorical weights (e.g. more Thermal weight in volcanic rooms) — still allows any affinity at low probability.
 

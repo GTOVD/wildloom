@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
-"""Emit data/moves/abilities.catalog.json — 100 named abilities from attack_templates.catalog.json."""
+"""Emit data/moves/abilities.catalog.json — reference *fixtures* only.
+
+Canonical move definitions are templates in attack_templates.catalog.json (frames + bounds).
+Each creature/player *resolves* a template by choosing affinities: none (non-element frames only),
+primary only, or primary + secondary — never fixed per fixture id.
+
+This JSON holds ~100 deterministic rows for balance mocks / tests: numeric sliders are rolled,
+affinities are *example rolls* for those rows, not an authoritative roster of "Galvanic moves".
+"""
+
 
 from __future__ import annotations
 
@@ -57,6 +66,13 @@ TEMPLATE_SUFFIX = {
     "surge_voidcollapse": "Collapse",
     "strike_gale_drive": "Drive",
 }
+
+# Human-readable template labels (affinity-agnostic).
+TEMPLATE_LABEL = {k: f"Surge {v}" if k.startswith("surge_") else (f"Strike {v}" if k.startswith("strike_") else f"True {v}") for k, v in TEMPLATE_SUFFIX.items()}
+TEMPLATE_LABEL["true_spike"] = "True Spike"
+TEMPLATE_LABEL["strike_gale_drive"] = "Strike Gale Drive"
+TEMPLATE_LABEL["surge_noiseburst"] = "Surge Noiseburst"
+TEMPLATE_LABEL["surge_voidcollapse"] = "Surge Void Collapse"
 
 
 def _rng01(seed: str) -> float:
@@ -122,7 +138,7 @@ def main() -> None:
             epithets = EPITHETS[primary]
             epithet = epithets[k % len(epithets)]
             suffix = TEMPLATE_SUFFIX[tid]
-            display_name = f"{epithet} {suffix}"
+            example_generated_label = f"{epithet} {suffix}"
 
             eta = None
             weights: dict[str, float]
@@ -161,19 +177,16 @@ def main() -> None:
                 s0 = _lin(_rng01(salt + "|ms"), sm["slashing"]["min"], sm["slashing"]["max"])
                 modalities = _normalize_mod(c0, p0, s0)
 
-            abi_id = f"abi_{serial:03d}_{tid}_{primary}"
-            if secondary:
-                abi_id += f"_{secondary}"
+            abi_id = f"ref_move_{serial:03d}"
 
-            tags = sorted({primary, cat, *(tpl.get("suggested_tags") or [])})
-            if secondary:
-                tags.append(secondary)
-            tags = sorted(set(tags))
+            base_tags = list(tpl.get("suggested_tags") or [])
+            tags = sorted({*base_tags, cat, "reference_fixture"})
 
             abilities.append(
                 {
                     "ability_id": abi_id,
-                    "display_name": display_name,
+                    "display_name": f"{TEMPLATE_LABEL[tid]} · ref {serial:03d}",
+                    "example_generated_label": example_generated_label,
                     "template_id": tid,
                     "category": cat,
                     "damage_kind": dk,
@@ -193,7 +206,8 @@ def main() -> None:
 
     doc = {
         "schema_version": "1.0.0",
-        "content_note": "100 authored-style abilities generated from attack_templates.catalog.json bounds via scripts/gen_abilities_catalog.py — regenerate; numbers are placeholders until Monte Carlo balance.",
+        "catalog_role": "reference_fixtures",
+        "content_note": "Not the authoritative ability list. Rows are Monte Carlo / balance mocks: template_id + rolled sliders + example affinity picks. Real moves are resolved from attack_templates.catalog.json when a player or generator assigns 0/1/2 affinities.",
         "ability_count": len(abilities),
         "source_templates_ref": "./attack_templates.catalog.json",
         "abilities": abilities,

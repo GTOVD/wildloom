@@ -110,42 +110,13 @@ const HABITATS = [
   'coastal surge pools',
 ];
 
-function emphasis(primary, secondary, rng) {
-  const e = {};
-  e[primary] = 0.42 + rng() * 0.28;
-  if (secondary) {
-    e[secondary] = 0.22 + rng() * 0.22;
-  }
-  const others = AFFINITIES.filter((a) => a !== primary && a !== secondary);
-  let rest = 1 - Object.values(e).reduce((s, v) => s + v, 0);
-  while (rest > 0.001 && others.length) {
-    const a = pick(rng, others);
-    const add = Math.min(rest * (0.25 + rng() * 0.55), rest);
-    e[a] = (e[a] ?? 0) + add;
-    rest -= add;
-  }
-  const sum = Object.values(e).reduce((s, v) => s + v, 0);
-  for (const k of Object.keys(e)) e[k] = Math.round((e[k] / sum) * 1000) / 1000;
-  return e;
-}
-
-function blurb(primary, habitat, rng) {
-  const verbs = ['Channels', 'Stores', 'Dissipates', 'Amplifies', 'Harvests', 'Routes', 'Shields', 'Bleeds off'];
-  const nouns = {
-    thermal: 'thermal stress',
-    cryo: 'latent cold',
-    aqueous: 'osmotic gradients',
-    galvanic: 'charge shells',
-    mineral: 'lattice strain',
-    flora: 'metabolic surplus',
-    aero: 'pressure seams',
-    luminous: 'photon coherence',
-    void: 'vacuum folds',
-    sonic: 'standing waves',
-    corrosive: 'redox fronts',
-    plasmic: 'sheath turbulence',
-  };
-  return `${pick(rng, verbs)} ${nouns[primary]} across ${habitat}; each instance rolls unique stats and materials at spawn.`;
+function blurb(habitat, rng) {
+  const lines = [
+    `Ranges ${habitat}; each wild or hatched instance rolls its own affinity emphasis (none, one, or two dominant IDs), stats, and materials.`,
+    `Known from ${habitat}; combat typing is never fixed per species line — only per creature instance.`,
+    `Often tracked near ${habitat}; dex cards may show rolled summaries, but builds diverge instance by instance.`,
+  ];
+  return pick(rng, lines);
 }
 
 function generate() {
@@ -167,16 +138,12 @@ function generate() {
     usedSlugs.add(slug);
 
     const primary = AFFINITIES[i % AFFINITIES.length];
-    let secondary = AFFINITIES[(i + 3) % AFFINITIES.length];
-    if (secondary === primary) secondary = AFFINITIES[(i + 5) % AFFINITIES.length];
-    const secondaryOrNull = i % 7 === 0 ? null : secondary;
 
     const pre = pick(rng, PREFIX[primary]);
     const s1 = `${cap(pre)}${pick(rng, SUFFIX_S1)}`.replace(/([a-z])([A-Z])/g, '$1$2');
     const s2 = `${cap(pre)}${pick(rng, MID_S2)}`;
 
     const habitat = pick(rng, HABITATS);
-    const emph = emphasis(primary, secondaryOrNull, rng);
 
     species.push({
       id: slug,
@@ -187,11 +154,10 @@ function generate() {
         { stage: 2, code: 'ascension', name: s2 },
         { stage: 3, code: 'zenith', name: zenithName },
       ],
-      primary_affinity: primary,
-      secondary_affinity: secondaryOrNull,
-      affinity_emphasis_hint: emph,
+      primary_affinity: null,
+      secondary_affinity: null,
       habitat,
-      blurb: blurb(primary, habitat, rng),
+      blurb: blurb(habitat, rng),
       species_tags: [],
     });
   }
@@ -200,7 +166,7 @@ function generate() {
     $schema: './species.schema.json',
     schema_version: '1.0.0',
     content_note:
-      'One hundred species lines (Wildloom). Identity/names/stages only — combat stats and affinity_emphasis roll per instance (TECHNICAL-DESIGN §1). affinity_emphasis_hint and primary/secondary are dex/UI seeds, not authoritative builds.',
+      'One hundred species lines (Wildloom): identity, stage names, habitat — no catalog-level combat typing. primary_affinity / secondary_affinity are null here; each creature instance rolls none / one / two dominant affinities plus emphasis vector (TECHNICAL-DESIGN §1). Stage name prefixes still draw flavor words from affinity-themed pools for lore-only variety.',
     species_count: species.length,
     species,
   };

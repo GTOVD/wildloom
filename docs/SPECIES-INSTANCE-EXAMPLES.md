@@ -2,7 +2,7 @@
 
 **Companion:** [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 & §5 (**no species-fixed stats**), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §§1–4 (twelve affinities, rolled aptitudes, Resonance), [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) (spawn typing independent of catalog, aptitude tiers, rarity odds), [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§3–4 (nine stats, twelve material axes).
 
-[`data/species/catalog.json`](../data/species/catalog.json) lists **100 species lines**: display names, three stages, habitat string, plus **`primary_affinity`**, **`secondary_affinity`**, **`affinity_emphasis_hint`** for **dex/UI/procedural naming only**. **They are not combat authority.** Every battle-ready creature is an **instance** whose **stats, materials, and affinity_emphasis** are **rolled** (then advanced by training).
+[`data/species/catalog.json`](../data/species/catalog.json) lists **100 species lines**: display names, three stages, habitat string. **`primary_affinity`**, **`secondary_affinity`**, and **`affinity_emphasis_hint`** are **optional** — the generated catalog keeps **`null`** typing on the row so nothing reads as “this species is Thermal.” **Combat authority** is always the **instance**: rolled **`affinity_emphasis`** (none / one / two dominant IDs as collapsed UI allows), stats, and materials.
 
 ---
 

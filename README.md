@@ -15,7 +15,7 @@ TypeScript monorepo: web client + authoritative game server + shared simulation 
 
 - **Planning / architecture:** [`docs/TECHNICAL-DESIGN.md`](docs/TECHNICAL-DESIGN.md) (living document until build kickoff)
 - **Combat math & endurance pipeline:** [`docs/COMBAT-MODEL.md`](docs/COMBAT-MODEL.md)
-- **Composable attacks + 100-ability roster:** [`docs/ATTACK-CATALOG.md`](docs/ATTACK-CATALOG.md) · [`data/moves/`](data/moves/) (`attack_templates.catalog.json`, **`abilities.catalog.json`**)
+- **Composable attacks + move fixtures:** [`docs/ATTACK-CATALOG.md`](docs/ATTACK-CATALOG.md) · [`data/moves/`](data/moves/) (`attack_templates.catalog.json` = frames; `abilities.catalog.json` = **`reference_fixtures`** mocks only)
 - **Affinities, field, progression:** [`docs/GAMEPLAY-SYSTEMS.md`](docs/GAMEPLAY-SYSTEMS.md)
 - **Expanded design (12 affinities, biomes, combos):** [`docs/DESIGN-SUPPLEMENT.md`](docs/DESIGN-SUPPLEMENT.md)
 - **Combat package (TS):** [`packages/combat`](packages/combat/README.md)

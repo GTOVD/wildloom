@@ -1,12 +1,14 @@
 {
   "schema_version": "1.0.0",
-  "content_note": "100 authored-style abilities generated from attack_templates.catalog.json bounds via scripts/gen_abilities_catalog.py — regenerate; numbers are placeholders until Monte Carlo balance.",
+  "catalog_role": "reference_fixtures",
+  "content_note": "Not the authoritative ability list. Rows are Monte Carlo / balance mocks: template_id + rolled sliders + example affinity picks. Real moves are resolved from attack_templates.catalog.json when a player or generator assigns 0/1/2 affinities.",
   "ability_count": 100,
   "source_templates_ref": "./attack_templates.catalog.json",
   "abilities": [
     {
-      "ability_id": "abi_001_surge_blast_galvanic",
-      "display_name": "Arc Blast",
+      "ability_id": "ref_move_001",
+      "display_name": "Surge Blast · ref 001",
+      "example_generated_label": "Arc Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -25,15 +27,16 @@
         "layer1_soft_amp": 0.1194
       },
       "tags": [
-        "galvanic",
         "ranged",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_002_surge_blast_plasmic_cryo",
-      "display_name": "Arcjet Blast",
+      "ability_id": "ref_move_002",
+      "display_name": "Surge Blast · ref 002",
+      "example_generated_label": "Arcjet Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -53,16 +56,16 @@
         "layer1_soft_amp": 0.0635
       },
       "tags": [
-        "cryo",
-        "plasmic",
         "ranged",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_003_surge_blast_aero_sonic",
-      "display_name": "Vortex Blast",
+      "ability_id": "ref_move_003",
+      "display_name": "Surge Blast · ref 003",
+      "example_generated_label": "Vortex Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -82,16 +85,16 @@
         "layer1_soft_amp": 0.0218
       },
       "tags": [
-        "aero",
         "ranged",
-        "sonic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_004_surge_blast_void_aqueous",
-      "display_name": "Singularity Blast",
+      "ability_id": "ref_move_004",
+      "display_name": "Surge Blast · ref 004",
+      "example_generated_label": "Singularity Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -111,16 +114,16 @@
         "layer1_soft_amp": 0.0706
       },
       "tags": [
-        "aqueous",
         "ranged",
-        "surge",
-        "void"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_005_surge_blast_void",
-      "display_name": "TidalVoid Blast",
+      "ability_id": "ref_move_005",
+      "display_name": "Surge Blast · ref 005",
+      "example_generated_label": "TidalVoid Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -140,14 +143,15 @@
       },
       "tags": [
         "ranged",
-        "surge",
-        "void"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_006_surge_blast_aero",
-      "display_name": "Jetstream Blast",
+      "ability_id": "ref_move_006",
+      "display_name": "Surge Blast · ref 006",
+      "example_generated_label": "Jetstream Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -166,15 +170,16 @@
         "layer1_soft_amp": -0.1413
       },
       "tags": [
-        "aero",
         "ranged",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_007_surge_blast_aqueous",
-      "display_name": "Pressure Blast",
+      "ability_id": "ref_move_007",
+      "display_name": "Surge Blast · ref 007",
+      "example_generated_label": "Pressure Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -193,15 +198,16 @@
         "layer1_soft_amp": -0.147
       },
       "tags": [
-        "aqueous",
         "ranged",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_008_surge_blast_luminous",
-      "display_name": "Corona Blast",
+      "ability_id": "ref_move_008",
+      "display_name": "Surge Blast · ref 008",
+      "example_generated_label": "Corona Blast",
       "template_id": "surge_blast",
       "category": "surge",
       "damage_kind": "endurance",
@@ -220,15 +226,16 @@
         "layer1_soft_amp": -0.1466
       },
       "tags": [
-        "luminous",
         "ranged",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_009_surge_lance_galvanic_thermal",
-      "display_name": "Arc Lance",
+      "ability_id": "ref_move_009",
+      "display_name": "Surge Lance · ref 009",
+      "example_generated_label": "Arc Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -250,15 +257,15 @@
       "tags": [
         "beam",
         "focused",
-        "galvanic",
-        "surge",
-        "thermal"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_010_surge_lance_sonic",
-      "display_name": "Oscill Lance",
+      "ability_id": "ref_move_010",
+      "display_name": "Surge Lance · ref 010",
+      "example_generated_label": "Oscill Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -279,14 +286,15 @@
       "tags": [
         "beam",
         "focused",
-        "sonic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_011_surge_lance_aero_aqueous",
-      "display_name": "Vortex Lance",
+      "ability_id": "ref_move_011",
+      "display_name": "Surge Lance · ref 011",
+      "example_generated_label": "Vortex Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -306,17 +314,17 @@
         "ward_coupling": 0.0327
       },
       "tags": [
-        "aero",
-        "aqueous",
         "beam",
         "focused",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_012_surge_lance_void",
-      "display_name": "Singularity Lance",
+      "ability_id": "ref_move_012",
+      "display_name": "Surge Lance · ref 012",
+      "example_generated_label": "Singularity Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -337,14 +345,15 @@
       "tags": [
         "beam",
         "focused",
-        "surge",
-        "void"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_013_surge_lance_cryo",
-      "display_name": "Crystalline Lance",
+      "ability_id": "ref_move_013",
+      "display_name": "Surge Lance · ref 013",
+      "example_generated_label": "Crystalline Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -364,15 +373,16 @@
       },
       "tags": [
         "beam",
-        "cryo",
         "focused",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_014_surge_lance_void",
-      "display_name": "Silence Lance",
+      "ability_id": "ref_move_014",
+      "display_name": "Surge Lance · ref 014",
+      "example_generated_label": "Silence Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -393,14 +403,15 @@
       "tags": [
         "beam",
         "focused",
-        "surge",
-        "void"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_015_surge_lance_flora",
-      "display_name": "Pollen Lance",
+      "ability_id": "ref_move_015",
+      "display_name": "Surge Lance · ref 015",
+      "example_generated_label": "Pollen Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -420,15 +431,16 @@
       },
       "tags": [
         "beam",
-        "flora",
         "focused",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_016_surge_lance_aqueous_aero",
-      "display_name": "Foam Lance",
+      "ability_id": "ref_move_016",
+      "display_name": "Surge Lance · ref 016",
+      "example_generated_label": "Foam Lance",
       "template_id": "surge_lance",
       "category": "surge",
       "damage_kind": "endurance",
@@ -448,17 +460,17 @@
         "ward_coupling": 0.1539
       },
       "tags": [
-        "aero",
-        "aqueous",
         "beam",
         "focused",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_017_surge_burst_aqueous_galvanic",
-      "display_name": "Brine Burst",
+      "ability_id": "ref_move_017",
+      "display_name": "Surge Burst · ref 017",
+      "example_generated_label": "Brine Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -479,15 +491,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "aqueous",
-        "galvanic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_018_surge_burst_cryo",
-      "display_name": "Frost Burst",
+      "ability_id": "ref_move_018",
+      "display_name": "Surge Burst · ref 018",
+      "example_generated_label": "Frost Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -507,14 +519,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "cryo",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_019_surge_burst_void_sonic",
-      "display_name": "Collapse Burst",
+      "ability_id": "ref_move_019",
+      "display_name": "Surge Burst · ref 019",
+      "example_generated_label": "Collapse Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -535,15 +548,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "sonic",
-        "surge",
-        "void"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_020_surge_burst_plasmic_thermal",
-      "display_name": "Ionflare Burst",
+      "ability_id": "ref_move_020",
+      "display_name": "Surge Burst · ref 020",
+      "example_generated_label": "Ionflare Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -564,15 +577,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "plasmic",
-        "surge",
-        "thermal"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_021_surge_burst_galvanic_aero",
-      "display_name": "Ion Burst",
+      "ability_id": "ref_move_021",
+      "display_name": "Surge Burst · ref 021",
+      "example_generated_label": "Ion Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -592,16 +605,16 @@
         "field_coupling": 0.0851
       },
       "tags": [
-        "aero",
         "aoe_flavor",
-        "galvanic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_022_surge_burst_cryo_luminous",
-      "display_name": "Permafrost Burst",
+      "ability_id": "ref_move_022",
+      "display_name": "Surge Burst · ref 022",
+      "example_generated_label": "Permafrost Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -622,15 +635,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "cryo",
-        "luminous",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_023_surge_burst_luminous",
-      "display_name": "Glare Burst",
+      "ability_id": "ref_move_023",
+      "display_name": "Surge Burst · ref 023",
+      "example_generated_label": "Glare Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -650,14 +663,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "luminous",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_024_surge_burst_luminous_plasmic",
-      "display_name": "Corona Burst",
+      "ability_id": "ref_move_024",
+      "display_name": "Surge Burst · ref 024",
+      "example_generated_label": "Corona Burst",
       "template_id": "surge_burst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -678,15 +692,15 @@
       },
       "tags": [
         "aoe_flavor",
-        "luminous",
-        "plasmic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_025_surge_siphon_aero",
-      "display_name": "Gale Siphon",
+      "ability_id": "ref_move_025",
+      "display_name": "Surge Siphon · ref 025",
+      "example_generated_label": "Gale Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -705,15 +719,16 @@
         "reservoir_coupling": 0.1212
       },
       "tags": [
-        "aero",
         "drain",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_026_surge_siphon_void_plasmic",
-      "display_name": "Pinch Siphon",
+      "ability_id": "ref_move_026",
+      "display_name": "Surge Siphon · ref 026",
+      "example_generated_label": "Pinch Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -734,15 +749,15 @@
       },
       "tags": [
         "drain",
-        "plasmic",
-        "surge",
-        "void"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_027_surge_siphon_sonic_aqueous",
-      "display_name": "Wavefront Siphon",
+      "ability_id": "ref_move_027",
+      "display_name": "Surge Siphon · ref 027",
+      "example_generated_label": "Wavefront Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -762,16 +777,16 @@
         "reservoir_coupling": 0.3903
       },
       "tags": [
-        "aqueous",
         "drain",
-        "sonic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_028_surge_siphon_thermal",
-      "display_name": "Smolder Siphon",
+      "ability_id": "ref_move_028",
+      "display_name": "Surge Siphon · ref 028",
+      "example_generated_label": "Smolder Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -791,14 +806,15 @@
       },
       "tags": [
         "drain",
-        "surge",
-        "thermal"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_029_surge_siphon_aero",
-      "display_name": "Lift Siphon",
+      "ability_id": "ref_move_029",
+      "display_name": "Surge Siphon · ref 029",
+      "example_generated_label": "Lift Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -817,15 +833,16 @@
         "reservoir_coupling": 0.0448
       },
       "tags": [
-        "aero",
         "drain",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_030_surge_siphon_cryo_thermal",
-      "display_name": "Permafrost Siphon",
+      "ability_id": "ref_move_030",
+      "display_name": "Surge Siphon · ref 030",
+      "example_generated_label": "Permafrost Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -845,16 +862,16 @@
         "reservoir_coupling": 0.0365
       },
       "tags": [
-        "cryo",
         "drain",
-        "surge",
-        "thermal"
+        "reference_fixture",
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_031_surge_siphon_plasmic_aero",
-      "display_name": "Spectral Siphon",
+      "ability_id": "ref_move_031",
+      "display_name": "Surge Siphon · ref 031",
+      "example_generated_label": "Spectral Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -874,16 +891,16 @@
         "reservoir_coupling": 0.188
       },
       "tags": [
-        "aero",
         "drain",
-        "plasmic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_032_surge_siphon_aero_flora",
-      "display_name": "Cyclone Siphon",
+      "ability_id": "ref_move_032",
+      "display_name": "Surge Siphon · ref 032",
+      "example_generated_label": "Cyclone Siphon",
       "template_id": "surge_siphon",
       "category": "surge",
       "damage_kind": "endurance",
@@ -903,16 +920,16 @@
         "reservoir_coupling": 0.1444
       },
       "tags": [
-        "aero",
         "drain",
-        "flora",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_033_strike_slam_aero_plasmic",
-      "display_name": "Gale Slam",
+      "ability_id": "ref_move_033",
+      "display_name": "Strike Slam · ref 033",
+      "example_generated_label": "Gale Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -936,17 +953,17 @@
         "posture_break_bias": -0.072
       },
       "tags": [
-        "aero",
         "concussive",
         "contact",
-        "plasmic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_034_strike_slam_aqueous",
-      "display_name": "Tidal Slam",
+      "ability_id": "ref_move_034",
+      "display_name": "Strike Slam · ref 034",
+      "example_generated_label": "Tidal Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -969,16 +986,17 @@
         "posture_break_bias": -0.0342
       },
       "tags": [
-        "aqueous",
         "concussive",
         "contact",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_035_strike_slam_luminous",
-      "display_name": "Radiant Slam",
+      "ability_id": "ref_move_035",
+      "display_name": "Strike Slam · ref 035",
+      "example_generated_label": "Radiant Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1003,14 +1021,15 @@
       "tags": [
         "concussive",
         "contact",
-        "luminous",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_036_strike_slam_sonic",
-      "display_name": "Harmonic Slam",
+      "ability_id": "ref_move_036",
+      "display_name": "Strike Slam · ref 036",
+      "example_generated_label": "Harmonic Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1035,14 +1054,15 @@
       "tags": [
         "concussive",
         "contact",
-        "sonic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_037_strike_slam_galvanic",
-      "display_name": "Ion Slam",
+      "ability_id": "ref_move_037",
+      "display_name": "Strike Slam · ref 037",
+      "example_generated_label": "Ion Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1067,14 +1087,15 @@
       "tags": [
         "concussive",
         "contact",
-        "galvanic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_038_strike_slam_thermal",
-      "display_name": "Ignition Slam",
+      "ability_id": "ref_move_038",
+      "display_name": "Strike Slam · ref 038",
+      "example_generated_label": "Ignition Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1099,14 +1120,15 @@
       "tags": [
         "concussive",
         "contact",
-        "strike",
-        "thermal"
+        "reference_fixture",
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_039_strike_slam_thermal_galvanic",
-      "display_name": "Flashpoint Slam",
+      "ability_id": "ref_move_039",
+      "display_name": "Strike Slam · ref 039",
+      "example_generated_label": "Flashpoint Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1132,15 +1154,15 @@
       "tags": [
         "concussive",
         "contact",
-        "galvanic",
-        "strike",
-        "thermal"
+        "reference_fixture",
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_040_strike_slam_plasmic_void",
-      "display_name": "Flash Slam",
+      "ability_id": "ref_move_040",
+      "display_name": "Strike Slam · ref 040",
+      "example_generated_label": "Flash Slam",
       "template_id": "strike_slam",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1166,15 +1188,15 @@
       "tags": [
         "concussive",
         "contact",
-        "plasmic",
-        "strike",
-        "void"
+        "reference_fixture",
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_041_strike_thrust_plasmic",
-      "display_name": "Fusor Thrust",
+      "ability_id": "ref_move_041",
+      "display_name": "Strike Thrust · ref 041",
+      "example_generated_label": "Fusor Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1199,14 +1221,15 @@
       "tags": [
         "contact",
         "piercing_modality",
-        "plasmic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_042_strike_thrust_aqueous_aero",
-      "display_name": "Tidal Thrust",
+      "ability_id": "ref_move_042",
+      "display_name": "Strike Thrust · ref 042",
+      "example_generated_label": "Tidal Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1230,17 +1253,17 @@
         "pierce_channel_amp": 0.0801
       },
       "tags": [
-        "aero",
-        "aqueous",
         "contact",
         "piercing_modality",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_043_strike_thrust_corrosive_luminous",
-      "display_name": "Vitriol Thrust",
+      "ability_id": "ref_move_043",
+      "display_name": "Strike Thrust · ref 043",
+      "example_generated_label": "Vitriol Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1265,16 +1288,16 @@
       },
       "tags": [
         "contact",
-        "corrosive",
-        "luminous",
         "piercing_modality",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_044_strike_thrust_thermal_corrosive",
-      "display_name": "Smolder Thrust",
+      "ability_id": "ref_move_044",
+      "display_name": "Strike Thrust · ref 044",
+      "example_generated_label": "Smolder Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1299,16 +1322,16 @@
       },
       "tags": [
         "contact",
-        "corrosive",
         "piercing_modality",
-        "strike",
-        "thermal"
+        "reference_fixture",
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_045_strike_thrust_sonic",
-      "display_name": "Dissonant Thrust",
+      "ability_id": "ref_move_045",
+      "display_name": "Strike Thrust · ref 045",
+      "example_generated_label": "Dissonant Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1333,14 +1356,15 @@
       "tags": [
         "contact",
         "piercing_modality",
-        "sonic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_046_strike_thrust_mineral_luminous",
-      "display_name": "Fault Thrust",
+      "ability_id": "ref_move_046",
+      "display_name": "Strike Thrust · ref 046",
+      "example_generated_label": "Fault Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1365,16 +1389,16 @@
       },
       "tags": [
         "contact",
-        "luminous",
-        "mineral",
         "piercing_modality",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_047_strike_thrust_luminous_plasmic",
-      "display_name": "Glare Thrust",
+      "ability_id": "ref_move_047",
+      "display_name": "Strike Thrust · ref 047",
+      "example_generated_label": "Glare Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1399,16 +1423,16 @@
       },
       "tags": [
         "contact",
-        "luminous",
         "piercing_modality",
-        "plasmic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_048_strike_thrust_sonic",
-      "display_name": "Impulse Thrust",
+      "ability_id": "ref_move_048",
+      "display_name": "Strike Thrust · ref 048",
+      "example_generated_label": "Impulse Thrust",
       "template_id": "strike_thrust",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1433,14 +1457,15 @@
       "tags": [
         "contact",
         "piercing_modality",
-        "sonic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_049_strike_rend_corrosive_flora",
-      "display_name": "Caustic Rend",
+      "ability_id": "ref_move_049",
+      "display_name": "Strike Rend · ref 049",
+      "example_generated_label": "Caustic Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1465,16 +1490,16 @@
       },
       "tags": [
         "contact",
-        "corrosive",
-        "flora",
+        "reference_fixture",
         "slashing_modality",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_050_strike_rend_sonic_luminous",
-      "display_name": "Oscill Rend",
+      "ability_id": "ref_move_050",
+      "display_name": "Strike Rend · ref 050",
+      "example_generated_label": "Oscill Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1499,16 +1524,16 @@
       },
       "tags": [
         "contact",
-        "luminous",
+        "reference_fixture",
         "slashing_modality",
-        "sonic",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_051_strike_rend_plasmic",
-      "display_name": "Torch Rend",
+      "ability_id": "ref_move_051",
+      "display_name": "Strike Rend · ref 051",
+      "example_generated_label": "Torch Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1532,15 +1557,16 @@
       },
       "tags": [
         "contact",
-        "plasmic",
+        "reference_fixture",
         "slashing_modality",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_052_strike_rend_void_aero",
-      "display_name": "Singularity Rend",
+      "ability_id": "ref_move_052",
+      "display_name": "Strike Rend · ref 052",
+      "example_generated_label": "Singularity Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1564,17 +1590,17 @@
         "wetness_coupling": 0.2424
       },
       "tags": [
-        "aero",
         "contact",
+        "reference_fixture",
         "slashing_modality",
-        "strike",
-        "void"
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_053_strike_rend_corrosive",
-      "display_name": "Fluxbite Rend",
+      "ability_id": "ref_move_053",
+      "display_name": "Strike Rend · ref 053",
+      "example_generated_label": "Fluxbite Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1598,15 +1624,16 @@
       },
       "tags": [
         "contact",
-        "corrosive",
+        "reference_fixture",
         "slashing_modality",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_054_strike_rend_sonic_mineral",
-      "display_name": "Echo Rend",
+      "ability_id": "ref_move_054",
+      "display_name": "Strike Rend · ref 054",
+      "example_generated_label": "Echo Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1631,16 +1658,16 @@
       },
       "tags": [
         "contact",
-        "mineral",
+        "reference_fixture",
         "slashing_modality",
-        "sonic",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_055_strike_rend_corrosive_thermal",
-      "display_name": "Redox Rend",
+      "ability_id": "ref_move_055",
+      "display_name": "Strike Rend · ref 055",
+      "example_generated_label": "Redox Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1665,16 +1692,16 @@
       },
       "tags": [
         "contact",
-        "corrosive",
+        "reference_fixture",
         "slashing_modality",
-        "strike",
-        "thermal"
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_056_strike_rend_aero_corrosive",
-      "display_name": "Cyclone Rend",
+      "ability_id": "ref_move_056",
+      "display_name": "Strike Rend · ref 056",
+      "example_generated_label": "Cyclone Rend",
       "template_id": "strike_rend",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1698,17 +1725,17 @@
         "wetness_coupling": 0.2295
       },
       "tags": [
-        "aero",
         "contact",
-        "corrosive",
+        "reference_fixture",
         "slashing_modality",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_057_strike_tempered_aero",
-      "display_name": "Gale Temper",
+      "ability_id": "ref_move_057",
+      "display_name": "Strike Temper · ref 057",
+      "example_generated_label": "Gale Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1731,15 +1758,16 @@
         "material_echo": 0.0046
       },
       "tags": [
-        "aero",
         "modality_lab",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_058_strike_tempered_luminous_corrosive",
-      "display_name": "Gleam Temper",
+      "ability_id": "ref_move_058",
+      "display_name": "Strike Temper · ref 058",
+      "example_generated_label": "Gleam Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1763,16 +1791,16 @@
         "material_echo": 0.0312
       },
       "tags": [
-        "corrosive",
-        "luminous",
         "modality_lab",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_059_strike_tempered_aqueous",
-      "display_name": "Surge Temper",
+      "ability_id": "ref_move_059",
+      "display_name": "Strike Temper · ref 059",
+      "example_generated_label": "Surge Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1795,15 +1823,16 @@
         "material_echo": 0.1098
       },
       "tags": [
-        "aqueous",
         "modality_lab",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_060_strike_tempered_luminous_plasmic",
-      "display_name": "Beacon Temper",
+      "ability_id": "ref_move_060",
+      "display_name": "Strike Temper · ref 060",
+      "example_generated_label": "Beacon Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1827,16 +1856,16 @@
         "material_echo": 0.0529
       },
       "tags": [
-        "luminous",
         "modality_lab",
-        "plasmic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_061_strike_tempered_cryo",
-      "display_name": "Crystalline Temper",
+      "ability_id": "ref_move_061",
+      "display_name": "Strike Temper · ref 061",
+      "example_generated_label": "Crystalline Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1859,15 +1888,16 @@
         "material_echo": -0.0941
       },
       "tags": [
-        "cryo",
         "modality_lab",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_062_strike_tempered_aero_luminous",
-      "display_name": "Jetstream Temper",
+      "ability_id": "ref_move_062",
+      "display_name": "Strike Temper · ref 062",
+      "example_generated_label": "Jetstream Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1891,16 +1921,16 @@
         "material_echo": -0.0941
       },
       "tags": [
-        "aero",
-        "luminous",
         "modality_lab",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_063_strike_tempered_aero_thermal",
-      "display_name": "Draft Temper",
+      "ability_id": "ref_move_063",
+      "display_name": "Strike Temper · ref 063",
+      "example_generated_label": "Draft Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1924,16 +1954,16 @@
         "material_echo": 0.1483
       },
       "tags": [
-        "aero",
         "modality_lab",
-        "strike",
-        "thermal"
+        "reference_fixture",
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_064_strike_tempered_sonic_corrosive",
-      "display_name": "Impulse Temper",
+      "ability_id": "ref_move_064",
+      "display_name": "Strike Temper · ref 064",
+      "example_generated_label": "Impulse Temper",
       "template_id": "strike_tempered",
       "category": "strike",
       "damage_kind": "endurance",
@@ -1957,16 +1987,16 @@
         "material_echo": -0.1407
       },
       "tags": [
-        "corrosive",
         "modality_lab",
-        "sonic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_065_true_spike_void",
-      "display_name": "Vacuum Spike",
+      "ability_id": "ref_move_065",
+      "display_name": "True Spike · ref 065",
+      "example_generated_label": "Vacuum Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -1984,15 +2014,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
+        "reference_fixture",
         "true",
-        "true_damage",
-        "void"
+        "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_066_true_spike_sonic",
-      "display_name": "Oscill Spike",
+      "ability_id": "ref_move_066",
+      "display_name": "True Spike · ref 066",
+      "example_generated_label": "Oscill Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2010,15 +2041,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
-        "sonic",
+        "reference_fixture",
         "true",
         "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_067_true_spike_galvanic_void",
-      "display_name": "Circuit Spike",
+      "ability_id": "ref_move_067",
+      "display_name": "True Spike · ref 067",
+      "example_generated_label": "Circuit Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2037,16 +2069,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
-        "galvanic",
+        "reference_fixture",
         "true",
-        "true_damage",
-        "void"
+        "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_068_true_spike_aqueous",
-      "display_name": "Vapor Spike",
+      "ability_id": "ref_move_068",
+      "display_name": "True Spike · ref 068",
+      "example_generated_label": "Vapor Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2064,15 +2096,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
-        "aqueous",
+        "reference_fixture",
         "true",
         "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_069_true_spike_cryo_galvanic",
-      "display_name": "Crystalline Spike",
+      "ability_id": "ref_move_069",
+      "display_name": "True Spike · ref 069",
+      "example_generated_label": "Crystalline Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2091,16 +2124,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
-        "cryo",
-        "galvanic",
+        "reference_fixture",
         "true",
         "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_070_true_spike_aqueous_flora",
-      "display_name": "Current Spike",
+      "ability_id": "ref_move_070",
+      "display_name": "True Spike · ref 070",
+      "example_generated_label": "Current Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2119,16 +2152,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
-        "aqueous",
-        "flora",
+        "reference_fixture",
         "true",
         "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_071_true_spike_flora_cryo",
-      "display_name": "Pollen Spike",
+      "ability_id": "ref_move_071",
+      "display_name": "True Spike · ref 071",
+      "example_generated_label": "Pollen Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2147,16 +2180,16 @@
         "rupture_cleanliness": 1
       },
       "tags": [
-        "cryo",
-        "flora",
+        "reference_fixture",
         "true",
         "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_072_true_spike_galvanic_void",
-      "display_name": "Busbar Spike",
+      "ability_id": "ref_move_072",
+      "display_name": "True Spike · ref 072",
+      "example_generated_label": "Busbar Spike",
       "template_id": "true_spike",
       "category": "true",
       "damage_kind": "endurance",
@@ -2175,16 +2208,16 @@
         "rupture_cleanliness": 0
       },
       "tags": [
-        "galvanic",
+        "reference_fixture",
         "true",
-        "true_damage",
-        "void"
+        "true_damage"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_073_surge_prism_corrosive",
-      "display_name": "Caustic Prism",
+      "ability_id": "ref_move_073",
+      "display_name": "Surge Prism · ref 073",
+      "example_generated_label": "Caustic Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2203,15 +2236,16 @@
         "reflect_coupling": 0.161
       },
       "tags": [
-        "corrosive",
         "luminous_hook",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_074_surge_prism_flora_plasmic",
-      "display_name": "Canopy Prism",
+      "ability_id": "ref_move_074",
+      "display_name": "Surge Prism · ref 074",
+      "example_generated_label": "Canopy Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2231,16 +2265,16 @@
         "reflect_coupling": -0.0202
       },
       "tags": [
-        "flora",
         "luminous_hook",
-        "plasmic",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_075_surge_prism_galvanic_aqueous",
-      "display_name": "Circuit Prism",
+      "ability_id": "ref_move_075",
+      "display_name": "Surge Prism · ref 075",
+      "example_generated_label": "Circuit Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2260,16 +2294,16 @@
         "reflect_coupling": 0.0433
       },
       "tags": [
-        "aqueous",
-        "galvanic",
         "luminous_hook",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_076_surge_prism_cryo",
-      "display_name": "Hoarfrost Prism",
+      "ability_id": "ref_move_076",
+      "display_name": "Surge Prism · ref 076",
+      "example_generated_label": "Hoarfrost Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2288,15 +2322,16 @@
         "reflect_coupling": -0.0546
       },
       "tags": [
-        "cryo",
         "luminous_hook",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_077_surge_prism_corrosive_flora",
-      "display_name": "Fluxbite Prism",
+      "ability_id": "ref_move_077",
+      "display_name": "Surge Prism · ref 077",
+      "example_generated_label": "Fluxbite Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2316,16 +2351,16 @@
         "reflect_coupling": -0.1118
       },
       "tags": [
-        "corrosive",
-        "flora",
         "luminous_hook",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_078_surge_prism_galvanic",
-      "display_name": "Relay Prism",
+      "ability_id": "ref_move_078",
+      "display_name": "Surge Prism · ref 078",
+      "example_generated_label": "Relay Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2344,15 +2379,16 @@
         "reflect_coupling": 0.1251
       },
       "tags": [
-        "galvanic",
         "luminous_hook",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_079_surge_prism_galvanic_aqueous",
-      "display_name": "Spark Prism",
+      "ability_id": "ref_move_079",
+      "display_name": "Surge Prism · ref 079",
+      "example_generated_label": "Spark Prism",
       "template_id": "surge_prism",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2372,16 +2408,16 @@
         "reflect_coupling": 0.1248
       },
       "tags": [
-        "aqueous",
-        "galvanic",
         "luminous_hook",
+        "reference_fixture",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_080_surge_noiseburst_aero_luminous",
-      "display_name": "Gale Noiseburst",
+      "ability_id": "ref_move_080",
+      "display_name": "Surge Noiseburst · ref 080",
+      "example_generated_label": "Gale Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2402,15 +2438,16 @@
       },
       "tags": [
         "aero",
-        "luminous",
+        "reference_fixture",
         "sonic",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_081_surge_noiseburst_aqueous_mineral",
-      "display_name": "Tidal Noiseburst",
+      "ability_id": "ref_move_081",
+      "display_name": "Surge Noiseburst · ref 081",
+      "example_generated_label": "Tidal Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2431,16 +2468,16 @@
       },
       "tags": [
         "aero",
-        "aqueous",
-        "mineral",
+        "reference_fixture",
         "sonic",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_082_surge_noiseburst_plasmic_thermal",
-      "display_name": "Torch Noiseburst",
+      "ability_id": "ref_move_082",
+      "display_name": "Surge Noiseburst · ref 082",
+      "example_generated_label": "Torch Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2461,16 +2498,16 @@
       },
       "tags": [
         "aero",
-        "plasmic",
+        "reference_fixture",
         "sonic",
-        "surge",
-        "thermal"
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_083_surge_noiseburst_void_aqueous",
-      "display_name": "Singularity Noiseburst",
+      "ability_id": "ref_move_083",
+      "display_name": "Surge Noiseburst · ref 083",
+      "example_generated_label": "Singularity Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2491,16 +2528,16 @@
       },
       "tags": [
         "aero",
-        "aqueous",
+        "reference_fixture",
         "sonic",
-        "surge",
-        "void"
+        "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_084_surge_noiseburst_luminous_aero",
-      "display_name": "Photosurge Noiseburst",
+      "ability_id": "ref_move_084",
+      "display_name": "Surge Noiseburst · ref 084",
+      "example_generated_label": "Photosurge Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2521,15 +2558,16 @@
       },
       "tags": [
         "aero",
-        "luminous",
+        "reference_fixture",
         "sonic",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_085_surge_noiseburst_cryo",
-      "display_name": "Permafrost Noiseburst",
+      "ability_id": "ref_move_085",
+      "display_name": "Surge Noiseburst · ref 085",
+      "example_generated_label": "Permafrost Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2549,15 +2587,16 @@
       },
       "tags": [
         "aero",
-        "cryo",
+        "reference_fixture",
         "sonic",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_086_surge_noiseburst_plasmic",
-      "display_name": "Spectral Noiseburst",
+      "ability_id": "ref_move_086",
+      "display_name": "Surge Noiseburst · ref 086",
+      "example_generated_label": "Spectral Noiseburst",
       "template_id": "surge_noiseburst",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2577,15 +2616,16 @@
       },
       "tags": [
         "aero",
-        "plasmic",
+        "reference_fixture",
         "sonic",
         "surge"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_087_surge_voidcollapse_flora",
-      "display_name": "Bloom Collapse",
+      "ability_id": "ref_move_087",
+      "display_name": "Surge Void Collapse · ref 087",
+      "example_generated_label": "Bloom Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2604,15 +2644,16 @@
         "medium_strip_bias": 0.0856
       },
       "tags": [
-        "flora",
+        "reference_fixture",
         "surge",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_088_surge_voidcollapse_aqueous_thermal",
-      "display_name": "Tidal Collapse",
+      "ability_id": "ref_move_088",
+      "display_name": "Surge Void Collapse · ref 088",
+      "example_generated_label": "Tidal Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2632,16 +2673,16 @@
         "medium_strip_bias": 0.0076
       },
       "tags": [
-        "aqueous",
+        "reference_fixture",
         "surge",
-        "thermal",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_089_surge_voidcollapse_sonic",
-      "display_name": "Wavefront Collapse",
+      "ability_id": "ref_move_089",
+      "display_name": "Surge Void Collapse · ref 089",
+      "example_generated_label": "Wavefront Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2660,15 +2701,16 @@
         "medium_strip_bias": 0.2507
       },
       "tags": [
-        "sonic",
+        "reference_fixture",
         "surge",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_090_surge_voidcollapse_thermal_corrosive",
-      "display_name": "Smolder Collapse",
+      "ability_id": "ref_move_090",
+      "display_name": "Surge Void Collapse · ref 090",
+      "example_generated_label": "Smolder Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2688,16 +2730,16 @@
         "medium_strip_bias": 0.152
       },
       "tags": [
-        "corrosive",
+        "reference_fixture",
         "surge",
-        "thermal",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_091_surge_voidcollapse_flora_galvanic",
-      "display_name": "Greenheat Collapse",
+      "ability_id": "ref_move_091",
+      "display_name": "Surge Void Collapse · ref 091",
+      "example_generated_label": "Greenheat Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2717,16 +2759,16 @@
         "medium_strip_bias": 0.2709
       },
       "tags": [
-        "flora",
-        "galvanic",
+        "reference_fixture",
         "surge",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_092_surge_voidcollapse_thermal_cryo",
-      "display_name": "Ignition Collapse",
+      "ability_id": "ref_move_092",
+      "display_name": "Surge Void Collapse · ref 092",
+      "example_generated_label": "Ignition Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2746,16 +2788,16 @@
         "medium_strip_bias": 0.0572
       },
       "tags": [
-        "cryo",
+        "reference_fixture",
         "surge",
-        "thermal",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_093_surge_voidcollapse_void",
-      "display_name": "Unwind Collapse",
+      "ability_id": "ref_move_093",
+      "display_name": "Surge Void Collapse · ref 093",
+      "example_generated_label": "Unwind Collapse",
       "template_id": "surge_voidcollapse",
       "category": "surge",
       "damage_kind": "endurance",
@@ -2774,14 +2816,16 @@
         "medium_strip_bias": 0.291
       },
       "tags": [
+        "reference_fixture",
         "surge",
         "void"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_094_strike_gale_drive_corrosive_aqueous",
-      "display_name": "Caustic Drive",
+      "ability_id": "ref_move_094",
+      "display_name": "Strike Gale Drive · ref 094",
+      "example_generated_label": "Caustic Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -2806,16 +2850,16 @@
       },
       "tags": [
         "aero",
-        "aqueous",
         "contact",
-        "corrosive",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_095_strike_gale_drive_aero",
-      "display_name": "Shear Drive",
+      "ability_id": "ref_move_095",
+      "display_name": "Strike Gale Drive · ref 095",
+      "example_generated_label": "Shear Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -2840,13 +2884,15 @@
       "tags": [
         "aero",
         "contact",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_096_strike_gale_drive_aero_galvanic",
-      "display_name": "Vortex Drive",
+      "ability_id": "ref_move_096",
+      "display_name": "Strike Gale Drive · ref 096",
+      "example_generated_label": "Vortex Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -2872,14 +2918,15 @@
       "tags": [
         "aero",
         "contact",
-        "galvanic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_097_strike_gale_drive_mineral_sonic",
-      "display_name": "Oreline Drive",
+      "ability_id": "ref_move_097",
+      "display_name": "Strike Gale Drive · ref 097",
+      "example_generated_label": "Oreline Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -2905,15 +2952,15 @@
       "tags": [
         "aero",
         "contact",
-        "mineral",
-        "sonic",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_098_strike_gale_drive_luminous",
-      "display_name": "Photosurge Drive",
+      "ability_id": "ref_move_098",
+      "display_name": "Strike Gale Drive · ref 098",
+      "example_generated_label": "Photosurge Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -2938,14 +2985,15 @@
       "tags": [
         "aero",
         "contact",
-        "luminous",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_099_strike_gale_drive_flora",
-      "display_name": "Rootlace Drive",
+      "ability_id": "ref_move_099",
+      "display_name": "Strike Gale Drive · ref 099",
+      "example_generated_label": "Rootlace Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -2970,14 +3018,15 @@
       "tags": [
         "aero",
         "contact",
-        "flora",
+        "reference_fixture",
         "strike"
       ],
       "balance_band": "reference_generated_v1"
     },
     {
-      "ability_id": "abi_100_strike_gale_drive_plasmic_thermal",
-      "display_name": "Spectral Drive",
+      "ability_id": "ref_move_100",
+      "display_name": "Strike Gale Drive · ref 100",
+      "example_generated_label": "Spectral Drive",
       "template_id": "strike_gale_drive",
       "category": "strike",
       "damage_kind": "endurance",
@@ -3003,9 +3052,8 @@
       "tags": [
         "aero",
         "contact",
-        "plasmic",
-        "strike",
-        "thermal"
+        "reference_fixture",
+        "strike"
       ],
       "balance_band": "reference_generated_v1"
     }
