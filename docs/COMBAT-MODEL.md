@@ -19,11 +19,11 @@
 | **Layer 2** | Data-driven predicate rules (physics-flavored hooks). |
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
 | **Strike modality** | How a **strike** splits across **concussive / piercing / slashing** channels (physics-flavored wound mechanics). Distinct from move-field **`pierce`** (numeric armor bypass). |
-| **`stamina`** | Stat: maximum **endurance pool** capacity (training + species)—how long the creature can sustain effort before collapse. |
+| **`stamina`** | Stat: maximum **endurance pool** capacity (rolled aptitude + training)—how long the creature can sustain effort before collapse. |
 | **Current endurance** \(S(t)\) | Battle state scalar depleted by hits and continuous drains; UI may label “readiness” / “fight stamina.” Not “hit points” as a metaphor. |
 | **Incapacitated** | \(S \le 0\) — combat loss condition (collapse / exhaustion); switches and XP behave like a knockout. |
 
-Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) for the **nine-affinity MVP**. Target-state additions (**Sonic**, **Corrosive**, **Plasmic**) and the authoritative 12×12 matrix live in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md). Older examples in this doc may still say “Solar/Tidal” as generic placeholders—swap at authoring time.
+Affinity IDs in **content data**: **twelve-ID** roster in [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1; MVP resolver enums may ship **nine** first. Authoritative 12×12 **`CHART₀`** lives in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §2. Older examples may say “Solar/Tidal”—swap at authoring time.
 
 ---
 
@@ -35,7 +35,7 @@ Used everywhere in damage coupling, speed order, and **endurance pool** sizing.
 
 | Id | Role | Notes |
 |----|------|--------|
-| `stamina` | Endurance capacity | Sets maximum battle pool \(S_{\max}\); current endurance \(S\) is battle state (\(0 \le S \le S_{\max}\)). Species + level/budget derive \(S_{\max}\). |
+| `stamina` | Endurance capacity | Sets maximum battle pool \(S_{\max}\); current endurance \(S\) is battle state (\(0 \le S \le S_{\max}\)). **Instance** rolled aptitude + level budget **`B(L)`** + training derive \(S_{\max}\) — not a species lookup ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §5). |
 | `might` | Physical offense | Used by **strike** moves. |
 | `bulwark` | Physical mitigation | Reduces strike **endurance loss** (with saturation). |
 | `insight` | Special offense | Used by **surge** moves. |
@@ -49,9 +49,9 @@ Used everywhere in damage coupling, speed order, and **endurance pool** sizing.
 
 ### 2.2 Material profile (latent vector)
 
-**Distribution intent:** Species templates define **mean/variance or spline-controlled ranges** for each axis—not fixed integers per species line. Training and procedural rolls shift individuals continuously—see [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 (*Procedural identity*).
+**Distribution intent:** Each **instance** rolls the full twelve-axis vector from **global/stage/encounter** priors ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §4). Species catalog rows **do not** fix material means—dex entries are flavor-only ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1).
 
-Per creature (species base ± training/item/procedural deltas). Components are **roughly in [0, 1]** after normalization.
+Per creature (rolled axes ± temporary battle modifiers). Components are **roughly in [0, 1]** after normalization.
 
 | Component | Meaning (design) |
 |-----------|------------------|
@@ -61,11 +61,13 @@ Per creature (species base ± training/item/procedural deltas). Components are *
 | `porosity` | Holds moisture, corrodes, wicks. |
 | `polarity` | Charge buildup / discharge interactions. |
 
+**Twelve-axis target —** [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §4 adds `density`, `elasticity`, `reflectivity`, `acoustic_impedance`, `chemical_reactivity`, `magnetization`, `permeability` (all rolled per instance).
+
 **Rule:** Material profile **does not** replace core stats; it keys **Layer 2–3** and contributes terms to **dynamic Layer 1** (§5.5). New players can ignore it until inspect/advanced UI.
 
 ### 2.3 Identity flags (combat-relevant)
 
-- **`affinity_emphasis`** (recommended): vector or normalized weights over affinity IDs—implements **composed typings** (e.g. Flora + Luminous both strong on one individual). `primary_affinity` / `secondary_affinity` remain optional **UI summaries** or tournament collapsed view.
+- **`affinity_emphasis`** (required on instances): vector or normalized weights over affinity IDs—implements **composed typings**. Catalog `primary_affinity` / `secondary_affinity` / `affinity_emphasis_hint` are **non-authoritative** dex seeds; combat MUST use the instance’s rolled emphasis ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.2).
 - **`species_tags`** optional defaults for rules (e.g. `crystalline_body`).
 - Pass emphasis vectors + materials into **`m1`**; static charts alone are insufficient for target dynamism (§5.5).
 
@@ -382,7 +384,7 @@ Document in schema so tools can simulate.
 
 | Artifact | Role |
 |----------|------|
-| `species/catalog.json` | **100 species lines** — id, zenith name, 3 stages, affinities, `affinity_emphasis_hint`, habitat, blurb; instances extend with rolled stats/materials. |
+| `species/catalog.json` | **100 species lines** — id, zenith name, 3 stages, optional dex **`primary`/`secondary`/`affinity_emphasis_hint`** (twelve-ID vocabulary); **identity only** — combat typing/stats/materials roll on each **instance** ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
 | `species/species.schema.json` | JSON Schema for catalog entries. |
 | `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
@@ -501,5 +503,5 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | §5.4b strike modalities (concussive / piercing / slashing); pierce vs modality clarified; pipeline + `math.ts` support |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
-| 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; distribution-first species templates §2. |
-| 2026-05-03 | §9: [`data/species/catalog.json`](../data/species/catalog.json) + schema — 100 species lines (`npm run gen:species`). |
+| 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
+| 2026-05-03 | §9: [`data/species/catalog.json`](../data/species/catalog.json) + schema — 100 **identity** lines (`npm run gen:species`); combat stats on instances only. |

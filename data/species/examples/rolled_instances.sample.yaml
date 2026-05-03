@@ -1,0 +1,222 @@
+# Sample procedural instances — NOT loaded by runtime; authoring / tests only.
+#
+# Numbering (why ints vs ratios):
+#   - stats.*  → same family: effective combat budget units (UI often integers; resolver may use floats after buffs).
+#   - affinity_emphasis.* → weights on a simplex (each in [0,1], together sum to 1) for Layer 1 emphasis / typing display.
+#   - material_profile.*  → normalized material axes in [0,1] for Layers 2–3 (different meaning than stat budgets).
+#
+# Catalog primary/secondary on a dex row are flavor-only; here they mirror how UI might *collapse* emphasis to two chips.
+
+tortoise_comparison:
+  shared_notes:
+    level: 52
+    species_line_id: ash_mantle
+    dex_reference: data/species/catalog.json → ash_mantle (identity art/names only)
+
+  caldera_bulwark:
+    identity:
+      instance_label: caldera_bulwark
+      species_line_id: ash_mantle
+      species_zenith_name: Ash Mantle
+      stage: 3
+      stage_code: zenith
+      stage_display_name: Ash Mantle
+      morph_display_name: Cruciblenymph
+      ascension_display_name: Cruciblethorn
+      habitat_tag: volcanic shelves
+      species_tags: []
+    typing:
+      primary_affinity: thermal
+      secondary_affinity: mineral
+      affinity_emphasis:
+        thermal: 0.505
+        mineral: 0.205
+        flora: 0.085
+        aqueous: 0.06
+        cryo: 0.048
+        void: 0.038
+        galvanic: 0.018
+        aero: 0.014
+        luminous: 0.011
+        sonic: 0.007
+        corrosive: 0.006
+        plasmic: 0.003
+    stats:
+      stamina: 141
+      might: 71
+      bulwark: 127
+      insight: 51
+      ward: 76
+      tempo: 36
+      acuity: 31
+      resilience: 56
+      flux: 24
+    material_profile:
+      thermal_mass: 0.84
+      conductivity: 0.28
+      rigidity: 0.89
+      porosity: 0.14
+      polarity: 0.19
+      density: 0.82
+      elasticity: 0.11
+      reflectivity: 0.33
+      acoustic_impedance: 0.83
+      chemical_reactivity: 0.46
+      magnetization: 0.14
+      permeability: 0.09
+
+  mossback_grazer:
+    identity:
+      instance_label: mossback_grazer
+      species_line_id: ash_mantle
+      species_zenith_name: Ash Mantle
+      stage: 3
+      stage_code: zenith
+      stage_display_name: Ash Mantle
+      morph_display_name: Cruciblenymph
+      ascension_display_name: Cruciblethorn
+      habitat_tag: ancient rainforest
+      species_tags: []
+    typing:
+      primary_affinity: flora
+      secondary_affinity: aqueous
+      affinity_emphasis:
+        flora: 0.395
+        aqueous: 0.285
+        thermal: 0.105
+        mineral: 0.082
+        galvanic: 0.056
+        cryo: 0.047
+        void: 0.01
+        aero: 0.008
+        luminous: 0.006
+        sonic: 0.003
+        corrosive: 0.002
+        plasmic: 0.001
+    stats:
+      stamina: 118
+      might: 54
+      bulwark: 86
+      insight: 84
+      ward: 88
+      tempo: 64
+      acuity: 50
+      resilience: 47
+      flux: 28
+    material_profile:
+      thermal_mass: 0.49
+      conductivity: 0.36
+      rigidity: 0.41
+      porosity: 0.58
+      polarity: 0.24
+      density: 0.46
+      elasticity: 0.42
+      reflectivity: 0.11
+      acoustic_impedance: 0.44
+      chemical_reactivity: 0.52
+      magnetization: 0.18
+      permeability: 0.64
+
+  rimeplate_wanderer:
+    identity:
+      instance_label: rimeplate_wanderer
+      species_line_id: ash_mantle
+      species_zenith_name: Ash Mantle
+      stage: 3
+      stage_code: zenith
+      stage_display_name: Ash Mantle
+      morph_display_name: Cruciblenymph
+      ascension_display_name: Cruciblethorn
+      habitat_tag: tundra talus
+      species_tags: []
+    typing:
+      primary_affinity: cryo
+      secondary_affinity: mineral
+      affinity_emphasis:
+        cryo: 0.42
+        mineral: 0.26
+        thermal: 0.12
+        void: 0.07
+        flora: 0.05
+        aqueous: 0.03
+        galvanic: 0.02
+        aero: 0.01
+        luminous: 0.008
+        sonic: 0.006
+        corrosive: 0.004
+        plasmic: 0.002
+    stats:
+      stamina: 131
+      might: 74
+      bulwark: 108
+      insight: 66
+      ward: 80
+      tempo: 43
+      acuity: 40
+      resilience: 52
+      flux: 28
+    material_profile:
+      thermal_mass: 0.56
+      conductivity: 0.24
+      rigidity: 0.86
+      porosity: 0.22
+      polarity: 0.21
+      density: 0.68
+      elasticity: 0.18
+      reflectivity: 0.22
+      acoustic_impedance: 0.71
+      chemical_reactivity: 0.34
+      magnetization: 0.17
+      permeability: 0.26
+
+  echo_shell_sentinel:
+    identity:
+      instance_label: echo_shell_sentinel
+      species_line_id: ash_mantle
+      species_zenith_name: Ash Mantle
+      stage: 3
+      stage_code: zenith
+      stage_display_name: Ash Mantle
+      morph_display_name: Cruciblenymph
+      ascension_display_name: Cruciblethorn
+      habitat_tag: crystalline caverns
+      species_tags: []
+    typing:
+      primary_affinity: sonic
+      secondary_affinity: mineral
+      affinity_emphasis:
+        sonic: 0.326
+        mineral: 0.218
+        thermal: 0.139
+        aero: 0.099
+        luminous: 0.079
+        flora: 0.059
+        aqueous: 0.03
+        cryo: 0.02
+        void: 0.012
+        galvanic: 0.01
+        corrosive: 0.006
+        plasmic: 0.002
+    stats:
+      stamina: 96
+      might: 63
+      bulwark: 94
+      insight: 98
+      ward: 72
+      tempo: 71
+      acuity: 59
+      resilience: 38
+      flux: 32
+    material_profile:
+      thermal_mass: 0.52
+      conductivity: 0.31
+      rigidity: 0.71
+      porosity: 0.21
+      polarity: 0.26
+      density: 0.61
+      elasticity: 0.27
+      reflectivity: 0.26
+      acoustic_impedance: 0.78
+      chemical_reactivity: 0.39
+      magnetization: 0.22
+      permeability: 0.24

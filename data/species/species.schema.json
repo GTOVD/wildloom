@@ -26,7 +26,10 @@
         "flora",
         "aero",
         "luminous",
-        "void"
+        "void",
+        "sonic",
+        "corrosive",
+        "plasmic"
       ]
     },
     "stage": {

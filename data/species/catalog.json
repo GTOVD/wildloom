@@ -1,7 +1,7 @@
 {
   "$schema": "./species.schema.json",
   "schema_version": "1.0.0",
-  "content_note": "One hundred species lines (Wildloom). affinity_emphasis_hint is a template prior; instances vary per TECHNICAL-DESIGN §1.",
+  "content_note": "One hundred species lines (Wildloom). Identity/names/stages only — combat stats and affinity_emphasis roll per instance (TECHNICAL-DESIGN §1). affinity_emphasis_hint and primary/secondary are dex/UI seeds, not authoritative builds.",
   "species_count": 100,
   "species": [
     {
@@ -29,13 +29,12 @@
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
         "thermal": 0.47,
-        "flora": 0.251,
+        "aero": 0.253,
         "cryo": 0.218,
-        "galvanic": 0.049,
-        "void": 0.005,
-        "aqueous": 0.004,
-        "mineral": 0.002,
-        "luminous": 0.001
+        "galvanic": 0.037,
+        "mineral": 0.016,
+        "plasmic": 0.005,
+        "sonic": 0.001
       },
       "habitat": "ancient rainforest",
       "blurb": "Bleeds off thermal stress across ancient rainforest; each instance rolls unique stats and materials at spawn.",
@@ -67,10 +66,10 @@
       "affinity_emphasis_hint": {
         "cryo": 0.485,
         "mineral": 0.239,
-        "aero": 0.154,
+        "void": 0.154,
         "aqueous": 0.057,
-        "flora": 0.056,
-        "void": 0.009
+        "luminous": 0.056,
+        "plasmic": 0.009
       },
       "habitat": "near-vacuum ridges",
       "blurb": "Harvests latent cold across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
@@ -102,9 +101,11 @@
       "affinity_emphasis_hint": {
         "aqueous": 0.568,
         "flora": 0.342,
-        "cryo": 0.052,
-        "luminous": 0.03,
-        "galvanic": 0.008
+        "cryo": 0.051,
+        "corrosive": 0.016,
+        "mineral": 0.008,
+        "sonic": 0.014,
+        "galvanic": 0.001
       },
       "habitat": "deep trenches",
       "blurb": "Harvests osmotic gradients across deep trenches; each instance rolls unique stats and materials at spawn.",
@@ -136,11 +137,12 @@
       "affinity_emphasis_hint": {
         "galvanic": 0.451,
         "aero": 0.364,
-        "aqueous": 0.156,
-        "void": 0.01,
-        "flora": 0.015,
-        "cryo": 0.003,
-        "thermal": 0.001
+        "aqueous": 0.113,
+        "mineral": 0.039,
+        "plasmic": 0.01,
+        "luminous": 0.015,
+        "flora": 0.007,
+        "cryo": 0.001
       },
       "habitat": "neutral mesas",
       "blurb": "Harvests charge shells across neutral mesas; each instance rolls unique stats and materials at spawn.",
@@ -172,10 +174,10 @@
       "affinity_emphasis_hint": {
         "mineral": 0.563,
         "luminous": 0.234,
-        "galvanic": 0.143,
-        "aqueous": 0.046,
-        "aero": 0.011,
-        "flora": 0.004
+        "flora": 0.143,
+        "galvanic": 0.046,
+        "corrosive": 0.011,
+        "aero": 0.004
       },
       "habitat": "tundra talus",
       "blurb": "Routes lattice strain across tundra talus; each instance rolls unique stats and materials at spawn.",
@@ -207,9 +209,9 @@
       "affinity_emphasis_hint": {
         "flora": 0.465,
         "void": 0.402,
-        "galvanic": 0.094,
-        "luminous": 0.022,
-        "aqueous": 0.005,
+        "aero": 0.094,
+        "plasmic": 0.022,
+        "galvanic": 0.005,
         "thermal": 0.011
       },
       "habitat": "magma chambers",
@@ -238,16 +240,15 @@
         }
       ],
       "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
         "aero": 0.48,
-        "thermal": 0.269,
-        "cryo": 0.149,
-        "void": 0.075,
-        "flora": 0.019,
-        "aqueous": 0.005,
-        "mineral": 0.003,
-        "galvanic": 0
+        "sonic": 0.269,
+        "thermal": 0.147,
+        "plasmic": 0.075,
+        "luminous": 0.019,
+        "cryo": 0.007,
+        "mineral": 0.003
       },
       "habitat": "coastal surge pools",
       "blurb": "Bleeds off pressure seams across coastal surge pools; each instance rolls unique stats and materials at spawn.",
@@ -278,13 +279,12 @@
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
         "luminous": 0.462,
-        "cryo": 0.478,
-        "galvanic": 0.031,
-        "void": 0.012,
-        "aqueous": 0.01,
-        "flora": 0.004,
-        "thermal": 0.003,
-        "aero": 0
+        "cryo": 0.455,
+        "flora": 0.031,
+        "aqueous": 0.026,
+        "plasmic": 0.012,
+        "mineral": 0.01,
+        "sonic": 0.005
       },
       "habitat": "crystalline caverns",
       "blurb": "Dissipates photon coherence across crystalline caverns; each instance rolls unique stats and materials at spawn.",
@@ -312,14 +312,15 @@
         }
       ],
       "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
         "void": 0.627,
-        "aqueous": 0.304,
+        "plasmic": 0.304,
         "mineral": 0.027,
         "thermal": 0.033,
-        "aero": 0.008,
-        "cryo": 0.002
+        "luminous": 0.007,
+        "cryo": 0.002,
+        "sonic": 0
       },
       "habitat": "coastal surge pools",
       "blurb": "Dissipates vacuum folds across coastal surge pools; each instance rolls unique stats and materials at spawn.",
@@ -333,12 +334,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ashmite"
+          "name": "Cavitymite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Ashwing"
+          "name": "Cavitywing"
         },
         {
           "stage": 3,
@@ -346,18 +347,18 @@
           "name": "Ash Spire"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "thermal": 0.579,
-        "galvanic": 0.401,
+        "sonic": 0.579,
+        "thermal": 0.401,
         "mineral": 0.006,
-        "aqueous": 0.008,
+        "galvanic": 0.008,
         "cryo": 0.005,
-        "flora": 0.001
+        "aero": 0.001
       },
       "habitat": "coastal surge pools",
-      "blurb": "Amplifies thermal stress across coastal surge pools; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies standing waves across coastal surge pools; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -368,12 +369,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Borealing"
+          "name": "Acidling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Boreacrest"
+          "name": "Acidcrest"
         },
         {
           "stage": 3,
@@ -381,19 +382,20 @@
           "name": "Tide Mantle"
         }
       ],
-      "primary_affinity": "cryo",
-      "secondary_affinity": "mineral",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "cryo": 0.494,
-        "mineral": 0.367,
-        "aero": 0.066,
-        "void": 0.029,
-        "galvanic": 0.018,
-        "thermal": 0.023,
-        "aqueous": 0.004
+        "corrosive": 0.494,
+        "cryo": 0.367,
+        "luminous": 0.066,
+        "plasmic": 0.029,
+        "mineral": 0.018,
+        "aqueous": 0.024,
+        "galvanic": 0.002,
+        "thermal": 0.001
       },
       "habitat": "near-vacuum ridges",
-      "blurb": "Routes latent cold across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Routes redox fronts across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -404,12 +406,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Spraymite"
+          "name": "Fusormite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Spraythorn"
+          "name": "Fusorthorn"
         },
         {
           "stage": 3,
@@ -417,18 +419,19 @@
           "name": "Tide Glass"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "aqueous": 0.582,
-        "flora": 0.297,
-        "luminous": 0.084,
-        "mineral": 0.028,
-        "thermal": 0.008,
-        "aero": 0.001
+        "plasmic": 0.582,
+        "aqueous": 0.297,
+        "void": 0.084,
+        "aero": 0.028,
+        "cryo": 0.005,
+        "thermal": 0.003,
+        "luminous": 0.001
       },
       "habitat": "tundra talus",
-      "blurb": "Channels osmotic gradients across tundra talus; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels sheath turbulence across tundra talus; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -439,12 +442,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Arcseed"
+          "name": "Emberseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Arccrest"
+          "name": "Embercrest"
         },
         {
           "stage": 3,
@@ -452,20 +455,22 @@
           "name": "Tide Rift"
         }
       ],
-      "primary_affinity": "galvanic",
-      "secondary_affinity": "aero",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "galvanic",
       "affinity_emphasis_hint": {
-        "galvanic": 0.538,
-        "aero": 0.258,
-        "aqueous": 0.153,
-        "cryo": 0.033,
-        "luminous": 0.013,
-        "void": 0.003,
-        "flora": 0.001,
-        "thermal": 0.001
+        "thermal": 0.538,
+        "galvanic": 0.258,
+        "flora": 0.153,
+        "mineral": 0.024,
+        "corrosive": 0.01,
+        "aqueous": 0.009,
+        "sonic": 0.003,
+        "plasmic": 0.003,
+        "void": 0.001,
+        "cryo": 0.001
       },
       "habitat": "neutral mesas",
-      "blurb": "Harvests charge shells across neutral mesas; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests thermal stress across neutral mesas; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -476,12 +481,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Feldsprite"
+          "name": "Hoarsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Feldridge"
+          "name": "Hoarridge"
         },
         {
           "stage": 3,
@@ -489,20 +494,21 @@
           "name": "Tide Loom"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "mineral",
       "affinity_emphasis_hint": {
-        "mineral": 0.443,
-        "luminous": 0.289,
-        "thermal": 0.149,
-        "void": 0.069,
-        "aero": 0.015,
-        "galvanic": 0.031,
-        "flora": 0.004,
-        "cryo": 0
+        "cryo": 0.443,
+        "mineral": 0.289,
+        "aqueous": 0.147,
+        "corrosive": 0.084,
+        "aero": 0.016,
+        "luminous": 0.015,
+        "void": 0.002,
+        "thermal": 0.002,
+        "sonic": 0.002
       },
       "habitat": "volcanic shelves",
-      "blurb": "Channels lattice strain across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels latent cold across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -513,12 +519,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Mycelmite"
+          "name": "Lagoonmite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Mycelwake"
+          "name": "Lagoonwake"
         },
         {
           "stage": 3,
@@ -526,19 +532,20 @@
           "name": "Tide Crest"
         }
       ],
-      "primary_affinity": "flora",
+      "primary_affinity": "aqueous",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "flora": 0.608,
-        "galvanic": 0.34,
-        "mineral": 0.039,
-        "void": 0.007,
-        "aero": 0.005,
-        "cryo": 0.001,
-        "luminous": 0.001
+        "aqueous": 0.608,
+        "aero": 0.264,
+        "flora": 0.075,
+        "luminous": 0.039,
+        "plasmic": 0.007,
+        "void": 0.005,
+        "galvanic": 0.001,
+        "sonic": 0.001
       },
       "habitat": "karst sinks",
-      "blurb": "Stores metabolic surplus across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores osmotic gradients across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -549,12 +556,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Altopod"
+          "name": "Amppod"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Altowake"
+          "name": "Ampwake"
         },
         {
           "stage": 3,
@@ -562,15 +569,15 @@
           "name": "Tide Fold"
         }
       ],
-      "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aero",
       "affinity_emphasis_hint": {
-        "aero": 0.671,
-        "thermal": 0.326,
-        "flora": 0.003
+        "galvanic": 0.671,
+        "aero": 0.326,
+        "void": 0.003
       },
       "habitat": "karst sinks",
-      "blurb": "Stores pressure seams across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores charge shells across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -581,12 +588,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Aethermite"
+          "name": "Silicamite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Aethershard"
+          "name": "Silicashard"
         },
         {
           "stage": 3,
@@ -594,19 +601,21 @@
           "name": "Tide Mesh"
         }
       ],
-      "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "primary_affinity": "mineral",
+      "secondary_affinity": "luminous",
       "affinity_emphasis_hint": {
-        "luminous": 0.496,
-        "cryo": 0.282,
-        "thermal": 0.123,
+        "mineral": 0.496,
+        "luminous": 0.282,
+        "thermal": 0.085,
         "galvanic": 0.062,
-        "flora": 0.034,
-        "aero": 0.002,
+        "cryo": 0.038,
+        "void": 0.021,
+        "aero": 0.013,
+        "sonic": 0.002,
         "aqueous": 0.002
       },
       "habitat": "coastal surge pools",
-      "blurb": "Channels photon coherence across coastal surge pools; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels lattice strain across coastal surge pools; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -617,12 +626,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Nullseed"
+          "name": "Bloomseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Nullcrest"
+          "name": "Bloomcrest"
         },
         {
           "stage": 3,
@@ -630,18 +639,20 @@
           "name": "Tide Vault"
         }
       ],
-      "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "primary_affinity": "flora",
+      "secondary_affinity": "void",
       "affinity_emphasis_hint": {
-        "void": 0.653,
-        "aqueous": 0.268,
-        "thermal": 0.056,
-        "aero": 0.021,
-        "flora": 0.002,
-        "mineral": 0
+        "flora": 0.653,
+        "void": 0.268,
+        "thermal": 0.023,
+        "cryo": 0.033,
+        "corrosive": 0.019,
+        "sonic": 0.002,
+        "luminous": 0.002,
+        "aero": 0
       },
       "habitat": "coastal surge pools",
-      "blurb": "Bleeds off vacuum folds across coastal surge pools; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off metabolic surplus across coastal surge pools; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -652,12 +663,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Magmaling"
+          "name": "Zephyrling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Magmagleam"
+          "name": "Zephyrgleam"
         },
         {
           "stage": 3,
@@ -665,14 +676,14 @@
           "name": "Tide Wake"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "aero",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
-        "thermal": 0.642,
-        "galvanic": 0.358
+        "aero": 0.642,
+        "sonic": 0.358
       },
       "habitat": "tundra talus",
-      "blurb": "Amplifies thermal stress across tundra talus; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies pressure seams across tundra talus; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -683,12 +694,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Permamite"
+          "name": "Uvmite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Permawing"
+          "name": "Uvwing"
         },
         {
           "stage": 3,
@@ -696,16 +707,17 @@
           "name": "Tide Spire"
         }
       ],
-      "primary_affinity": "cryo",
-      "secondary_affinity": "mineral",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "corrosive",
       "affinity_emphasis_hint": {
-        "cryo": 0.597,
-        "mineral": 0.236,
-        "flora": 0.127,
-        "luminous": 0.04
+        "luminous": 0.597,
+        "corrosive": 0.236,
+        "mineral": 0.125,
+        "void": 0.04,
+        "flora": 0.002
       },
       "habitat": "salt flats",
-      "blurb": "Channels latent cold across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels photon coherence across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -716,12 +728,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Lagoonling"
+          "name": "Eclipseling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Lagoonmantle"
+          "name": "Eclipsemantle"
         },
         {
           "stage": 3,
@@ -729,19 +741,19 @@
           "name": "Storm Mantle"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "void",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
-        "aqueous": 0.428,
-        "flora": 0.287,
-        "aero": 0.126,
+        "void": 0.428,
+        "plasmic": 0.287,
+        "flora": 0.132,
         "galvanic": 0.121,
-        "void": 0.03,
-        "mineral": 0.007,
-        "luminous": 0.001
+        "corrosive": 0.03,
+        "sonic": 0.001,
+        "mineral": 0
       },
       "habitat": "prismatic dunes",
-      "blurb": "Shields osmotic gradients across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields vacuum folds across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -752,12 +764,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Arcnymph"
+          "name": "Echonymph"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Arcridge"
+          "name": "Echoridge"
         },
         {
           "stage": 3,
@@ -765,18 +777,18 @@
           "name": "Storm Glass"
         }
       ],
-      "primary_affinity": "galvanic",
+      "primary_affinity": "sonic",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "galvanic": 0.653,
+        "sonic": 0.653,
         "cryo": 0.203,
-        "void": 0.113,
-        "luminous": 0.013,
-        "mineral": 0.017,
-        "aqueous": 0.001
+        "plasmic": 0.113,
+        "void": 0.013,
+        "flora": 0.017,
+        "mineral": 0.001
       },
       "habitat": "volcanic shelves",
-      "blurb": "Bleeds off charge shells across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off standing waves across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -787,12 +799,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Basaltseed"
+          "name": "Chelateseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Basaltwing"
+          "name": "Chelatewing"
         },
         {
           "stage": 3,
@@ -800,19 +812,19 @@
           "name": "Storm Rift"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "mineral": 0.566,
-        "luminous": 0.287,
-        "aqueous": 0.125,
-        "aero": 0.016,
-        "flora": 0.003,
+        "corrosive": 0.566,
+        "cryo": 0.287,
+        "flora": 0.125,
+        "sonic": 0.016,
+        "luminous": 0.003,
         "thermal": 0.002,
-        "void": 0
+        "plasmic": 0
       },
       "habitat": "neutral mesas",
-      "blurb": "Channels lattice strain across neutral mesas; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels redox fronts across neutral mesas; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -823,12 +835,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Sporesprite"
+          "name": "Novasprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Sporewake"
+          "name": "Novawake"
         },
         {
           "stage": 3,
@@ -836,18 +848,18 @@
           "name": "Storm Loom"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "flora": 0.602,
-        "void": 0.341,
-        "galvanic": 0.039,
-        "luminous": 0.009,
-        "aero": 0.008,
-        "mineral": 0.001
+        "plasmic": 0.602,
+        "aqueous": 0.341,
+        "flora": 0.039,
+        "corrosive": 0.009,
+        "sonic": 0.008,
+        "luminous": 0.001
       },
       "habitat": "tundra talus",
-      "blurb": "Shields metabolic surplus across tundra talus; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields sheath turbulence across tundra talus; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -858,12 +870,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ventnymph"
+          "name": "Bloomheatnymph"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Ventridge"
+          "name": "Bloomheatridge"
         },
         {
           "stage": 3,
@@ -871,17 +883,18 @@
           "name": "Storm Crest"
         }
       ],
-      "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "galvanic",
       "affinity_emphasis_hint": {
-        "aero": 0.487,
-        "thermal": 0.232,
-        "galvanic": 0.158,
-        "void": 0.054,
-        "cryo": 0.069
+        "thermal": 0.487,
+        "galvanic": 0.232,
+        "aero": 0.143,
+        "plasmic": 0.054,
+        "cryo": 0.069,
+        "flora": 0.015
       },
       "habitat": "prismatic dunes",
-      "blurb": "Shields pressure seams across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields thermal stress across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -892,12 +905,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Gleamsprite"
+          "name": "Shardsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Gleammantle"
+          "name": "Shardmantle"
         },
         {
           "stage": 3,
@@ -905,17 +918,17 @@
           "name": "Storm Fold"
         }
       ],
-      "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "mineral",
       "affinity_emphasis_hint": {
-        "luminous": 0.671,
-        "cryo": 0.307,
+        "cryo": 0.671,
+        "mineral": 0.307,
         "galvanic": 0.016,
-        "flora": 0.005,
-        "void": 0.001
+        "sonic": 0.005,
+        "plasmic": 0.001
       },
       "habitat": "deep trenches",
-      "blurb": "Bleeds off photon coherence across deep trenches; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off latent cold across deep trenches; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -926,12 +939,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Nullsprite"
+          "name": "Kelpsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Nullmantle"
+          "name": "Kelpmantle"
         },
         {
           "stage": 3,
@@ -939,18 +952,18 @@
           "name": "Storm Mesh"
         }
       ],
-      "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "flora",
       "affinity_emphasis_hint": {
-        "void": 0.67,
-        "aqueous": 0.298,
-        "flora": 0.016,
-        "mineral": 0.009,
+        "aqueous": 0.67,
+        "flora": 0.298,
+        "void": 0.016,
+        "aero": 0.009,
         "cryo": 0.007,
-        "luminous": 0.001
+        "corrosive": 0.001
       },
       "habitat": "volcanic shelves",
-      "blurb": "Amplifies vacuum folds across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies osmotic gradients across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -961,12 +974,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Cruciblecub"
+          "name": "Pulsecub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Cruciblemantle"
+          "name": "Pulsemantle"
         },
         {
           "stage": 3,
@@ -974,16 +987,16 @@
           "name": "Storm Vault"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aero",
       "affinity_emphasis_hint": {
-        "thermal": 0.624,
-        "galvanic": 0.365,
+        "galvanic": 0.624,
+        "aero": 0.365,
         "aqueous": 0.01,
-        "void": 0.001
+        "plasmic": 0.001
       },
       "habitat": "near-vacuum ridges",
-      "blurb": "Dissipates thermal stress across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates charge shells across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -994,12 +1007,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Shardsprite"
+          "name": "Basaltsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Shardthorn"
+          "name": "Basaltthorn"
         },
         {
           "stage": 3,
@@ -1007,19 +1020,20 @@
           "name": "Storm Wake"
         }
       ],
-      "primary_affinity": "cryo",
+      "primary_affinity": "mineral",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "cryo": 0.447,
-        "aero": 0.201,
-        "mineral": 0.182,
-        "void": 0.058,
+        "mineral": 0.447,
+        "void": 0.196,
+        "aero": 0.182,
+        "plasmic": 0.055,
         "thermal": 0.08,
         "aqueous": 0.025,
-        "luminous": 0.007
+        "sonic": 0.013,
+        "corrosive": 0.003
       },
       "habitat": "magma chambers",
-      "blurb": "Routes latent cold across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Routes lattice strain across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1030,12 +1044,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Abysssprite"
+          "name": "Verdsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Abysswake"
+          "name": "Verdwake"
         },
         {
           "stage": 3,
@@ -1043,18 +1057,18 @@
           "name": "Storm Spire"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "flora",
+      "secondary_affinity": "void",
       "affinity_emphasis_hint": {
-        "aqueous": 0.484,
-        "flora": 0.436,
+        "flora": 0.484,
+        "void": 0.436,
         "cryo": 0.053,
-        "aero": 0.023,
+        "luminous": 0.023,
         "thermal": 0.003,
-        "void": 0.001
+        "plasmic": 0.001
       },
       "habitat": "salt flats",
-      "blurb": "Stores osmotic gradients across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores metabolic surplus across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1065,12 +1079,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Arccub"
+          "name": "Galecub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Arcshard"
+          "name": "Galeshard"
         },
         {
           "stage": 3,
@@ -1078,18 +1092,19 @@
           "name": "Rime Mantle"
         }
       ],
-      "primary_affinity": "galvanic",
-      "secondary_affinity": "aero",
+      "primary_affinity": "aero",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
-        "galvanic": 0.608,
-        "aero": 0.23,
-        "luminous": 0.141,
-        "aqueous": 0.014,
-        "cryo": 0.006,
-        "flora": 0.001
+        "aero": 0.608,
+        "sonic": 0.23,
+        "void": 0.141,
+        "mineral": 0.014,
+        "aqueous": 0.004,
+        "cryo": 0.003,
+        "luminous": 0.001
       },
       "habitat": "thunderhead fronts",
-      "blurb": "Routes charge shells across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Routes pressure seams across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1100,12 +1115,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Karstling"
+          "name": "Uvling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Karstshard"
+          "name": "Uvshard"
         },
         {
           "stage": 3,
@@ -1113,18 +1128,19 @@
           "name": "Rime Glass"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "corrosive",
       "affinity_emphasis_hint": {
-        "mineral": 0.608,
-        "luminous": 0.368,
-        "cryo": 0.017,
-        "galvanic": 0.003,
+        "luminous": 0.608,
+        "corrosive": 0.368,
+        "cryo": 0.012,
+        "mineral": 0.003,
+        "aqueous": 0.005,
         "thermal": 0.003,
-        "flora": 0.001
+        "aero": 0.001
       },
       "habitat": "salt flats",
-      "blurb": "Amplifies lattice strain across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies photon coherence across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1135,12 +1151,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Verdwisp"
+          "name": "Vacuumwisp"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Verdthorn"
+          "name": "Vacuumthorn"
         },
         {
           "stage": 3,
@@ -1148,17 +1164,18 @@
           "name": "Rime Rift"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "void",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
-        "flora": 0.625,
-        "void": 0.347,
-        "thermal": 0.022,
-        "luminous": 0.006,
-        "galvanic": 0.001
+        "void": 0.625,
+        "plasmic": 0.347,
+        "thermal": 0.018,
+        "sonic": 0.006,
+        "cryo": 0.004,
+        "mineral": 0.001
       },
       "habitat": "near-vacuum ridges",
-      "blurb": "Amplifies metabolic surplus across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies vacuum folds across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1169,12 +1186,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Vortexcub"
+          "name": "Timbrecub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Vortexthorn"
+          "name": "Timbrethorn"
         },
         {
           "stage": 3,
@@ -1182,21 +1199,21 @@
           "name": "Rime Loom"
         }
       ],
-      "primary_affinity": "aero",
+      "primary_affinity": "sonic",
       "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "aero": 0.511,
+        "sonic": 0.511,
         "thermal": 0.234,
-        "galvanic": 0.131,
-        "mineral": 0.099,
-        "flora": 0.011,
+        "mineral": 0.131,
+        "aero": 0.099,
+        "luminous": 0.011,
         "cryo": 0.005,
-        "void": 0.004,
-        "aqueous": 0.002,
-        "luminous": 0.003
+        "plasmic": 0.004,
+        "galvanic": 0.002,
+        "void": 0.003
       },
       "habitat": "volcanic shelves",
-      "blurb": "Bleeds off pressure seams across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off standing waves across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1207,12 +1224,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Prismsprite"
+          "name": "Etchsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Prismquill"
+          "name": "Etchquill"
         },
         {
           "stage": 3,
@@ -1220,18 +1237,19 @@
           "name": "Rime Crest"
         }
       ],
-      "primary_affinity": "luminous",
+      "primary_affinity": "corrosive",
       "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "luminous": 0.554,
+        "corrosive": 0.554,
         "cryo": 0.392,
         "thermal": 0.031,
-        "aqueous": 0.019,
-        "flora": 0.004,
-        "mineral": 0.001
+        "galvanic": 0.018,
+        "luminous": 0.004,
+        "flora": 0.001,
+        "aqueous": 0.001
       },
       "habitat": "urban runoff zones",
-      "blurb": "Bleeds off photon coherence across urban runoff zones; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off redox fronts across urban runoff zones; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1242,12 +1260,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Vacuumling"
+          "name": "Torchveilling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Vacuumridge"
+          "name": "Torchveilridge"
         },
         {
           "stage": 3,
@@ -1255,19 +1273,19 @@
           "name": "Rime Fold"
         }
       ],
-      "primary_affinity": "void",
+      "primary_affinity": "plasmic",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "void": 0.617,
-        "aero": 0.16,
+        "plasmic": 0.617,
+        "void": 0.163,
         "thermal": 0.173,
-        "luminous": 0.017,
-        "flora": 0.021,
-        "mineral": 0.011,
-        "cryo": 0.001
+        "corrosive": 0.017,
+        "luminous": 0.018,
+        "flora": 0.011,
+        "aqueous": 0.001
       },
       "habitat": "near-vacuum ridges",
-      "blurb": "Routes vacuum folds across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Routes sheath turbulence across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1296,8 +1314,8 @@
       "affinity_emphasis_hint": {
         "thermal": 0.56,
         "galvanic": 0.395,
-        "flora": 0.032,
-        "void": 0.008,
+        "luminous": 0.032,
+        "plasmic": 0.008,
         "aqueous": 0.004,
         "cryo": 0.001
       },
@@ -1331,10 +1349,11 @@
       "affinity_emphasis_hint": {
         "cryo": 0.426,
         "mineral": 0.437,
-        "aero": 0.073,
-        "luminous": 0.051,
-        "aqueous": 0.008,
-        "void": 0.005
+        "void": 0.073,
+        "corrosive": 0.05,
+        "galvanic": 0.008,
+        "plasmic": 0.005,
+        "sonic": 0.001
       },
       "habitat": "karst sinks",
       "blurb": "Shields latent cold across karst sinks; each instance rolls unique stats and materials at spawn.",
@@ -1366,9 +1385,10 @@
       "affinity_emphasis_hint": {
         "aqueous": 0.576,
         "flora": 0.245,
-        "luminous": 0.111,
+        "sonic": 0.111,
         "cryo": 0.034,
-        "mineral": 0.034
+        "luminous": 0.025,
+        "aero": 0.008
       },
       "habitat": "coastal surge pools",
       "blurb": "Bleeds off osmotic gradients across coastal surge pools; each instance rolls unique stats and materials at spawn.",
@@ -1432,11 +1452,10 @@
         "mineral": 0.585,
         "luminous": 0.223,
         "aqueous": 0.103,
-        "aero": 0.064,
-        "thermal": 0.018,
-        "galvanic": 0.005,
-        "void": 0.002,
-        "flora": 0.001
+        "sonic": 0.064,
+        "cryo": 0.018,
+        "aero": 0.005,
+        "plasmic": 0.002
       },
       "habitat": "crystalline caverns",
       "blurb": "Channels lattice strain across crystalline caverns; each instance rolls unique stats and materials at spawn.",
@@ -1468,10 +1487,10 @@
       "affinity_emphasis_hint": {
         "flora": 0.512,
         "void": 0.379,
-        "mineral": 0.043,
-        "cryo": 0.036,
-        "luminous": 0.028,
-        "aero": 0.001,
+        "luminous": 0.043,
+        "aqueous": 0.036,
+        "plasmic": 0.028,
+        "sonic": 0.001,
         "thermal": 0.001
       },
       "habitat": "magma chambers",
@@ -1503,12 +1522,11 @@
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
         "aero": 0.549,
-        "luminous": 0.329,
-        "galvanic": 0.058,
-        "mineral": 0.048,
-        "cryo": 0.008,
-        "void": 0.007,
-        "aqueous": 0.001,
+        "corrosive": 0.329,
+        "mineral": 0.058,
+        "flora": 0.048,
+        "aqueous": 0.009,
+        "plasmic": 0.007,
         "thermal": 0.001
       },
       "habitat": "neutral mesas",
@@ -1537,10 +1555,10 @@
         }
       ],
       "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "secondary_affinity": "corrosive",
       "affinity_emphasis_hint": {
         "luminous": 0.578,
-        "cryo": 0.422,
+        "corrosive": 0.422,
         "thermal": 0.001
       },
       "habitat": "coastal surge pools",
@@ -1569,14 +1587,15 @@
         }
       ],
       "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
         "void": 0.542,
-        "aqueous": 0.332,
+        "plasmic": 0.332,
         "cryo": 0.04,
-        "aero": 0.064,
+        "luminous": 0.046,
         "mineral": 0.016,
-        "luminous": 0.007
+        "sonic": 0.017,
+        "corrosive": 0.007
       },
       "habitat": "deep trenches",
       "blurb": "Routes vacuum folds across deep trenches; each instance rolls unique stats and materials at spawn.",
@@ -1590,12 +1609,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Cindercub"
+          "name": "Resoncub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Cinderloom"
+          "name": "Resonloom"
         },
         {
           "stage": 3,
@@ -1603,18 +1622,20 @@
           "name": "Lux Fold"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "thermal": 0.543,
-        "galvanic": 0.245,
-        "aqueous": 0.119,
-        "luminous": 0.047,
-        "void": 0.039,
-        "flora": 0.007
+        "sonic": 0.543,
+        "thermal": 0.245,
+        "aqueous": 0.106,
+        "void": 0.047,
+        "corrosive": 0.039,
+        "galvanic": 0.013,
+        "flora": 0.005,
+        "aero": 0.002
       },
       "habitat": "thunderhead fronts",
-      "blurb": "Shields thermal stress across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields standing waves across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1625,12 +1646,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Chillling"
+          "name": "Fluxbiteling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Chillloom"
+          "name": "Fluxbiteloom"
         },
         {
           "stage": 3,
@@ -1638,14 +1659,14 @@
           "name": "Lux Mesh"
         }
       ],
-      "primary_affinity": "cryo",
-      "secondary_affinity": "mineral",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "cryo": 0.661,
-        "mineral": 0.339
+        "corrosive": 0.661,
+        "cryo": 0.339
       },
       "habitat": "neutral mesas",
-      "blurb": "Stores latent cold across neutral mesas; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores redox fronts across neutral mesas; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1656,12 +1677,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Kelplet"
+          "name": "Sheathlet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Kelpmantle"
+          "name": "Sheathmantle"
         },
         {
           "stage": 3,
@@ -1669,18 +1690,18 @@
           "name": "Lux Vault"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "aqueous": 0.612,
-        "flora": 0.358,
-        "galvanic": 0.024,
-        "cryo": 0.005,
-        "void": 0.001,
-        "aero": 0.001
+        "plasmic": 0.612,
+        "aqueous": 0.358,
+        "mineral": 0.024,
+        "galvanic": 0.005,
+        "sonic": 0.001,
+        "luminous": 0.001
       },
       "habitat": "volcanic shelves",
-      "blurb": "Shields osmotic gradients across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields sheath turbulence across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1691,12 +1712,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Voltamite"
+          "name": "Cindermite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Voltaridge"
+          "name": "Cinderridge"
         },
         {
           "stage": 3,
@@ -1704,14 +1725,14 @@
           "name": "Lux Wake"
         }
       ],
-      "primary_affinity": "galvanic",
-      "secondary_affinity": "aero",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "galvanic",
       "affinity_emphasis_hint": {
-        "galvanic": 0.596,
-        "aero": 0.404
+        "thermal": 0.596,
+        "galvanic": 0.404
       },
       "habitat": "magma chambers",
-      "blurb": "Amplifies charge shells across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies thermal stress across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1722,12 +1743,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Agateling"
+          "name": "Chillling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Agategleam"
+          "name": "Chillgleam"
         },
         {
           "stage": 3,
@@ -1735,18 +1756,18 @@
           "name": "Lux Spire"
         }
       ],
-      "primary_affinity": "mineral",
+      "primary_affinity": "cryo",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "mineral": 0.666,
-        "galvanic": 0.237,
-        "aero": 0.065,
-        "aqueous": 0.015,
-        "cryo": 0.015,
-        "void": 0.002
+        "cryo": 0.666,
+        "aero": 0.237,
+        "void": 0.065,
+        "mineral": 0.015,
+        "galvanic": 0.015,
+        "corrosive": 0.002
       },
       "habitat": "prismatic dunes",
-      "blurb": "Channels lattice strain across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels latent cold across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1757,12 +1778,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Canopymite"
+          "name": "Reefmite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Canopythorn"
+          "name": "Reefthorn"
         },
         {
           "stage": 3,
@@ -1770,17 +1791,18 @@
           "name": "Void Mantle"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "flora",
       "affinity_emphasis_hint": {
-        "flora": 0.501,
-        "void": 0.399,
+        "aqueous": 0.501,
+        "flora": 0.399,
         "cryo": 0.035,
         "thermal": 0.047,
-        "aero": 0.018
+        "corrosive": 0.016,
+        "sonic": 0.003
       },
       "habitat": "neutral mesas",
-      "blurb": "Harvests metabolic surplus across neutral mesas; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests osmotic gradients across neutral mesas; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1791,12 +1813,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Shearmite"
+          "name": "Galvmite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Shearshard"
+          "name": "Galvshard"
         },
         {
           "stage": 3,
@@ -1804,18 +1826,18 @@
           "name": "Void Glass"
         }
       ],
-      "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aero",
       "affinity_emphasis_hint": {
-        "aero": 0.579,
-        "thermal": 0.39,
+        "galvanic": 0.579,
+        "aero": 0.39,
         "aqueous": 0.008,
-        "void": 0.019,
-        "mineral": 0.002,
-        "luminous": 0.001
+        "plasmic": 0.019,
+        "luminous": 0.002,
+        "sonic": 0.001
       },
       "habitat": "magma chambers",
-      "blurb": "Harvests pressure seams across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests charge shells across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1826,12 +1848,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Beamsprite"
+          "name": "Limesprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Beamthorn"
+          "name": "Limethorn"
         },
         {
           "stage": 3,
@@ -1839,18 +1861,18 @@
           "name": "Void Rift"
         }
       ],
-      "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "primary_affinity": "mineral",
+      "secondary_affinity": "luminous",
       "affinity_emphasis_hint": {
-        "luminous": 0.45,
-        "cryo": 0.395,
+        "mineral": 0.45,
+        "luminous": 0.395,
         "thermal": 0.119,
-        "aqueous": 0.014,
-        "galvanic": 0.019,
-        "aero": 0.003
+        "cryo": 0.014,
+        "flora": 0.019,
+        "corrosive": 0.003
       },
       "habitat": "volcanic shelves",
-      "blurb": "Dissipates photon coherence across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates lattice strain across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1861,12 +1883,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Eclipsemite"
+          "name": "Mycelmite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Eclipseloom"
+          "name": "Mycelloom"
         },
         {
           "stage": 3,
@@ -1874,19 +1896,19 @@
           "name": "Void Loom"
         }
       ],
-      "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "primary_affinity": "flora",
+      "secondary_affinity": "void",
       "affinity_emphasis_hint": {
-        "void": 0.657,
-        "aqueous": 0.259,
+        "flora": 0.657,
+        "void": 0.259,
         "mineral": 0.056,
-        "aero": 0.008,
-        "cryo": 0.01,
+        "corrosive": 0.008,
+        "aqueous": 0.01,
         "thermal": 0.008,
-        "flora": 0.002
+        "aero": 0.002
       },
       "habitat": "prismatic dunes",
-      "blurb": "Shields vacuum folds across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields metabolic surplus across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1897,12 +1919,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Tindercub"
+          "name": "Nimbuscub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Tindercrest"
+          "name": "Nimbuscrest"
         },
         {
           "stage": 3,
@@ -1910,19 +1932,20 @@
           "name": "Void Crest"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "aero",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
-        "thermal": 0.443,
-        "galvanic": 0.289,
-        "luminous": 0.182,
-        "aero": 0.081,
-        "void": 0.003,
+        "aero": 0.443,
+        "sonic": 0.289,
+        "void": 0.182,
+        "flora": 0.081,
+        "plasmic": 0.002,
         "aqueous": 0.002,
-        "cryo": 0
+        "corrosive": 0.001,
+        "thermal": 0
       },
       "habitat": "salt flats",
-      "blurb": "Bleeds off thermal stress across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off pressure seams across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1933,12 +1956,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Frostwisp"
+          "name": "Heliowisp"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Frostwake"
+          "name": "Heliowake"
         },
         {
           "stage": 3,
@@ -1946,18 +1969,20 @@
           "name": "Void Fold"
         }
       ],
-      "primary_affinity": "cryo",
-      "secondary_affinity": "mineral",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "corrosive",
       "affinity_emphasis_hint": {
-        "cryo": 0.437,
-        "mineral": 0.268,
-        "galvanic": 0.237,
+        "luminous": 0.437,
+        "corrosive": 0.268,
+        "galvanic": 0.235,
         "aero": 0.042,
-        "luminous": 0.015,
-        "aqueous": 0.002
+        "sonic": 0.013,
+        "void": 0.002,
+        "mineral": 0.001,
+        "cryo": 0.002
       },
       "habitat": "volcanic shelves",
-      "blurb": "Stores latent cold across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores photon coherence across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -1968,12 +1993,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Abyssseed"
+          "name": "Vacuumseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Abyssshard"
+          "name": "Vacuumshard"
         },
         {
           "stage": 3,
@@ -1981,18 +2006,18 @@
           "name": "Void Mesh"
         }
       ],
-      "primary_affinity": "aqueous",
+      "primary_affinity": "void",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "aqueous": 0.688,
-        "aero": 0.13,
-        "flora": 0.126,
+        "void": 0.688,
+        "luminous": 0.13,
+        "aero": 0.126,
         "mineral": 0.045,
-        "luminous": 0.01,
-        "galvanic": 0.001
+        "sonic": 0.01,
+        "aqueous": 0.001
       },
       "habitat": "salt flats",
-      "blurb": "Dissipates osmotic gradients across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates vacuum folds across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2003,12 +2028,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ampling"
+          "name": "Phononling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Ampwing"
+          "name": "Phononwing"
         },
         {
           "stage": 3,
@@ -2016,19 +2041,19 @@
           "name": "Void Vault"
         }
       ],
-      "primary_affinity": "galvanic",
-      "secondary_affinity": "aero",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "galvanic": 0.474,
-        "aero": 0.411,
-        "thermal": 0.081,
-        "aqueous": 0.022,
-        "flora": 0.004,
-        "mineral": 0.005,
-        "cryo": 0.001
+        "sonic": 0.474,
+        "thermal": 0.411,
+        "cryo": 0.047,
+        "aqueous": 0.034,
+        "galvanic": 0.024,
+        "luminous": 0.004,
+        "aero": 0.005
       },
       "habitat": "volcanic shelves",
-      "blurb": "Bleeds off charge shells across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off standing waves across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2039,12 +2064,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Silicasprite"
+          "name": "Oxidsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Silicawake"
+          "name": "Oxidwake"
         },
         {
           "stage": 3,
@@ -2052,20 +2077,20 @@
           "name": "Void Wake"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "mineral": 0.44,
-        "luminous": 0.226,
-        "galvanic": 0.225,
-        "flora": 0.057,
-        "aqueous": 0.049,
+        "corrosive": 0.44,
+        "cryo": 0.226,
+        "flora": 0.225,
+        "aero": 0.057,
+        "mineral": 0.049,
         "thermal": 0.001,
-        "aero": 0.002,
-        "void": 0.001
+        "sonic": 0.002,
+        "plasmic": 0.001
       },
       "habitat": "ancient rainforest",
-      "blurb": "Amplifies lattice strain across ancient rainforest; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies redox fronts across ancient rainforest; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2076,12 +2101,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Canopyling"
+          "name": "Corbelling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Canopyloom"
+          "name": "Corbelloom"
         },
         {
           "stage": 3,
@@ -2089,19 +2114,19 @@
           "name": "Void Spire"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "flora": 0.45,
-        "void": 0.439,
-        "aero": 0.09,
-        "mineral": 0.009,
+        "plasmic": 0.45,
+        "aqueous": 0.439,
+        "void": 0.09,
+        "luminous": 0.009,
         "thermal": 0.01,
-        "cryo": 0.002,
-        "galvanic": 0.001
+        "galvanic": 0.002,
+        "flora": 0.001
       },
       "habitat": "urban runoff zones",
-      "blurb": "Harvests metabolic surplus across urban runoff zones; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests sheath turbulence across urban runoff zones; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2112,12 +2137,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Stratoseed"
+          "name": "Cinderseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Stratogleam"
+          "name": "Cindergleam"
         },
         {
           "stage": 3,
@@ -2125,19 +2150,21 @@
           "name": "Root Mantle"
         }
       ],
-      "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "galvanic",
       "affinity_emphasis_hint": {
-        "aero": 0.448,
-        "thermal": 0.432,
-        "mineral": 0.071,
+        "thermal": 0.448,
+        "galvanic": 0.432,
+        "luminous": 0.071,
         "cryo": 0.019,
-        "aqueous": 0.019,
-        "void": 0.011,
-        "galvanic": 0.001
+        "mineral": 0.015,
+        "plasmic": 0.008,
+        "aqueous": 0.003,
+        "corrosive": 0.003,
+        "flora": 0.001
       },
       "habitat": "ancient rainforest",
-      "blurb": "Shields pressure seams across ancient rainforest; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Shields thermal stress across ancient rainforest; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2148,12 +2175,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Radiling"
+          "name": "Hoarling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Radiquill"
+          "name": "Hoarquill"
         },
         {
           "stage": 3,
@@ -2161,18 +2188,18 @@
           "name": "Root Glass"
         }
       ],
-      "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "mineral",
       "affinity_emphasis_hint": {
-        "luminous": 0.523,
-        "cryo": 0.439,
+        "cryo": 0.523,
+        "mineral": 0.439,
         "thermal": 0.024,
         "aqueous": 0.01,
-        "galvanic": 0.001,
-        "aero": 0.002
+        "flora": 0.001,
+        "sonic": 0.002
       },
       "habitat": "tundra talus",
-      "blurb": "Dissipates photon coherence across tundra talus; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates latent cold across tundra talus; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2183,12 +2210,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Sinkwisp"
+          "name": "Tidewisp"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Sinkgleam"
+          "name": "Tidegleam"
         },
         {
           "stage": 3,
@@ -2196,18 +2223,18 @@
           "name": "Root Rift"
         }
       ],
-      "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "flora",
       "affinity_emphasis_hint": {
-        "void": 0.694,
-        "aqueous": 0.294,
-        "mineral": 0.005,
+        "aqueous": 0.694,
+        "flora": 0.294,
+        "luminous": 0.005,
         "thermal": 0.006,
-        "luminous": 0.001,
-        "galvanic": 0.001
+        "plasmic": 0.001,
+        "mineral": 0.001
       },
       "habitat": "karst sinks",
-      "blurb": "Dissipates vacuum folds across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates osmotic gradients across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2218,12 +2245,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Cinderpod"
+          "name": "Voltapod"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Cinderquill"
+          "name": "Voltaquill"
         },
         {
           "stage": 3,
@@ -2231,20 +2258,22 @@
           "name": "Root Loom"
         }
       ],
-      "primary_affinity": "thermal",
+      "primary_affinity": "galvanic",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "thermal": 0.541,
-        "flora": 0.161,
-        "luminous": 0.172,
-        "cryo": 0.064,
-        "void": 0.029,
-        "mineral": 0.024,
+        "galvanic": 0.541,
+        "aero": 0.161,
+        "sonic": 0.124,
+        "thermal": 0.064,
+        "corrosive": 0.048,
+        "plasmic": 0.029,
+        "flora": 0.028,
         "aqueous": 0.004,
-        "galvanic": 0.005
+        "mineral": 0.002,
+        "luminous": 0.001
       },
       "habitat": "magma chambers",
-      "blurb": "Harvests thermal stress across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests charge shells across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2255,12 +2284,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Chilllet"
+          "name": "Agatelet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Chillridge"
+          "name": "Agateridge"
         },
         {
           "stage": 3,
@@ -2268,18 +2297,18 @@
           "name": "Root Crest"
         }
       ],
-      "primary_affinity": "cryo",
-      "secondary_affinity": "mineral",
+      "primary_affinity": "mineral",
+      "secondary_affinity": "luminous",
       "affinity_emphasis_hint": {
-        "cryo": 0.448,
-        "mineral": 0.344,
+        "mineral": 0.448,
+        "luminous": 0.344,
         "galvanic": 0.088,
-        "flora": 0.1,
+        "aero": 0.1,
         "aqueous": 0.007,
-        "aero": 0.014
+        "void": 0.014
       },
       "habitat": "volcanic shelves",
-      "blurb": "Dissipates latent cold across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates lattice strain across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2290,12 +2319,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Sprayseed"
+          "name": "Thornseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Sprayshard"
+          "name": "Thornshard"
         },
         {
           "stage": 3,
@@ -2303,18 +2332,18 @@
           "name": "Root Fold"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "flora",
+      "secondary_affinity": "void",
       "affinity_emphasis_hint": {
-        "aqueous": 0.563,
-        "flora": 0.411,
-        "mineral": 0.011,
-        "void": 0.011,
+        "flora": 0.563,
+        "void": 0.411,
+        "aero": 0.011,
+        "corrosive": 0.011,
         "thermal": 0.003,
-        "aero": 0.001
+        "luminous": 0.001
       },
       "habitat": "volcanic shelves",
-      "blurb": "Routes osmotic gradients across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Routes metabolic surplus across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2325,12 +2354,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Arcling"
+          "name": "Galeling"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Arccrest"
+          "name": "Galecrest"
         },
         {
           "stage": 3,
@@ -2338,16 +2367,16 @@
           "name": "Root Mesh"
         }
       ],
-      "primary_affinity": "galvanic",
-      "secondary_affinity": "aero",
+      "primary_affinity": "aero",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
-        "galvanic": 0.642,
-        "aero": 0.356,
-        "luminous": 0.001,
+        "aero": 0.642,
+        "sonic": 0.356,
+        "corrosive": 0.001,
         "thermal": 0.001
       },
       "habitat": "karst sinks",
-      "blurb": "Dissipates charge shells across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates pressure seams across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2358,12 +2387,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Oremite"
+          "name": "Heliomite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Orewing"
+          "name": "Heliowing"
         },
         {
           "stage": 3,
@@ -2371,19 +2400,19 @@
           "name": "Root Vault"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "corrosive",
       "affinity_emphasis_hint": {
-        "mineral": 0.522,
-        "luminous": 0.242,
-        "flora": 0.184,
-        "aero": 0.035,
-        "void": 0.014,
-        "aqueous": 0.002,
-        "galvanic": 0.001
+        "luminous": 0.522,
+        "corrosive": 0.242,
+        "aero": 0.184,
+        "void": 0.035,
+        "plasmic": 0.014,
+        "galvanic": 0.002,
+        "flora": 0.001
       },
       "habitat": "magma chambers",
-      "blurb": "Bleeds off lattice strain across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off photon coherence across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2394,12 +2423,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Vinecub"
+          "name": "Deepcub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Vinequill"
+          "name": "Deepquill"
         },
         {
           "stage": 3,
@@ -2407,19 +2436,19 @@
           "name": "Root Wake"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "void",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
-        "flora": 0.603,
-        "void": 0.294,
+        "void": 0.603,
+        "plasmic": 0.294,
         "thermal": 0.047,
-        "luminous": 0.024,
+        "corrosive": 0.016,
         "cryo": 0.028,
-        "galvanic": 0.003,
-        "aero": 0.001
+        "sonic": 0.009,
+        "mineral": 0.003
       },
       "habitat": "prismatic dunes",
-      "blurb": "Bleeds off metabolic surplus across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off vacuum folds across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2430,12 +2459,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ventlet"
+          "name": "Clanglet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Ventgleam"
+          "name": "Clanggleam"
         },
         {
           "stage": 3,
@@ -2443,18 +2472,18 @@
           "name": "Root Spire"
         }
       ],
-      "primary_affinity": "aero",
+      "primary_affinity": "sonic",
       "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "aero": 0.462,
+        "sonic": 0.462,
         "thermal": 0.365,
-        "void": 0.126,
-        "luminous": 0.034,
-        "mineral": 0.007,
+        "plasmic": 0.126,
+        "corrosive": 0.034,
+        "aero": 0.007,
         "aqueous": 0.005
       },
       "habitat": "thunderhead fronts",
-      "blurb": "Dissipates pressure seams across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates standing waves across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2465,12 +2494,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Uvmite"
+          "name": "Stripmite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Uvloom"
+          "name": "Striploom"
         },
         {
           "stage": 3,
@@ -2478,19 +2507,19 @@
           "name": "Ore Mantle"
         }
       ],
-      "primary_affinity": "luminous",
+      "primary_affinity": "corrosive",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "luminous": 0.427,
-        "thermal": 0.42,
-        "cryo": 0.103,
-        "void": 0.02,
-        "aero": 0.026,
-        "galvanic": 0.002,
-        "flora": 0.001
+        "corrosive": 0.427,
+        "cryo": 0.523,
+        "plasmic": 0.02,
+        "sonic": 0.024,
+        "void": 0.002,
+        "mineral": 0.002,
+        "luminous": 0.001
       },
       "habitat": "prismatic dunes",
-      "blurb": "Stores photon coherence across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores redox fronts across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2501,12 +2530,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Abyssalsprite"
+          "name": "Fusorsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Abyssalgleam"
+          "name": "Fusorgleam"
         },
         {
           "stage": 3,
@@ -2514,19 +2543,19 @@
           "name": "Ore Glass"
         }
       ],
-      "primary_affinity": "void",
+      "primary_affinity": "plasmic",
       "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "void": 0.432,
+        "plasmic": 0.432,
         "aqueous": 0.258,
-        "flora": 0.155,
+        "luminous": 0.155,
         "cryo": 0.065,
-        "luminous": 0.036,
-        "aero": 0.047,
-        "galvanic": 0.007
+        "corrosive": 0.036,
+        "void": 0.047,
+        "flora": 0.007
       },
       "habitat": "tundra talus",
-      "blurb": "Harvests vacuum folds across tundra talus; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests sheath turbulence across tundra talus; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2555,10 +2584,11 @@
       "affinity_emphasis_hint": {
         "thermal": 0.602,
         "galvanic": 0.39,
-        "aero": 0.004,
-        "void": 0.003,
-        "mineral": 0.002,
-        "aqueous": 0
+        "void": 0.004,
+        "plasmic": 0.002,
+        "flora": 0.002,
+        "aqueous": 0,
+        "corrosive": 0.001
       },
       "habitat": "neutral mesas",
       "blurb": "Stores thermal stress across neutral mesas; each instance rolls unique stats and materials at spawn.",
@@ -2591,10 +2621,12 @@
         "cryo": 0.456,
         "mineral": 0.342,
         "thermal": 0.094,
-        "luminous": 0.051,
-        "aero": 0.025,
-        "aqueous": 0.011,
-        "void": 0.021
+        "sonic": 0.051,
+        "luminous": 0.023,
+        "galvanic": 0.011,
+        "corrosive": 0.018,
+        "void": 0.002,
+        "plasmic": 0.003
       },
       "habitat": "volcanic shelves",
       "blurb": "Dissipates latent cold across volcanic shelves; each instance rolls unique stats and materials at spawn.",
@@ -2626,8 +2658,9 @@
       "affinity_emphasis_hint": {
         "aqueous": 0.577,
         "flora": 0.42,
-        "galvanic": 0.001,
-        "void": 0.001
+        "mineral": 0.001,
+        "aero": 0.001,
+        "plasmic": 0.001
       },
       "habitat": "deep trenches",
       "blurb": "Routes osmotic gradients across deep trenches; each instance rolls unique stats and materials at spawn.",
@@ -2659,12 +2692,12 @@
       "affinity_emphasis_hint": {
         "galvanic": 0.534,
         "aero": 0.24,
-        "aqueous": 0.125,
-        "flora": 0.077,
-        "thermal": 0.014,
-        "luminous": 0.007,
-        "cryo": 0.001,
-        "void": 0.001
+        "mineral": 0.125,
+        "luminous": 0.066,
+        "void": 0.012,
+        "cryo": 0.015,
+        "sonic": 0.007,
+        "plasmic": 0.001
       },
       "habitat": "coastal surge pools",
       "blurb": "Amplifies charge shells across coastal surge pools; each instance rolls unique stats and materials at spawn.",
@@ -2696,8 +2729,9 @@
       "affinity_emphasis_hint": {
         "mineral": 0.7,
         "luminous": 0.262,
-        "flora": 0.032,
-        "aqueous": 0.003,
+        "aero": 0.03,
+        "galvanic": 0.003,
+        "void": 0.002,
         "thermal": 0.003
       },
       "habitat": "urban runoff zones",
@@ -2729,11 +2763,12 @@
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
         "flora": 0.5,
-        "aero": 0.182,
-        "mineral": 0.241,
+        "void": 0.182,
+        "aero": 0.172,
         "cryo": 0.071,
-        "galvanic": 0.003,
-        "void": 0.003
+        "luminous": 0.069,
+        "mineral": 0.003,
+        "plasmic": 0.003
       },
       "habitat": "tundra talus",
       "blurb": "Stores metabolic surplus across tundra talus; each instance rolls unique stats and materials at spawn.",
@@ -2761,14 +2796,14 @@
         }
       ],
       "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
         "aero": 0.452,
-        "thermal": 0.279,
-        "luminous": 0.191,
-        "flora": 0.056,
-        "void": 0.016,
-        "cryo": 0.006
+        "sonic": 0.279,
+        "corrosive": 0.206,
+        "luminous": 0.056,
+        "cryo": 0.006,
+        "plasmic": 0.001
       },
       "habitat": "deep trenches",
       "blurb": "Shields pressure seams across deep trenches; each instance rolls unique stats and materials at spawn.",
@@ -2796,14 +2831,13 @@
         }
       ],
       "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "secondary_affinity": "corrosive",
       "affinity_emphasis_hint": {
         "luminous": 0.604,
-        "cryo": 0.375,
-        "aqueous": 0.016,
-        "aero": 0.002,
-        "flora": 0.001,
-        "mineral": 0.002
+        "corrosive": 0.375,
+        "cryo": 0.016,
+        "void": 0.002,
+        "flora": 0.003
       },
       "habitat": "near-vacuum ridges",
       "blurb": "Amplifies photon coherence across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
@@ -2831,12 +2865,12 @@
         }
       ],
       "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
         "void": 0.527,
-        "aqueous": 0.38,
+        "plasmic": 0.38,
         "galvanic": 0.06,
-        "aero": 0.026,
+        "luminous": 0.026,
         "mineral": 0.005,
         "thermal": 0.002
       },
@@ -2852,12 +2886,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Cinderwisp"
+          "name": "Resonwisp"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Cindermantle"
+          "name": "Resonmantle"
         },
         {
           "stage": 3,
@@ -2865,19 +2899,19 @@
           "name": "Arc Glass"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "thermal": 0.603,
-        "galvanic": 0.354,
-        "luminous": 0.034,
+        "sonic": 0.603,
+        "thermal": 0.354,
+        "void": 0.034,
         "cryo": 0.003,
-        "aqueous": 0.005,
-        "aero": 0.001,
-        "flora": 0.001
+        "galvanic": 0.005,
+        "luminous": 0.001,
+        "aero": 0.001
       },
       "habitat": "salt flats",
-      "blurb": "Amplifies thermal stress across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies standing waves across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2888,12 +2922,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Chillnymph"
+          "name": "Fluxbitenymph"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Chillmantle"
+          "name": "Fluxbitemantle"
         },
         {
           "stage": 3,
@@ -2901,17 +2935,18 @@
           "name": "Arc Rift"
         }
       ],
-      "primary_affinity": "cryo",
-      "secondary_affinity": "mineral",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "cryo": 0.684,
-        "mineral": 0.244,
-        "galvanic": 0.056,
-        "luminous": 0.013,
+        "corrosive": 0.684,
+        "cryo": 0.244,
+        "mineral": 0.056,
+        "sonic": 0.009,
+        "void": 0.004,
         "thermal": 0.003
       },
       "habitat": "salt flats",
-      "blurb": "Dissipates latent cold across salt flats; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates redox fronts across salt flats; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2922,12 +2957,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Spraylet"
+          "name": "Fusorlet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Spraygleam"
+          "name": "Fusorgleam"
         },
         {
           "stage": 3,
@@ -2935,19 +2970,21 @@
           "name": "Arc Loom"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "aqueous": 0.473,
-        "flora": 0.381,
-        "aero": 0.049,
-        "mineral": 0.029,
-        "void": 0.05,
-        "galvanic": 0.015,
-        "cryo": 0.003
+        "plasmic": 0.473,
+        "aqueous": 0.381,
+        "luminous": 0.049,
+        "aero": 0.026,
+        "corrosive": 0.046,
+        "mineral": 0.015,
+        "sonic": 0.003,
+        "galvanic": 0.003,
+        "flora": 0.003
       },
       "habitat": "magma chambers",
-      "blurb": "Harvests osmotic gradients across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests sheath turbulence across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2958,12 +2995,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Relaycub"
+          "name": "Scaldcub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Relaywing"
+          "name": "Scaldwing"
         },
         {
           "stage": 3,
@@ -2971,19 +3008,19 @@
           "name": "Arc Crest"
         }
       ],
-      "primary_affinity": "galvanic",
+      "primary_affinity": "thermal",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "galvanic": 0.493,
-        "aero": 0.313,
-        "thermal": 0.12,
-        "flora": 0.067,
-        "mineral": 0.005,
-        "void": 0.002,
-        "cryo": 0.001
+        "thermal": 0.493,
+        "sonic": 0.313,
+        "cryo": 0.12,
+        "luminous": 0.067,
+        "flora": 0.005,
+        "plasmic": 0.002,
+        "aqueous": 0.001
       },
       "habitat": "tundra talus",
-      "blurb": "Bleeds off charge shells across tundra talus; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off thermal stress across tundra talus; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -2994,12 +3031,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Shardrockcub"
+          "name": "Glacicub"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Shardrockridge"
+          "name": "Glaciridge"
         },
         {
           "stage": 3,
@@ -3007,18 +3044,18 @@
           "name": "Arc Fold"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "mineral",
       "affinity_emphasis_hint": {
-        "mineral": 0.599,
-        "luminous": 0.24,
-        "galvanic": 0.076,
-        "aero": 0.043,
-        "void": 0.039,
-        "cryo": 0.003
+        "cryo": 0.599,
+        "mineral": 0.24,
+        "aero": 0.076,
+        "corrosive": 0.043,
+        "plasmic": 0.039,
+        "galvanic": 0.003
       },
       "habitat": "karst sinks",
-      "blurb": "Amplifies lattice strain across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies latent cold across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3029,12 +3066,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Sporepod"
+          "name": "Brinepod"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Sporecrest"
+          "name": "Brinecrest"
         },
         {
           "stage": 3,
@@ -3042,17 +3079,17 @@
           "name": "Arc Mesh"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "flora",
       "affinity_emphasis_hint": {
-        "flora": 0.669,
-        "void": 0.316,
-        "cryo": 0.005,
-        "galvanic": 0.008,
-        "luminous": 0.002
+        "aqueous": 0.669,
+        "flora": 0.316,
+        "galvanic": 0.005,
+        "aero": 0.008,
+        "corrosive": 0.002
       },
       "habitat": "crystalline caverns",
-      "blurb": "Harvests metabolic surplus across crystalline caverns; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests osmotic gradients across crystalline caverns; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3063,12 +3100,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Cyclseed"
+          "name": "Stormseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Cyclloom"
+          "name": "Stormloom"
         },
         {
           "stage": 3,
@@ -3076,20 +3113,20 @@
           "name": "Arc Vault"
         }
       ],
-      "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aero",
       "affinity_emphasis_hint": {
-        "aero": 0.507,
-        "thermal": 0.31,
-        "cryo": 0.071,
-        "galvanic": 0.054,
-        "void": 0.03,
-        "mineral": 0.022,
-        "luminous": 0.005,
-        "flora": 0.001
+        "galvanic": 0.507,
+        "aero": 0.31,
+        "thermal": 0.071,
+        "mineral": 0.054,
+        "plasmic": 0.03,
+        "luminous": 0.022,
+        "sonic": 0.005,
+        "corrosive": 0.001
       },
       "habitat": "volcanic shelves",
-      "blurb": "Stores pressure seams across volcanic shelves; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores charge shells across volcanic shelves; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3100,12 +3137,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Uvlet"
+          "name": "Karstlet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Uvcrest"
+          "name": "Karstcrest"
         },
         {
           "stage": 3,
@@ -3113,17 +3150,18 @@
           "name": "Arc Wake"
         }
       ],
-      "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "primary_affinity": "mineral",
+      "secondary_affinity": "luminous",
       "affinity_emphasis_hint": {
-        "luminous": 0.556,
-        "cryo": 0.326,
-        "flora": 0.096,
+        "mineral": 0.556,
+        "luminous": 0.326,
+        "aero": 0.08,
         "aqueous": 0.023,
-        "thermal": 0
+        "void": 0.015,
+        "cryo": 0
       },
       "habitat": "thunderhead fronts",
-      "blurb": "Stores photon coherence across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Stores lattice strain across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3134,12 +3172,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Vacuumsprite"
+          "name": "Verdsprite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Vacuummantle"
+          "name": "Verdmantle"
         },
         {
           "stage": 3,
@@ -3147,20 +3185,20 @@
           "name": "Arc Spire"
         }
       ],
-      "primary_affinity": "void",
-      "secondary_affinity": "aqueous",
+      "primary_affinity": "flora",
+      "secondary_affinity": "void",
       "affinity_emphasis_hint": {
-        "void": 0.493,
-        "aqueous": 0.243,
-        "luminous": 0.176,
+        "flora": 0.493,
+        "void": 0.243,
+        "plasmic": 0.176,
         "galvanic": 0.054,
-        "aero": 0.014,
+        "corrosive": 0.014,
         "mineral": 0.015,
         "thermal": 0.003,
-        "cryo": 0.001
+        "aqueous": 0.001
       },
       "habitat": "near-vacuum ridges",
-      "blurb": "Channels vacuum folds across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels metabolic surplus across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3171,12 +3209,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Pyrepod"
+          "name": "Shearpod"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Pyreloom"
+          "name": "Shearloom"
         },
         {
           "stage": 3,
@@ -3184,18 +3222,19 @@
           "name": "Gale Mantle"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "aero",
+      "secondary_affinity": "sonic",
       "affinity_emphasis_hint": {
-        "thermal": 0.55,
-        "galvanic": 0.432,
-        "void": 0.01,
-        "mineral": 0.002,
-        "cryo": 0.005,
-        "flora": 0.001
+        "aero": 0.55,
+        "sonic": 0.432,
+        "plasmic": 0.01,
+        "galvanic": 0.002,
+        "thermal": 0.004,
+        "mineral": 0.001,
+        "cryo": 0.001
       },
       "habitat": "magma chambers",
-      "blurb": "Bleeds off thermal stress across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Bleeds off pressure seams across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3206,12 +3245,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Cryonymph"
+          "name": "Aethernymph"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Cryoridge"
+          "name": "Aetherridge"
         },
         {
           "stage": 3,
@@ -3219,18 +3258,18 @@
           "name": "Gale Glass"
         }
       ],
-      "primary_affinity": "cryo",
+      "primary_affinity": "luminous",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "cryo": 0.489,
+        "luminous": 0.489,
         "flora": 0.198,
         "galvanic": 0.27,
         "mineral": 0.019,
-        "void": 0.02,
-        "aero": 0.003
+        "plasmic": 0.02,
+        "void": 0.003
       },
       "habitat": "ancient rainforest",
-      "blurb": "Harvests latent cold across ancient rainforest; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests photon coherence across ancient rainforest; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3241,12 +3280,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ripplelet"
+          "name": "Gravitlet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Rippleshard"
+          "name": "Gravitshard"
         },
         {
           "stage": 3,
@@ -3254,17 +3293,17 @@
           "name": "Gale Rift"
         }
       ],
-      "primary_affinity": "aqueous",
-      "secondary_affinity": "flora",
+      "primary_affinity": "void",
+      "secondary_affinity": "plasmic",
       "affinity_emphasis_hint": {
-        "aqueous": 0.598,
-        "flora": 0.258,
-        "void": 0.109,
-        "mineral": 0.031,
+        "void": 0.598,
+        "plasmic": 0.258,
+        "corrosive": 0.109,
+        "flora": 0.031,
         "luminous": 0.004
       },
       "habitat": "prismatic dunes",
-      "blurb": "Harvests osmotic gradients across prismatic dunes; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests vacuum folds across prismatic dunes; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3275,12 +3314,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ampseed"
+          "name": "Phononseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Ampshard"
+          "name": "Phononshard"
         },
         {
           "stage": 3,
@@ -3288,18 +3327,19 @@
           "name": "Gale Loom"
         }
       ],
-      "primary_affinity": "galvanic",
-      "secondary_affinity": "aero",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "thermal",
       "affinity_emphasis_hint": {
-        "galvanic": 0.651,
-        "aero": 0.254,
-        "thermal": 0.08,
-        "luminous": 0.007,
-        "flora": 0.005,
-        "mineral": 0.003
+        "sonic": 0.651,
+        "thermal": 0.254,
+        "cryo": 0.08,
+        "void": 0.007,
+        "luminous": 0.005,
+        "flora": 0.002,
+        "aero": 0.001
       },
       "habitat": "karst sinks",
-      "blurb": "Channels charge shells across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels standing waves across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3310,12 +3350,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Silicaseed"
+          "name": "Oxidseed"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Silicamantle"
+          "name": "Oxidmantle"
         },
         {
           "stage": 3,
@@ -3323,20 +3363,21 @@
           "name": "Gale Crest"
         }
       ],
-      "primary_affinity": "mineral",
-      "secondary_affinity": "luminous",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "cryo",
       "affinity_emphasis_hint": {
-        "mineral": 0.473,
-        "luminous": 0.268,
-        "galvanic": 0.154,
-        "cryo": 0.04,
-        "flora": 0.041,
-        "aqueous": 0.019,
+        "corrosive": 0.473,
+        "cryo": 0.268,
+        "aero": 0.154,
+        "galvanic": 0.04,
+        "void": 0.041,
+        "mineral": 0.019,
         "thermal": 0.003,
-        "void": 0.002
+        "sonic": 0.001,
+        "plasmic": 0.001
       },
       "habitat": "magma chambers",
-      "blurb": "Amplifies lattice strain across magma chambers; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Amplifies redox fronts across magma chambers; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3347,12 +3388,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Rootnymph"
+          "name": "Afterflarenymph"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Rootloom"
+          "name": "Afterflareloom"
         },
         {
           "stage": 3,
@@ -3360,14 +3401,14 @@
           "name": "Gale Fold"
         }
       ],
-      "primary_affinity": "flora",
-      "secondary_affinity": "void",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aqueous",
       "affinity_emphasis_hint": {
-        "flora": 0.666,
-        "void": 0.334
+        "plasmic": 0.666,
+        "aqueous": 0.334
       },
       "habitat": "karst sinks",
-      "blurb": "Dissipates metabolic surplus across karst sinks; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Dissipates sheath turbulence across karst sinks; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3378,12 +3419,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Ventlet"
+          "name": "Bloomheatlet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Ventloom"
+          "name": "Bloomheatloom"
         },
         {
           "stage": 3,
@@ -3391,18 +3432,19 @@
           "name": "Gale Mesh"
         }
       ],
-      "primary_affinity": "aero",
-      "secondary_affinity": "thermal",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "galvanic",
       "affinity_emphasis_hint": {
-        "aero": 0.453,
-        "thermal": 0.326,
-        "galvanic": 0.169,
+        "thermal": 0.453,
+        "galvanic": 0.326,
+        "flora": 0.169,
         "cryo": 0.038,
-        "luminous": 0.012,
-        "flora": 0.001
+        "sonic": 0.009,
+        "corrosive": 0.003,
+        "void": 0.001
       },
       "habitat": "thunderhead fronts",
-      "blurb": "Harvests pressure seams across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests thermal stress across thunderhead fronts; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3413,12 +3455,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Phosmite"
+          "name": "Boreamite"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Phosshard"
+          "name": "Boreashard"
         },
         {
           "stage": 3,
@@ -3426,19 +3468,19 @@
           "name": "Gale Vault"
         }
       ],
-      "primary_affinity": "luminous",
-      "secondary_affinity": "cryo",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "mineral",
       "affinity_emphasis_hint": {
-        "luminous": 0.604,
-        "cryo": 0.308,
-        "void": 0.04,
-        "aero": 0.04,
-        "galvanic": 0.006,
-        "flora": 0.001,
+        "cryo": 0.604,
+        "mineral": 0.308,
+        "corrosive": 0.042,
+        "sonic": 0.038,
+        "aero": 0.006,
+        "void": 0.001,
         "aqueous": 0.001
       },
       "habitat": "neutral mesas",
-      "blurb": "Channels photon coherence across neutral mesas; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels latent cold across neutral mesas; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3449,12 +3491,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Sinkpod"
+          "name": "Tidepod"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Sinkwing"
+          "name": "Tidewing"
         },
         {
           "stage": 3,
@@ -3462,18 +3504,19 @@
           "name": "Gale Wake"
         }
       ],
-      "primary_affinity": "void",
+      "primary_affinity": "aqueous",
       "secondary_affinity": null,
       "affinity_emphasis_hint": {
-        "void": 0.565,
-        "mineral": 0.266,
-        "galvanic": 0.07,
-        "flora": 0.096,
-        "cryo": 0.002,
-        "luminous": 0.001
+        "aqueous": 0.565,
+        "luminous": 0.266,
+        "aero": 0.07,
+        "void": 0.096,
+        "galvanic": 0.001,
+        "corrosive": 0.001,
+        "cryo": 0.001
       },
       "habitat": "coastal surge pools",
-      "blurb": "Channels vacuum folds across coastal surge pools; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Channels osmotic gradients across coastal surge pools; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     },
     {
@@ -3484,12 +3527,12 @@
         {
           "stage": 1,
           "code": "morph",
-          "name": "Emberlet"
+          "name": "Arclet"
         },
         {
           "stage": 2,
           "code": "ascension",
-          "name": "Emberwing"
+          "name": "Arcwing"
         },
         {
           "stage": 3,
@@ -3497,19 +3540,20 @@
           "name": "Gale Spire"
         }
       ],
-      "primary_affinity": "thermal",
-      "secondary_affinity": "galvanic",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aero",
       "affinity_emphasis_hint": {
-        "thermal": 0.525,
-        "galvanic": 0.247,
-        "aqueous": 0.091,
-        "aero": 0.054,
-        "cryo": 0.045,
-        "flora": 0.036,
-        "luminous": 0.001
+        "galvanic": 0.525,
+        "aero": 0.247,
+        "cryo": 0.09,
+        "void": 0.054,
+        "thermal": 0.045,
+        "luminous": 0.036,
+        "aqueous": 0.002,
+        "sonic": 0.001
       },
       "habitat": "near-vacuum ridges",
-      "blurb": "Harvests thermal stress across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
+      "blurb": "Harvests charge shells across near-vacuum ridges; each instance rolls unique stats and materials at spawn.",
       "species_tags": []
     }
   ]

@@ -31,9 +31,11 @@ Wildloom is a large, multi-subsystem game: sessions, world sync, combat authorit
 
 #### Procedural identity (every instance is its own build)
 
-**Intent:** Avoid “same jellyfish, same Galvanic/Aero spread” clones. At generation and again when a battle instance is created, creatures draw from **continuous distributions** so **core stats**, **material profiles** (all axes), **training emphasis**, **appearance genes**, and **learned move loadouts** can differ widely—even within one species line.
+**Intent:** Avoid “same jellyfish, same Galvanic/Aero spread” clones. At generation and again when a battle instance is created, creatures draw from **continuous distributions** so **core stats**, **extended stats**, **material profiles** (every axis), **affinity emphasis**, **appearance genes**, and **learned move loadouts** can differ widely—even within one species line.
 
-- **Typing as composition, not a preset pair:** Display names combine biology/flavor + **multiple affinity emphases** (e.g. “floral–luminous jellyfish”) backed by data **vectors or weights**, not only `primary`/`secondary` enums. Two individuals of the same species can sit at different points in that space.
+**No species-fixed stat sheet (hard rule):** A **species line** (`catalog.json` row) does **not** define canonical base stats, substats, material means, or guaranteed affinity weights for combat. Those live only on **creature instances** (rolled at spawn/capture/hatch). Catalog fields such as `primary_affinity`, `secondary_affinity`, and `affinity_emphasis_hint` are **non-authoritative flavor** for Pokédex sorting, procedural **name** generation, and tutorials—they must **not** be treated as the instance’s true typing or build unless explicitly copied into a stub (e.g. legacy UI); the server’s persisted instance record overrides them.
+
+- **Typing as composition, not a preset pair:** Display labels combine biology/flavor + **rolled affinity_emphasis** vectors (e.g. “floral–luminous jellyfish”). Optional `primary`/`secondary` summaries are **collapsed views** derived from the vector or omitted.
 - **Ability acquisition:** Moves and passives come from a **broad learnable pool**; soft gates use stats, materials, and affinity emphasis (e.g. high `conductivity` + Galvanic tendency unlocks chain arcs faster)—not a single rigid tree per species. Players and procedural trainers both assign **sliding coefficients** within authored bounds (`base_power`, modality weights, tag intensities).
 - **Moves as authored compositions:** A frame like **“Blast”** is a template; infusion layers add affinity flavor (**Void Blast**, **Luminous–Mineral Blast**, …) with **continuous knobs** that feed Layer 1 shaping, Layer 2 predicates, and Layer 3 impulses—see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5, §3 and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md).
 
@@ -104,10 +106,10 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 3. **World state** — tiles, collisions, spawns (species, rarity), interactables; **room scaling config** feeding spawn resolution.
 4. **Encounter model** — wild encounters optional; **PvP:** propose → accept → battle instance.
 5. **Battle engine** — deterministic, server-authoritative, seedable RNG; resolver [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (dynamic **`m1`**, continuous flows [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md)); **arena field state** from procedural biome composition.
-6. **Creature model** — species, stage, level, deep stat blocks, training vectors, moves, held item, **appearance seed**, **variant flags** (e.g. lustrous/coveted).
+6. **Creature model** — species line (**identity only**), stage, level, **rolled** stat blocks / materials / emphasis vectors, training vectors, moves, held item, **appearance seed**, variant flags (e.g. lustrous).
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
-9. **Content pipeline** — data files for species × stages ([`data/species/catalog.json`](../data/species/catalog.json) — 100 lines, JSON Schema [`species.schema.json`](../data/species/species.schema.json)); moves, **reaction rules**, balance tooling (Monte Carlo / sensitivities).
+9. **Content pipeline** — [`data/species/catalog.json`](../data/species/catalog.json) (100 **identity** lines + schema [`species.schema.json`](../data/species/species.schema.json)); moves; **reaction rules**; balance tooling. **Combat stats are not authored per catalog row** — they live on instances.
 10. **Rendering hooks** — shader/uniform pipeline driven by **appearance genes** (§7); optional quality tiers for low-end devices.
 
 ---
@@ -145,12 +147,13 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 
 ## 5. Stage fairness (competitive at any stage, infinite `L`)
 
-**Concrete pattern:**
+**Concrete pattern (fully rolled budgets):**
 
-- Define total stat budget **B(L)** per level for every creature (same formula for all stages at a given `L`; see §1 for two-phase behavior).
-- Each stage **s ∈ {1, 2, 3}** has a base spread vector **w_s** over core stats (**stamina**, physical offense/defense, special offense/defense, speed — exact schema TBD) that **sums to 1**.
-- **Training** adds a bounded tunable vector **t(L)** with **diminishing returns** as `L` grows so incremental grind shifts distribution without breaking brackets—caps may be **percentage of B(L)** rather than a single L=100 constant.
-- **Stage advancement** unlocks moves/passives and may shift **w_s**, but **must not** grant a hidden higher **B(L)** than another creature at the same level/stage ruleset. Competitive meta = **roles and reactions**, not raw tier.
+- Define total stat budget **B(L)** per level (same global formula for every creature at `L`; see §1 for two-phase behavior).
+- **Per instance**, sample how **B(L)** is **partitioned** across the core stat tuple (**stamina**, **might**, **bulwark**, **insight**, **ward**, **tempo**, …) using a **random compositional draw** (e.g. Dirichlet / bounded independent rolls), optionally conditioned only on **stage** **s ∈ {1,2,3}** via global hyperparameters—not on species id. Two Ash Mantles at the same level can land on opposite spreads.
+- **Extended stats** (**acuity**, **resilience**, **flux** — [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3) roll from their own distributions or derive from the rolled core tuple via **global** curves; species lines do not author per-line formulas.
+- **Training / Resonance** applies on top as a bounded tunable allocation **t(L)** with diminishing returns and bracket caps (percentage of **B(L)** or parallel budget pools—data-owned).
+- **Stage advancement** unlocks moves/passives and may widen/narrow roll variance or training caps via **global stage rules**, but **must not** bake a hidden higher **B(L)** than another creature at the same level under the same ruleset. Competitive meta = **roles and reactions**, not species-tier privilege.
 
 ---
 
@@ -160,8 +163,9 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 
 ### Representation (technical)
 
-- **Primary affinity:** Small discrete set (order-of tens), tuned for readability.
-- **Secondary tags / latent traits:** Bitmask or vector (e.g. `thermal_mass`, `rigidity`, `porosity`, `charge_buildup`) used by the resolver—not shown in full to new players; surfaced via inspect UI / lore / battle log over time.
+- **Affinity catalog:** Nine IDs ship first in code paths; **twelve** IDs (**Thermal … Void** plus **Sonic**, **Corrosive**, **Plasmic**) are the target set — IDs, `CHART₀`, and rationale in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1 summarizes both tiers.
+- **Instance emphasis:** Resolver consumes **rolled `affinity_emphasis`** over active affinity IDs + dynamic **`m1`** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5); catalog “primary” is not authoritative (§1 *Creatures*).
+- **Latent traits:** Material vector + Layer 3 accumulators (`thermal_mass`, `rigidity`, `wetness`, `sonic_stress`, `corrosion`, `ionization`, … — full list [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§4, §9) — surfaced gradually via inspect UI / meters.
 - **Battle state fields:** Ambient and local scalars the resolver reads (`wetness`, `temperature_delta`, `stress_fracture_accumulator`, …) updated by moves, weather, terrain, and reactions.
 
 ### Resolver shape
@@ -262,4 +266,5 @@ Choose one to lock into design before heavy implementation:
 | 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
 | 2026-05-03 | §4 endurance-first framing: DoT as \(\mathrm{d}S/\mathrm{d}t\); core stat **`stamina`** (replaces HP metaphor in progression spread). |
 | 2026-05-03 | Creatures: procedural per-instance stats/materials/typing composition; broad ability learning; compositional moves. Battles: procedural biome assembly. Layer 1: stat-shaped multiplier (not flat-only chart). |
-| 2026-05-03 | Content: [`data/species/catalog.json`](../data/species/catalog.json) (100 lines) + [`species.schema.json`](../data/species/species.schema.json); `npm run gen:species` to regenerate from [`scripts/gen-species-catalog.mjs`](../scripts/gen-species-catalog.mjs). |
+| 2026-05-03 | Content: [`data/species/catalog.json`](../data/species/catalog.json) (100 **identity** lines, twelve affinity IDs on dex cards) + [`species.schema.json`](../data/species/species.schema.json); `npm run gen:species` from [`scripts/gen-species-catalog.mjs`](../scripts/gen-species-catalog.mjs). |
+| 2026-05-03 | §1/§5: **No species-fixed stats** — all combat numbers roll per instance; catalog affinity fields are flavor-only. §6: twelve-affinity target + emphasis note. |

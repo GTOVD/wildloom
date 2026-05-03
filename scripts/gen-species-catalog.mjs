@@ -19,6 +19,9 @@ const AFFINITIES = [
   'aero',
   'luminous',
   'void',
+  'sonic',
+  'corrosive',
+  'plasmic',
 ];
 
 function mulberry32(seed) {
@@ -82,6 +85,9 @@ const PREFIX = {
   aero: ['gale', 'strato', 'zephyr', 'vortex', 'nimbus', 'shear', 'cycl', 'draft', 'alto', 'vent'],
   luminous: ['lux', 'helio', 'prism', 'gleam', 'radi', 'phos', 'aether', 'beam', 'uv', 'corona'],
   void: ['umbral', 'sink', 'null', 'gravit', 'vacuum', 'eclipse', 'abyssal', 'fold', 'singul', 'deep'],
+  sonic: ['echo', 'reson', 'chord', 'timbre', 'wavefront', 'harmonic', 'cavity', 'pulseband', 'phonon', 'clang'],
+  corrosive: ['caust', 'vitri', 'etch', 'chelate', 'lye', 'acid', 'oxid', 'ionate', 'strip', 'fluxbite'],
+  plasmic: ['nova', 'chromo', 'sheath', 'afterflare', 'torchveil', 'ionwake', 'fusor', 'arcjet', 'corbel', 'flare'],
 };
 
 const SUFFIX_S1 = ['ling', 'mite', 'let', 'pod', 'wisp', 'cub', 'nymph', 'seed', 'mite', 'sprite'];
@@ -135,6 +141,9 @@ function blurb(primary, habitat, rng) {
     aero: 'pressure seams',
     luminous: 'photon coherence',
     void: 'vacuum folds',
+    sonic: 'standing waves',
+    corrosive: 'redox fronts',
+    plasmic: 'sheath turbulence',
   };
   return `${pick(rng, verbs)} ${nouns[primary]} across ${habitat}; each instance rolls unique stats and materials at spawn.`;
 }
@@ -157,9 +166,9 @@ function generate() {
     }
     usedSlugs.add(slug);
 
-    const primary = AFFINITIES[i % 9];
-    let secondary = AFFINITIES[(i + 3) % 9];
-    if (secondary === primary) secondary = AFFINITIES[(i + 5) % 9];
+    const primary = AFFINITIES[i % AFFINITIES.length];
+    let secondary = AFFINITIES[(i + 3) % AFFINITIES.length];
+    if (secondary === primary) secondary = AFFINITIES[(i + 5) % AFFINITIES.length];
     const secondaryOrNull = i % 7 === 0 ? null : secondary;
 
     const pre = pick(rng, PREFIX[primary]);
@@ -191,7 +200,7 @@ function generate() {
     $schema: './species.schema.json',
     schema_version: '1.0.0',
     content_note:
-      'One hundred species lines (Wildloom). affinity_emphasis_hint is a template prior; instances vary per TECHNICAL-DESIGN §1.',
+      'One hundred species lines (Wildloom). Identity/names/stages only — combat stats and affinity_emphasis roll per instance (TECHNICAL-DESIGN §1). affinity_emphasis_hint and primary/secondary are dex/UI seeds, not authoritative builds.',
     species_count: species.length,
     species,
   };

@@ -1,6 +1,6 @@
 # Wildloom — gameplay systems (affinities, field, progression)
 
-**Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 uses a **dynamic `m1`** (§5.5) anchored by a **`CHART₀` baseline** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §2); rule IDs remain **data-driven** until balance passes.
+**Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 uses **dynamic `m1`** (§5.5) anchored by **`CHART₀`** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §2). **Twelve** affinity IDs are the target roster; **nine** ship first in MVP enums ([§1](#1-affinity-framework--twelve-ids-mvp-ships-nine)).
 
 **Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
 
@@ -8,9 +8,34 @@
 
 ---
 
-## 1. Nine-affinity framework (Layer 1)
+## 1. Affinity framework — twelve IDs, MVP ships nine
 
-To keep the matchup chart readable (under ~10 affinities) while supporting physics-flavored depth in Layers 2–3, we use **original names** that imply states and energy—not third-party franchises.
+**Interactions:** Layer 1 dynamic **`m1`** reshapes baseline matchup tendencies (**`CHART₀`**) using emphasis vectors, stats, materials, move fusion, and field ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5). Layer 2 predicate catalog below + [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) combos/stances. Layer 3 accumulators couple heat, wetness, fracture, charge, **sonic_stress**, **corrosion**, **ionization**, etc. ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§8–9).
+
+### 1.0 Twelve-affinity roster (target content IDs)
+
+| ID | Affinity | Theme (short) |
+|----|----------|----------------|
+| `TH` | **Thermal** | Heat, combustion, convection |
+| `CY` | **Cryo** | Cold, entropy, brittle setups |
+| `AQ` | **Aqueous** | Liquids, wetness, pressure |
+| `GA` | **Galvanic** | Charge, circuits, arcs |
+| `MI` | **Mineral** | Stone, crystal, grounding |
+| `FL` | **Flora** | Biomass, sustain, DoT |
+| `AE` | **Aero** | Gas, wind, field spread |
+| `LU` | **Luminous** | Light, surge pierce |
+| `VO` | **Void** | Vacuum / isolation, compression flavors |
+| `SO` | **Sonic** | Resonance, impedance, medium |
+| `CR` | **Corrosive** | Acid/base kinetics, armor erosion |
+| `PL` | **Plasmic** | Ionized burst, ionization field |
+
+Authoritative **`CHART₀`**, Sonic/Corrosive/Plasmic mechanics, statuses, and biomes: [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2, §§8–13.
+
+### 1.1 MVP nine (resolver ships first)
+
+Early engine enums may omit **`sonic`**, **`corrosive`**, **`plasmic`** until content hooks land; design assumes they eventually participate in the **same** Layer 1–3 machinery.
+
+To keep the matchup chart readable during onboarding, tutorials may **collapse** affinities into the nine-row summary below (still physics-flavored naming).
 
 | Affinity | Theme & metaphor | Identity / playstyle |
 |----------|------------------|----------------------|
@@ -26,17 +51,15 @@ To keep the matchup chart readable (under ~10 affinities) while supporting physi
 
 **Open decision:** Keep this “physics-first” naming, push further into non-element metaphors, or split “identity” vs “damage flavor” for readability—finalize before shipping tutorial copy.
 
-**Post-MVP expansion:** Three additional affinities (**Sonic**, **Corrosive**, **Plasmic**), dual-affinity blend defaults, and the complete matchup matrix are specified in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2—implement after the nine-type chart ships.
-
 ---
 
-## 1.1 Procedural uniqueness, composed typings, and move authoring
+## 1.2 Procedural uniqueness, composed typings, and move authoring
 
-**Creature instances:** Each animal is a **draw from continuous distributions** across stats, materials, training emphasis, genes, and learned abilities—not a fixed spreadsheet row per species. Same **species line** can yield vastly different builds ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1).
+**Creature instances:** Every animal is a **pure roll**: **no species line defines base stats, substats, materials, or affinity weights** for combat. The species row is **identity + dex flavor** (names, stages, habitat string, optional non-binding hints). Stats/materials/emphasis are drawn at spawn/capture from **global + stage (+ optional encounter biome) distributions**, then advanced by **Resonance** / training ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5). Examples with fake numbers: [`SPECIES-INSTANCE-EXAMPLES.md`](../docs/SPECIES-INSTANCE-EXAMPLES.md).
 
-**Typing:** Prefer **`affinity_emphasis` vectors** (and display labels like “floral–luminous jellyfish”) over locking every individual into a canonical dual-type cliché. Chart **`CHART₀`** supplies metaphor anchors; **effective matchup feel** slides with build ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2.3, §5.5).
+**Typing:** Combat uses **`affinity_emphasis`** vectors over the twelve IDs (or nine until unlocked). Catalog `primary_affinity` / `affinity_emphasis_hint` are **dex/UI seeds only** unless you explicitly mirror them into a legacy preview—**authoritative** emphasis always comes from the instance payload.
 
-**Abilities & moves:** Templates (**Blast**, **Veil**, …) accept **infusions** and **`affinity_weights`** so authored or player-facing names (**Void Blast**, **Luminous–Mineral Blast**) map to **sliding coefficients**—power, pierce bias, tags, modality mix—within authored ceilings. **Soft unlock gates** use stats/materials/emphasis; avoid hard “only species X learns move Y” except where narrative demands.
+**Abilities & moves:** Templates (**Blast**, **Veil**, …) accept **infusions** and **`affinity_weights`** so authored or player-facing names (**Void Blast**, **Luminous–Mineral Blast**, …) map to **sliding coefficients**—power, pierce bias, tags, modality mix—within authored ceilings. **Soft unlock gates** use **rolled** stats/materials/emphasis; avoid hard “only species X learns move Y” except narrative cosmetics.
 
 **Battles:** Arenas compose from **biome / field primitives** with procedural seeds while replay stays deterministic ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12; [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 *World & battles*).
 
@@ -56,7 +79,7 @@ Accumulators are continuous battle scalars (per combatant unless noted). They de
 | `concussion` | Concussive-heavy strikes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b; weight ω_con) | Tempo / accuracy decay via smooth coupling—[`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5. |
 | `laceration` | Slashing-heavy strikes (weight ω_slash), esp. high porosity/wetness | Feeds bleed **`\mathrm{d}S/\mathrm{d}t`** channels §3.6; Layer 2 gates severity caps. |
 
-Additional scalars (`charge_buildup`, etc.) stay in `Combatant.scalars` per [`packages/combat`](../packages/combat/src/types.ts).
+Additional scalars (`charge_buildup`, **`cryo_load`**, **`corrosion`**, **`radiation`**, **`sonic_stress`**, **`ionization`**, **`compression`**, **`bio_resonance`**, **`magnetic_flux`**, …) ship per [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §9; MVP code may subset until rules land — [`packages/combat`](../packages/combat/src/types.ts).
 
 ### 2.2 Signature reaction rules (Layer 2)
 
@@ -106,33 +129,35 @@ Optional **derived field cues** (author decides whether to expose raw numbers): 
 
 ---
 
-## 4. Stat growth — genetic variance & resonance pool
+## 4. Stat growth — fully rolled aptitudes + visible Resonance
 
-**Goals:** Remove opaque hidden rolls, keep identity variance, stay compatible with infinite-level **`B(L)`** from [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md).
+**Goals:** Every instance’s combat math comes from **rolls + training**, not from a hidden species spreadsheet. Compatible with infinite-level **`B(L)`** ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5).
 
-### 4.1 Base & genetic variance
+### 4.1 Rolled aptitudes (no species base vector)
 
-- Species defines a **base six-vector** over core stats.
-- On creation/capture, roll a **variance vector** (e.g. ±5% per stat), **fully visible** in UI immediately.
+- At creation/capture, sample a **raw aptitude vector** over the six core stats (and separately over extended stats if enabled) from **global/stage/encounter** distributions scaled by **`B(L)`** — **not** from species id.
+- Apply **genetic jitter** (e.g. narrow noise per axis), **fully visible** immediately.
+- **Material profile:** independent roll over **twelve** axes ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §4) — species line does not fix morphology numbers.
 
 ### 4.2 Resonance (training allocation)
 
-Working name: **Resonance** — a transparent spendable budget (replaces classic invisible EV grind).
+Working name: **Resonance** — transparent spendable budget (replaces invisible EV grind).
 
-- **Accrual:** e.g. flat Resonance per level through phase boundaries; past level 100 use diminishing Resonance-per-level consistent with post-100 grind philosophy (**tune in data**).
-- **Allocation:** Spent at hubs (“tuning stations”) into the six core stats; **respec rules** are product policy (costed vs free in dev rooms).
-- **Hard cap:** No single stat may hold more than a fixed fraction (e.g. 40%) of **total allocated Resonance at that level** to avoid degenerate builds that stress-break saturation math.
+- **Accrual:** per level through phase boundaries; post-100 diminishing accrual consistent with grind philosophy (data-owned).
+- **Allocation:** hubs (“tuning stations”) into whichever stats the design exposes (six core + optional **acuity / resilience / flux**).
+- **Hard cap:** e.g. no single stat >40% of allocated pool at a snapshot — avoids breaking saturation math.
 
 ### 4.3 Combined stat formula (conceptual)
 
 For a core stat `S` at level `L`:
 
 \[
-S_{\text{final}} = \Bigl( S_{\text{base}} \cdot (1 + V_{\text{variance}}) + R_{\text{allocated}} \Bigr) \cdot f_{\text{growth}}(L)
+S_{\text{final}} = \Bigl( A_{\text{rolled}} + R_{\text{allocated}} \Bigr) \cdot f_{\text{growth}}(L)
 \]
 
-- \(f_{\text{growth}}(L)\) follows **Phase A / Phase B** piecewise progression (technical design §1).
-- Wire \(R_{\text{allocated}}\) and caps into the same modifier-stacking policy as combat (`COMBAT-MODEL` §8).
+- \(A_{\text{rolled}}\) is the **instance** aptitude draw (+ jitter), **never** a species table lookup.
+- \(f_{\text{growth}}(L)\) follows Phase A / B ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1).
+- Extended stats either roll independently or use **global** maps \(g_j(A_{\text{rolled}})\), not per-species curves ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3.3 migration is **default prior for simulators**, not a creature definition).
 
 ---
 
@@ -153,6 +178,9 @@ Not lesson plans—**design targets** for observable behavior + copy. Real class
 | Aero | Fluids carry scalars (spread/dilute) | field clears / spreads accumulators |
 | Luminous | Energy carriers bypass some material paths | surge-first tuning |
 | Void | Isolation / compression metaphors | **`stamina` / \(S_{\max}\)** compression separate from chemical physics |
+| Sonic | Periodic forcing + impedance | `sonic_stress`; resonance combos vs rigid bodies |
+| Corrosive | Rate laws erode defense over time | `corrosion`; long-fight pressure |
+| Plasmic | Ionized burst + field coupling | `ionization`; synergizes with Galvanic hooks |
 
 ### 5.2 Strike modalities (concussive / piercing / slashing)
 
@@ -164,17 +192,18 @@ Not lesson plans—**design targets** for observable behavior + copy. Real class
 
 ---
 
-## 6. Extended accumulators (optional backlog)
+## 6. Extended accumulators (reference)
 
-Add only when rules justify CPU + UX:
+Full Layer 3 registry, cross-coupling notes, UI tiers: [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §9. MVP builds may implement a subset; **do not** imply species-specific fixed accumulator priors — starting battle scalars reset from rules + field, not from catalog rows.
 
 | Key | Role sketch |
 |-----|-------------|
-| `ionization` | Track plasma-friendly Layer 2 bridges between Thermal ↔ Galvanic (high complexity—flag gated). |
-| `surface_charge` | Separate from bulk `charge_buildup` for layered conductive skins. |
-| `plastic_strain` | Slow irreversible bulwark creep under sustained strikes (advanced bracket only). |
-
-Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) style before authoring predicates.
+| `ionization` | Plasma / Plasmic bridges; field leaks ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§7–8). |
+| `sonic_stress` | Sonic resonance path to `deafened` / combos. |
+| `corrosion` | CR catalyst + armor shred thresholds. |
+| `cryo_load` | Gates `frozen` with `heat_load`. |
+| `compression` | Void-heavy compression meter. |
+| `bio_resonance` | Flora sustained economy / biome coupling. |
 
 ---
 
@@ -187,4 +216,4 @@ Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-
 | 2026-05-03 | `concussion` / `laceration`; modality reaction sketches; §5.2 strike modality literacy |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §1 post-MVP twelve-affinity pointer |
 | 2026-05-03 | Void / bleed copy aligned with endurance pool \(S\) and **`stamina`** ceiling ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2, §6). |
-| 2026-05-03 | §1.1 procedural uniqueness, composed typings, infusion moves, procedural arenas; Layer 1 dynamic `m1` note in header |
+| 2026-05-03 | §1 twelve-ID roster + MVP nine; Layer interaction paragraph; §4 **no species base stats**; §5.1 SO/CR/PL literacy; §6 → DESIGN-SUPPLEMENT §9 |

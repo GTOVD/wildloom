@@ -19,7 +19,8 @@ TypeScript monorepo: web client + authoritative game server + shared simulation 
 - **Expanded design (12 affinities, biomes, combos):** [`docs/DESIGN-SUPPLEMENT.md`](docs/DESIGN-SUPPLEMENT.md)
 - **Combat package (TS):** [`packages/combat`](packages/combat/README.md)
 - Continuous simulation & pedagogy: [`docs/SIMULATION-AND-PEDAGOGY.md`](docs/SIMULATION-AND-PEDAGOGY.md)
-- **Species catalog (100 lines):** [`data/species/catalog.json`](data/species/catalog.json) — regenerate with `npm run gen:species`
+- **Species catalog (100 lines):** [`data/species/catalog.json`](data/species/catalog.json) — **identity** only (names/stages/habitat); twelve affinity IDs on dex cards are **not** combat-authoritative; regenerate with `npm run gen:species`
+- **Procedural instance examples:** [`docs/SPECIES-INSTANCE-EXAMPLES.md`](docs/SPECIES-INSTANCE-EXAMPLES.md) · [`data/species/examples/`](data/species/examples/)
 
 ## License
 
