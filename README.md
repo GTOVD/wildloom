@@ -17,7 +17,7 @@ TypeScript monorepo: web client + authoritative game server + shared simulation 
 - **Combat math & pipeline:** [`docs/COMBAT-MODEL.md`](docs/COMBAT-MODEL.md)
 - **Affinities, field, progression:** [`docs/GAMEPLAY-SYSTEMS.md`](docs/GAMEPLAY-SYSTEMS.md)
 - **Combat package (TS):** [`packages/combat`](packages/combat/README.md)
-- **Vision & guardrails:** [`docs/PROJECT-BRIEF.md`](docs/PROJECT-BRIEF.md)
+- Continuous simulation & pedagogy: [`docs/SIMULATION-AND-PEDAGOGY.md`](docs/SIMULATION-AND-PEDAGOGY.md)
 
 ## License
 

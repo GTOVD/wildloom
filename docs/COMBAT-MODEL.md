@@ -1,6 +1,6 @@
 # Wildloom — combat model (attributes, affinities, damage)
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. Code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. Code: [`packages/combat`](../packages/combat/README.md).
 
 **Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (chart + stats); optional depth from **material traits** and **field scalars**; no duplicated formulas across tiers.
 
@@ -263,14 +263,22 @@ emit HitResolved { damage_hp, breakdown }    -- breakdown for UI/log/replay
 
 ## 6. Damage over time & coupled flows
 
-DoTs are **not** re-run through full strike/surge chart unless rule says so.
+DoTs are **not** re-run through full strike/surge chart unless a rule explicitly routes partial damage back through saturation.
 
-```
-dHP_dt = −Σ_k potency_k(u) + recovery_terms
-Δu_k = f_k(u, resistances)
-```
+### 6.1 Coupled state view
 
-Integrate with fixed substeps (e.g. 1/10 turn) for determinism. **Stacks** merge via defined policy (`max stacks`, `refresh duration`, `harmonic sum`).
+Let \(\mathbf{u}\) bundle Layer 3 scalars (`heat_load`, `wetness`, `fracture`, `charge_buildup`, …). Between discrete actions:
+
+\[
+\frac{d(\mathrm{HP})}{dt} = -\sum_k \mathrm{potency}_k(\mathbf{u}) + \text{recovery},\qquad
+\frac{d\mathbf{u}}{dt} = \mathbf{g}(\mathbf{u}, \text{field}, \text{materials}, \ldots)
+\]
+
+Hits inject **impulses** \(\Delta \mathbf{u}\) and may reshape effective defense before \(\sigma\) is evaluated—ordering must match [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §4.
+
+### 6.2 Integration policy
+
+Integrate with **fixed subticks** per turn (e.g. `1/10`) for deterministic replays. Stack merging uses explicit policies (`max stacks`, duration refresh, harmonic sum). Full toy flows (cooling, wetness exchange, charge leakage) live in the simulation doc—not duplicated here.
 
 ---
 
@@ -282,7 +290,7 @@ For hits `i = 1..H`:
   `E_{i+1} = E_i + Δ_exposure(hit_i, defender posture)`
 - Optional: `damage_i *= (1 + η * tanh(E_i))`
 
-Total damage is sum of hits; each hit runs §5 with shared RNG stream advancement.
+Total damage is sum of hits; each hit runs §5 with shared RNG stream advancement. Interpretation as sampling an **exposure integral**—[`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §6.
 
 ---
 
@@ -391,9 +399,28 @@ An external chat proposed an embedded slider widget for \(\kappa\), pierce, stat
 
 ---
 
+## 15. Calculus-forward modeling (summary)
+
+Layer 1 stays algebraic for onboarding; depth uses **smooth nonlinear maps** and **continuous flows**:
+
+- Saturation §13 gives bounded \(\sigma(A,D)\) with diminishing marginal returns vs armor.
+- §6 couples HP evolution to \(\mathbf{u}\) via flows + impulses.
+- §7 treats combos as discrete samples along a posture/exposure curve.
+
+**Full formalism** (ODE templates, integration contract, threshold events, honesty bar): [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
+
+---
+
+## 16. Local sensitivities for balance tools
+
+Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\), pierce, relaxation rates) nudge outcomes—finite differences or Monte Carlo on \(\partial J / \partial \theta\). Keeps “complex calculus” in **tooling**, not player-facing quizzes. Details: [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §7.
+
+---
+
 ## Document changelog
 
 | Date | Change |
 |------|--------|
 | 2026-05-03 | Initial combat integration spec |
 | 2026-05-03 | Linked `packages/combat` implementation; saturation math appendix; devtools note |
+| 2026-05-03 | §6 coupled flows; §15–§16; [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) cross-links |

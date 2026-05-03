@@ -2,7 +2,7 @@
 
 **Status:** Planning document. Additions and revisions land here until implementation kickoff. Treat sections marked **Open decision** as unresolved.
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — nine affinities, reactions/field, resonance progression. Reference code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — nine affinities, reactions/field, resonance progression. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. Reference code: [`packages/combat`](../packages/combat/README.md).
 
 ---
 
@@ -91,7 +91,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 2. **Room server** — tick loop (e.g. 10–20 Hz simulation), interest management (who sees whom), anti-cheat (server validates movement).
 3. **World state** — tiles, collisions, spawns (species, rarity), interactables; **room scaling config** feeding spawn resolution.
 4. **Encounter model** — wild encounters optional; **PvP:** propose → accept → battle instance.
-5. **Battle engine** — deterministic, server-authoritative, seedable RNG for replays and debugging; **element/reaction resolver** — see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) for full pipeline (Layers 1–3, stats, formulas).
+5. **Battle engine** — deterministic, server-authoritative, seedable RNG; resolver [`COMBAT-MODEL.md`](./COMBAT-MODEL.md); continuous flows [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
 6. **Creature model** — species, stage, level, deep stat blocks, training vectors, moves, held item, **appearance seed**, **variant flags** (e.g. lustrous/coveted).
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
@@ -115,6 +115,14 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 All of this runs as **numeric integration per tick** on the server — no symbolic computer algebra required in production.
 
 At **very high progression tiers**, mechanics can deliberately expose **coupled variables** (thermal stress ↔ material phase ↔ fracture thresholds) so mastery looks like **physical intuition**—but the **HUD and tutorials** must still teach the metaphor; formal physics education should never be a hard gate to enjoy the game.
+
+### Pedagogy & continuous simulation (expanded)
+
+Depth uses **calculus-flavored modeling** (flows between turns, smooth nonlinear mitigation, exposure ramps)—not player-facing quizzes. Fidelity is intentionally **toy-physical**: directional intuition matches real science where cheap, without claiming CFD/FEM-grade simulation.
+
+**Full write-up:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — battle state as \(\mathbf{u}(t)\), subtick integration contract, exemplar rate laws (thermal storage, wetness exchange, charge leakage, fracture relaxation), ordering of threshold events vs Layer 2, multi-hit exposure interpretation, offline \(\partial J/\partial \theta\) sensitivities, UI tiers, honesty bar for marketing/engineering.
+
+Cross-links: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6–§7, §15–§16; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §5–§6.
 
 ### Fairness vs nostalgia
 
@@ -205,6 +213,7 @@ Inspired by **inspectable float ranges** in competitive shooters (every instance
 | **Infinite progression power creep** | Asymptotic or log-like **B(L)** past 100 + bracketed PvP; constant Monte Carlo monitoring |
 | **Reaction combinatorics** | Rule explosion → keep predicates scoped; automated linter + fuzz |
 | **Accessibility vs depth** | Layer tutorials / “simple view” affinity chart; advanced inspect for trait stacks |
+| **Physics metaphor drift** | Internal “honesty bar” in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §9—marketing never implies CFD/FEM fidelity |
 | **Visual noise from genes** | Hard clamps per species; team readability reviews |
 
 ---
@@ -236,4 +245,4 @@ Choose one to lock into design before heavy implementation:
 | Date | Change |
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
-| 2026-05-03 | Infinite progression; scaling; elements/procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md); [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`packages/combat`](../packages/combat/README.md) |
+| 2026-05-03 | Infinite progression; scaling; elements/procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md); [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`packages/combat`](../packages/combat/README.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); §4 pedagogy subsection |

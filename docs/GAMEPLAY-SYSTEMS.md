@@ -2,6 +2,8 @@
 
 **Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 chart values and rule IDs remain **data-driven** until balance passes.
 
+**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract.
+
 **Implementation:** Reference resolver lives in [`packages/combat`](../packages/combat/README.md).
 
 ---
@@ -72,6 +74,8 @@ Replace binary weather with **continuous environment** where possible; seed from
 
 Server owns authoritative values; clients interpolate for VFX only.
 
+Optional **derived field cues** (author decides whether to expose raw numbers): e.g. a saturation-like composite of `ambient_temp` + `humidity` drives passive wetness gain (“sticky air” intuition)—keep formulas monotonic and documented so players aren’t fooled into fake thermodynamics.
+
 ---
 
 ## 4. Stat growth — genetic variance & resonance pool
@@ -104,8 +108,41 @@ S_{\text{final}} = \Bigl( S_{\text{base}} \cdot (1 + V_{\text{variance}}) + R_{\
 
 ---
 
-## 5. Document changelog
+## 5. Stealth physics-literacy map (affinities → intuition targets)
+
+Not lesson plans—**design targets** for observable behavior + copy. Real classrooms optional.
+
+| Affinity | Player-learnable intuition | Observable hooks |
+|----------|---------------------------|------------------|
+| Thermal | Heat accumulates and dissipates toward ambient | `heat_load` meter relaxes faster/slower with mass |
+| Cryo | Removing heat stresses brittle structures | spike rules when hot+rigid |
+| Aqueous | Moisture couples to environment | wetness ↔ humidity exchange |
+| Galvanic | Stored charge leaks faster when conductive paths exist | `charge_buildup`, wetness gates |
+| Mineral | Stiff materials concentrate stress → fracture | fracture ↔ rigidity |
+| Flora | Mass dampens thermal swings | slower \(dH/dt\) ramps |
+| Aero | Fluids carry scalars (spread/dilute) | field clears / spreads accumulators |
+| Luminous | Energy carriers bypass some material paths | surge-first tuning |
+| Void | Isolation / compression metaphors | vitality compression separate from chemical physics |
+
+---
+
+## 6. Extended accumulators (optional backlog)
+
+Add only when rules justify CPU + UX:
+
+| Key | Role sketch |
+|-----|-------------|
+| `ionization` | Track plasma-friendly Layer 2 bridges between Thermal ↔ Galvanic (high complexity—flag gated). |
+| `surface_charge` | Separate from bulk `charge_buildup` for layered conductive skins. |
+| `plastic_strain` | Slow irreversible bulwark creep under sustained strikes (advanced bracket only). |
+
+Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) style before authoring predicates.
+
+---
+
+## 7. Document changelog
 
 | Date | Change |
 |------|--------|
 | 2026-05-03 | Initial import: nine affinities, accumulator/reaction catalog, field scalars, resonance framing |
+| 2026-05-03 | Physics-literacy map; optional accumulators; simulation doc link; §4 stat growth restored |
