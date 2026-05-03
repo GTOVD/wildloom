@@ -28,6 +28,23 @@ Flavor titles (**Thermal blast**, **Void spike**) are **generated labels** from 
 
 ---
 
+## Bounds vs balance — why “drag everything to max” is not the whole story
+
+**Template `min`/`max` only answers:** “If this move is allowed into combat at all, what numbers are valid?” They do **not** mean every player can assign **max on every knob on every slot for free.**
+
+At runtime / persistence, legal builds still need **economy and validation** layered on top (exact numbers are balance-owned):
+
+| Mechanism | Role |
+|-----------|------|
+| **Loadout / tuning budget** | Each equipped move (or each customization session) spends from a finite budget — raising **`base_power`** leaves fewer points for **`pierce`**, **`accuracy`**, **`infusion_coeffs`**, modality emphasis, etc. Server rejects over-budget payloads. |
+| **Meta costs** | Using a “fully juiced” variant can cost more **stamina / tempo / cooldown / Resonance** (see [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) Resonance notes; [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 training brackets). |
+| **Trade-offs in data (optional)** | Future authoring can add explicit **couplings** (e.g. power vs accuracy ceilings within the same template) so the envelope is not a flat rectangle of independent maxes. |
+| **Combat saturation** | Even high **`base_power`** faces diminishing returns through **`σ`** / saturation in the damage pipeline ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5), so outcome is not linear in “always pick max.” |
+
+So: **nothing “hidden” in `attack_templates.catalog.json` stops someone from choosing max in a vacuum** — that file is not the economy layer. **Products do:** budgets, costs, server-side legality checks, and tuning so peak numbers compete with accuracy, tempo, and defensive responses rather than strictly dominating.
+
+---
+
 ## Three layers
 
 1. **Vocabulary** — twelve elemental IDs (expandable in design docs).
