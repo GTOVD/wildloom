@@ -21,6 +21,12 @@ export interface MaterialProfile {
   polarity: number;
 }
 
+export interface StrikeModalities {
+  concussive: number;
+  piercing: number;
+  slashing: number;
+}
+
 export interface Combatant {
   id: string;
   level: number;
@@ -42,11 +48,13 @@ export interface Move {
   base_power: number;
   affinity: Affinity;
   tags: string[];
-  /** Fraction in [0, 1] — ignores part of opposing defense */
+  /** Fraction in `[0, 1]` — armor bypass; strongest on piercing modality by default */
   pierce: number;
   damage_kind: 'hp' | 'status' | 'utility';
   /** 0–100 optional; if omitted treat as automatic hit */
   accuracy?: number;
+  /** §5.4b — omit for legacy single-path strike saturation */
+  strike_modalities?: StrikeModalities;
 }
 
 export interface BattleContext {
@@ -55,6 +63,19 @@ export interface BattleContext {
   terrain_id: string;
   /** Deterministic PRNG stream consumer — server-owned */
   rng: () => number;
+}
+
+/** Per-channel audit trail — §5.4b */
+export interface ModalHitBreakdown {
+  omega_c: number;
+  omega_p: number;
+  omega_s: number;
+  sigma_c: number;
+  sigma_p: number;
+  sigma_s: number;
+  d_core_c: number;
+  d_core_p: number;
+  d_core_s: number;
 }
 
 /** Values aligned with docs/COMBAT-MODEL.md §5 breakdown */
@@ -67,6 +88,7 @@ export interface DamageBreakdown {
   flat2: number;
   crit_mult: number;
   spread: number;
+  modalities?: ModalHitBreakdown;
 }
 
 export interface HitResult {

@@ -110,6 +110,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 - **DoT / erosion:** damage-over-time as rate-of-change of HP with resist decay; stacking caps defined by equilibrium limits or explicit caps.
 - **Stamina / focus:** resources as continuous recovery rate as a function of current resource and stress; actions spend discrete chunks with smooth penalties near empty — not staircase “you have 0 MP.”
 - **Multi-hit and exposure:** total damage over a combo approximates an integral of a hit curve modulated by how enemy posture / stagger builds smoothly.
+- **Strike modalities:** blunt impulse vs penetration vs shear channels blend separate nonlinear saturation branches tied to material ψ maps (`COMBAT-MODEL` §5.4b)—distinct from move-field **`pierce`** scalar bypass.
 - **Balance tooling:** expose sensitivities (e.g. impact of +1 defense on win rate) via Monte Carlo or closed-form approximations so tuning uses gradients, not only trial and error.
 
 All of this runs as **numeric integration per tick** on the server — no symbolic computer algebra required in production.
@@ -122,7 +123,7 @@ Depth uses **calculus-flavored modeling** (flows between turns, smooth nonlinear
 
 **Full write-up:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — battle state as \(\mathbf{u}(t)\), subtick integration contract, exemplar rate laws (thermal storage, wetness exchange, charge leakage, fracture relaxation), ordering of threshold events vs Layer 2, multi-hit exposure interpretation, offline \(\partial J/\partial \theta\) sensitivities, UI tiers, honesty bar for marketing/engineering.
 
-Cross-links: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6–§7, §15–§16; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §5–§6.
+Cross-links: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6–§7, §5.4b, §15–§16; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §5–§6.
 
 ### Fairness vs nostalgia
 
@@ -245,4 +246,4 @@ Choose one to lock into design before heavy implementation:
 | Date | Change |
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
-| 2026-05-03 | Infinite progression; scaling; elements/procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md); [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`packages/combat`](../packages/combat/README.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); §4 pedagogy subsection |
+| 2026-05-03 | Infinite progression; scaling; procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) incl. strike modalities §5.4b; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |

@@ -3,8 +3,8 @@
 Pure, deterministic combat math aligned with [`docs/COMBAT-MODEL.md`](../../docs/COMBAT-MODEL.md).
 
 - **`types.ts`** — immutable snapshot interfaces (`Combatant`, `Move`, `BattleContext`, …).
-- **`math.ts`** — level scaling, pierce, core saturation (`σ`, `D_core`).
-- **`pipeline.ts`** — ordered resolver (`resolveHit`), stubs for chart + reaction rules.
+- **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`.
+- **`pipeline.ts`** — ordered resolver (`resolveHit`), optional **`strike_modalities`** blend (§5.4b); stubs for chart + reaction rules.
 
 ## Usage
 

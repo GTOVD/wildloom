@@ -39,6 +39,8 @@ Accumulators are continuous battle scalars (per combatant unless noted). They de
 | `fracture` | Heavy **strike** stress on high-`rigidity` bodies | Reduces effective `bulwark` via saturation path coupling (tuning γ). |
 | `heat_load` | Thermal moves, exertion, hot fields | DoT or overload thresholds; `thermal_mass` slows heating **and** cooling. |
 | `wetness` | Aqueous moves, humidity | Amplifies galvanic pathways; enables steam / shock rules. |
+| `concussion` | Concussive-heavy strikes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b; weight ω_con) | Tempo / accuracy decay via smooth coupling—[`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5. |
+| `laceration` | Slashing-heavy strikes (weight ω_slash), esp. high porosity/wetness | Feeds bleed **`d(HP)/dt`** channels §3.6; Layer 2 gates severity caps. |
 
 Additional scalars (`charge_buildup`, etc.) stay in `Combatant.scalars` per [`packages/combat`](../packages/combat/src/types.ts).
 
@@ -57,6 +59,18 @@ Author as data (`reaction_rules/*`) with priorities. Examples:
 3. **Steam expansion**  
    - **When:** Thermal move; defender `wetness > 0.5`.  
    - **Then:** Consume/drain `wetness`, apply tempo penalty debuff, set Layer 2 multiplier bump (e.g. `m2 × 1.3` cap-checked).
+
+4. **Armor pierce alignment**  
+   - **When:** Move tag `armor_piercing` **and** defender `fracture > θ`.  
+   - **Then:** Temporarily boost **`pierce` scalar** or piercing modality pierce-share—keep audit trail per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.2 vs §5.4b separation.
+
+5. **Concussion spike**  
+   - **When:** `concussion` crosses threshold **and** defender lacks stance buff.  
+   - **Then:** Force slower tempo segment / accuracy slump—avoid hard stun RNG where possible (smooth debuffs).
+
+6. **Open shear**  
+   - **When:** `laceration` rising **and** follow-up slashing hit while `wetness` high.  
+   - **Then:** Amplify DoT potency cap-checked—requires bracket governance for competitive modes.
 
 Exact numbers ship from balance JSON, not this prose.
 
@@ -110,6 +124,8 @@ S_{\text{final}} = \Bigl( S_{\text{base}} \cdot (1 + V_{\text{variance}}) + R_{\
 
 ## 5. Stealth physics-literacy map (affinities → intuition targets)
 
+### 5.1 Energy / material affinities
+
 Not lesson plans—**design targets** for observable behavior + copy. Real classrooms optional.
 
 | Affinity | Player-learnable intuition | Observable hooks |
@@ -123,6 +139,14 @@ Not lesson plans—**design targets** for observable behavior + copy. Real class
 | Aero | Fluids carry scalars (spread/dilute) | field clears / spreads accumulators |
 | Luminous | Energy carriers bypass some material paths | surge-first tuning |
 | Void | Isolation / compression metaphors | vitality compression separate from chemical physics |
+
+### 5.2 Strike modalities (concussive / piercing / slashing)
+
+| Modality | Physics metaphor (toy fidelity) | Literacy hook |
+|----------|---------------------------------|---------------|
+| Concussive | Momentum transfer through shells/tissue | Shock lingers as `concussion`; rigid shells may transmit more unless damped |
+| Piercing modality | Contact pressure / stress concentration | Uses move **`pierce`** strongly; couples to `fracture` on brittle faces |
+| Slashing | Shear + tear along surfaces | Opens `laceration`; humidity/porosity amplify bleed drivers—not realistic surgery |
 
 ---
 
@@ -146,3 +170,4 @@ Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-
 |------|--------|
 | 2026-05-03 | Initial import: nine affinities, accumulator/reaction catalog, field scalars, resonance framing |
 | 2026-05-03 | Physics-literacy map; optional accumulators; simulation doc link; §4 stat growth restored |
+| 2026-05-03 | `concussion` / `laceration`; modality reaction sketches; §5.2 strike modality literacy |

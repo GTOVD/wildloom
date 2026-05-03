@@ -10,7 +10,7 @@
 
 ### 1.1 Physics-informed intuition without encyclopedic physics
 
-- **Goal:** Repeated play builds **correct directional intuition** (rates of change, equilibria, thresholds, coupling—thermal ↔ moisture ↔ conductivity ↔ fracture).
+- **Goal:** Repeated play builds **correct directional intuition** (rates of change, equilibria, thresholds, coupling—thermal ↔ moisture ↔ conductivity ↔ fracture ↔ **strike modalities** concussive / piercing / slashing).
 - **Non-goals:** Pretending we simulate continuum mechanics or Maxwell’s equations in full—the runtime budget is **toy physical fidelity**, deliberately analogous so tuning stays tractable.
 - **Pedagogy:** “Advanced inspect” surfaces meters tied to named quantities (`heat_load`, `wetness`, `charge_buildup`). Tooltip tier explains metaphor (“stored thermal stress”), glossary tier ties metaphor to **one sentence** of real-world analogy—not exam preparation.
 
@@ -28,7 +28,7 @@ That stack rewards thinking in **derivatives and elasticities** (“If I push we
 
 ## 2. Battle state as a dynamical system
 
-Pack Layer 3 scalars for combatant \(i\) into a vector \(\mathbf{u}_i \in \mathbb{R}^k\) (e.g. `fracture`, `heat_load`, `wetness`, `charge_buildup`, …). Pack field scalars into \(\mathbf{f}\).
+Pack Layer 3 scalars for combatant \(i\) into a vector \(\mathbf{u}_i \in \mathbb{R}^k\) (e.g. `fracture`, `heat_load`, `wetness`, `charge_buildup`, `concussion`, `laceration`, …). Pack field scalars into \(\mathbf{f}\).
 
 Between discrete player actions, advance:
 
@@ -95,6 +95,28 @@ Let \(F\) be `fracture`, strike impulse \(I_{\text{strike}}\), rigidity \(R\):
 \]
 
 High rigidity raises \(\psi\) (brittle channels crack stress). Relaxation \(\lambda\) models micro-healing / stance recovery—keeps fights from permanent irrelevance.
+
+### 3.5 Concussion / impulse residue (concussive modality hook)
+
+Let \(C\) track neurologically flavored impairment meters (**game abstraction**, not medical realism):
+
+\[
+\frac{dC}{dt} = \zeta_{\text{in}}\,\omega_{\mathrm{con}}\!\cdot J_{\mathrm{hit}} - \frac{C}{\tau_C(\text{vitality},\mathrm{tempo})}
+\]
+
+\(J_{\mathrm{hit}}\) is proportional to resolved concussive channel potency **before** optional stance shields—authors clamp \(\omega_{\mathrm{con}}\) coupling via Layer 2 to prevent tempo-lock exploits.
+
+**Literacy hook:** Impulses accumulate and **decay**; mitigation stacks damp \(\zeta_{\text{in}}\)—players learn “inertial insult ≠ instantaneous HP bar.”
+
+### 3.6 Laceration / shear bleed driver (slashing modality hook)
+
+Let \(L\) represent opened shear-band severity coupling into existing DoT math (`COMBAT-MODEL` §6):
+
+\[
+\frac{dL}{dt} = \xi_{\text{in}}\,\omega_{\mathrm{slas}}\!\cdot \phi(W,P)\, J_{\mathrm{hit}} - \gamma_{\text{clot}}\bigl(M,L\bigr)\, L
+\]
+
+\(\phi\) bumps bleed susceptibility when `wetness` \(W\) or `porosity` \(P\) is high—honesty bar: cartoon hemorrhage analog only.
 
 ---
 
@@ -174,3 +196,4 @@ Marketing avoids implying laboratory-grade simulation.
 | Date | Change |
 |------|--------|
 | 2026-05-03 | Initial pass: dynamical systems framing, toy flows, integration contract, pedagogy |
+| 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |

@@ -6,11 +6,22 @@ export type {
   DamageBreakdown,
   HitResult,
   MaterialProfile,
+  ModalHitBreakdown,
   Move,
   MoveCategory,
+  StrikeModalities,
 } from './types.js';
 
-export { TUNING, calcCoreSaturation, calcEffectiveDefense, calcLevelScaling } from './math.js';
+export {
+  MODALITY_TUNING,
+  TUNING,
+  calcCoreSaturation,
+  calcEffectiveDefense,
+  calcLevelScaling,
+  calcStrikeResistanceTriplet,
+  effectiveDefenseForModality,
+  normalizeStrikeModalities,
+} from './math.js';
 export {
   evaluateReactionRules,
   lookupAffinityChart,

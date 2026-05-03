@@ -4,7 +4,16 @@
  */
 
 import type { BattleContext, Combatant, DamageBreakdown, HitResult, Move } from './types.js';
-import { TUNING, calcCoreSaturation, calcEffectiveDefense, calcLevelScaling } from './math.js';
+import {
+  MODALITY_TUNING,
+  TUNING,
+  calcCoreSaturation,
+  calcEffectiveDefense,
+  calcLevelScaling,
+  calcStrikeResistanceTriplet,
+  effectiveDefenseForModality,
+  normalizeStrikeModalities,
+} from './math.js';
 
 const ZERO_BREAKDOWN: DamageBreakdown = {
   S_L: 0,
@@ -19,6 +28,66 @@ const ZERO_BREAKDOWN: DamageBreakdown = {
 
 /** Layer 3 coupling: fracture reduces effective physical defense (tuning γ). */
 const FRACTURE_DEFENSE_GAMMA = 0.2;
+
+function computeStrikeDCore(
+  attacker: Combatant,
+  defender: Combatant,
+  move: Move,
+  D_raw: number,
+  S_L: number
+): Pick<DamageBreakdown, 'D_core' | 'sigma' | 'modalities'> {
+  const A = attacker.stats_eff.might;
+
+  if (move.strike_modalities === undefined) {
+    const D_eff = calcEffectiveDefense(D_raw, move.pierce);
+    const { dCore, sigma } = calcCoreSaturation(A, D_eff, move.base_power, S_L);
+    return { D_core: dCore, sigma };
+  }
+
+  const ω = normalizeStrikeModalities(move.strike_modalities);
+  const { rCon, rPier, rSlas } = calcStrikeResistanceTriplet(D_raw, defender.materials);
+
+  const D_con = effectiveDefenseForModality(
+    rCon,
+    move.pierce,
+    MODALITY_TUNING.PIERCE_SHARE_CONCUSSIVE
+  );
+  const D_pier = effectiveDefenseForModality(
+    rPier,
+    move.pierce,
+    MODALITY_TUNING.PIERCE_SHARE_PIERCING
+  );
+  const D_slas = effectiveDefenseForModality(
+    rSlas,
+    move.pierce,
+    MODALITY_TUNING.PIERCE_SHARE_SLASHING
+  );
+
+  const cC = calcCoreSaturation(A, D_con, move.base_power, S_L);
+  const cP = calcCoreSaturation(A, D_pier, move.base_power, S_L);
+  const cS = calcCoreSaturation(A, D_slas, move.base_power, S_L);
+
+  const D_core =
+    ω.concussive * cC.dCore + ω.piercing * cP.dCore + ω.slashing * cS.dCore;
+  const sigma =
+    ω.concussive * cC.sigma + ω.piercing * cP.sigma + ω.slashing * cS.sigma;
+
+  return {
+    D_core,
+    sigma,
+    modalities: {
+      omega_c: ω.concussive,
+      omega_p: ω.piercing,
+      omega_s: ω.slashing,
+      sigma_c: cC.sigma,
+      sigma_p: cP.sigma,
+      sigma_s: cS.sigma,
+      d_core_c: cC.dCore,
+      d_core_p: cP.dCore,
+      d_core_s: cS.dCore,
+    },
+  };
+}
 
 export function resolveHit(
   attacker: Combatant,
@@ -39,23 +108,30 @@ export function resolveHit(
     return resolveTrueDamage(move, ctx);
   }
 
-  let A = 0;
-  let D_raw = 0;
+  let D_core: number;
+  let sigma: number;
+  let modalities: DamageBreakdown['modalities'];
+
+  const S_L = calcLevelScaling(attacker.level, defender.level);
 
   if (move.category === 'strike') {
-    A = attacker.stats_eff.might;
-    D_raw = defender.stats_eff.bulwark;
+    let D_raw = defender.stats_eff.bulwark;
+    const fracture = defender.accumulators.fracture ?? 0;
+    D_raw *= 1 - FRACTURE_DEFENSE_GAMMA * Math.tanh(fracture);
+
+    const sc = computeStrikeDCore(attacker, defender, move, D_raw, S_L);
+    D_core = sc.D_core;
+    sigma = sc.sigma;
+    modalities = sc.modalities;
   } else {
-    A = attacker.stats_eff.insight;
-    D_raw = defender.stats_eff.ward;
+    const D_raw = defender.stats_eff.ward;
+    const A = attacker.stats_eff.insight;
+    const D_eff = calcEffectiveDefense(D_raw, move.pierce);
+    const core = calcCoreSaturation(A, D_eff, move.base_power, S_L);
+    D_core = core.dCore;
+    sigma = core.sigma;
+    modalities = undefined;
   }
-
-  const fracture = defender.accumulators.fracture ?? 0;
-  D_raw *= 1 - FRACTURE_DEFENSE_GAMMA * Math.tanh(fracture);
-
-  const D_eff = calcEffectiveDefense(D_raw, move.pierce);
-  const S_L = calcLevelScaling(attacker.level, defender.level);
-  const { dCore: D_core, sigma } = calcCoreSaturation(A, D_eff, move.base_power, S_L);
 
   const m1 = lookupAffinityChart(move.affinity, defender.primary_affinity, defender.secondary_affinity);
   const stab =
@@ -80,7 +156,17 @@ export function resolveHit(
   return {
     hit: true,
     damage_hp,
-    breakdown: { S_L, sigma, D_core, m1: m1_final, m2, flat2, crit_mult, spread },
+    breakdown: {
+      S_L,
+      sigma,
+      D_core,
+      m1: m1_final,
+      m2,
+      flat2,
+      crit_mult,
+      spread,
+      modalities,
+    },
   };
 }
 

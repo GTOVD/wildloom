@@ -16,6 +16,7 @@
 | **Layer 1** | Classic effectiveness multipliers from affinity matchup. |
 | **Layer 2** | Data-driven predicate rules (physics-flavored hooks). |
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
+| **Strike modality** | How a **strike** splits across **concussive / piercing / slashing** channels (physics-flavored wound mechanics). Distinct from move-field **`pierce`** (numeric armor bypass). |
 
 Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) (nine originals). Older examples in this doc may still say “Solar/Tidal” as generic placeholders—swap at authoring time.
 
@@ -72,10 +73,13 @@ Each move carries:
 | `base_power` | Non-negative scalar; can be 0 for utility. |
 | `affinity` | Chart element for Layer 1 / STAB. |
 | `tags` | Set of strings for predicates (`thermal`, `aqueous`, `contact`, …). |
-| `pierce` | Fraction in `[0, 1]` — ignores part of opposing defense category (§5.2). |
+| `pierce` | Fraction in `[0, 1]` — geometric / armor bypass applied **per modality** (§5.4b); strongest on the **piercing** channel by default. |
+| `strike_modalities` | Optional simplex weights `{ concussive, piercing, slashing }` summing to `1` on **strike** moves; omit ⇒ `{1,0,0}` (legacy blunt-only path). |
 | `damage_kind` | Usually `hp`; some moves only tick accumulators or apply disables. |
 
 **True damage:** Skips **saturation path using bulwark/ward** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
+
+**Naming:** **`pierce` (field)** = scalar bypass knob on data. **“Piercing” modality** = localized stress concentration / stab geometry feeding its **own** saturation branch—do not conflate the two in authoring tools.
 
 ---
 
@@ -101,17 +105,18 @@ Execute steps **in order**; each step consumes labeled modifiers so audits and r
 flowchart TD
   A[Start hit] --> B{Hit connect? accuracy}
   B -->|miss| Z[0 damage]
-  B -->|hit| C[Move category selects Might/Bulwark or Insight/Ward]
-  C --> D[Level scaling factor S_L]
-  D --> E[Core saturation D_core]
-  E --> F[Pierce adjusts effective defense]
-  F --> G[Item / ability hooks: pre-chart]
-  G --> H[Layer 1 affinity multiplier m1]
-  H --> I[Layer 2 reaction rules m2 plus flats]
-  I --> J[Layer 3 accumulator coupling]
-  J --> K[Crit and variance RNG]
-  K --> L[Clamp minimum 0]
-  L --> M[Apply to HP + on-hit secondary effects]
+  B -->|hit| C{strike vs surge vs true}
+  C -->|surge / true| D[Single saturation path per §5.2–5.4]
+  C -->|strike| E[Fracture coupling on bulwark]
+  E --> F[Split bulwark into modality resistances R_c,R_p,R_s via material ψ_k]
+  F --> G[Apply pierce shares per channel → D_c,D_p,D_s]
+  G --> H[Three σ saturations → blend by ω → D_core]
+  H --> D
+  D --> I[Layer 1 affinity m1]
+  I --> J[Layer 2 rules m2 + flats]
+  J --> K[Layer 3 accumulator impulses]
+  K --> L[Crit / spread RNG]
+  L --> M[Clamp & apply HP]
 ```
 
 ### 5.1 Hit resolution (optional but recommended)
@@ -126,13 +131,16 @@ If miss: emit `miss` event; no on-hit reactions.
 
 ### 5.2 Effective defense and pierce
 
-For strike:
+For **surge** (and single-path strike fallback):
 
 ```
-Def_eff = bulwark_eff * (1 - pierce_move * λ_p)
+Def_eff = ward_eff or bulwark_eff
+Def_eff ← Def_eff * (1 - pierce_move * λ_p)    -- scalar bypass
 ```
 
-For surge: use `ward_eff` likewise. `λ_p` is a global tuning constant (e.g. `1` means “pierce is literal fraction ignored”).
+For **strike modality blend** (§5.4b), the same `pierce_move` scalar is applied **after** splitting resistances, with **channel-specific weights** \(\lambda_{\mathrm{con}}, \lambda_{\mathrm{pier}}, \lambda_{\mathrm{slas}}\) (usually \(\lambda_{\mathrm{pier}} \approx 1\), smaller shares on blunt/slash—data-tuned).
+
+`λ_p` is a global tuning constant (e.g. `1` means “pierce ignores that fraction of **that channel’s** resistance before saturation”).
 
 ### 5.3 Level scaling `S_L`
 
@@ -169,6 +177,47 @@ D_core = F_scale * move_power_modified * sigma * S_L
 
 - Raising `D` reduces `sigma` smoothly.
 - Raising `A` increases `sigma` with diminishing returns vs large `D`.
+
+### 5.4b Strike modality blend — concussive, piercing, slashing
+
+**Intent:** One **strike** can carry a mixture of **impulse** (concussive), **localized penetration** (piercing modality), and **shear / cutting** (slashing). Each channel gets its own smooth saturation against a **material-shaped** resistance before blending—same calculus spirit as §13, repeated three times with different \(D_k\).
+
+Let \(B_{\mathrm{eff}}\) be defender bulwark after fracture/posture hooks (§5.7) but **before** per-channel pierce. Let \(\mathbf{M}\) be defender material profile (`rigidity`, `porosity`, …—bounded \([0,1]\)).
+
+**Resistance shaping (examples — ship ψ from `scaling_curves.json`):**
+
+\[
+R_{\mathrm{con}} = B_{\mathrm{eff}}\cdot \psi_{\mathrm{con}}(\mathbf{M}),\quad
+R_{\mathrm{pier}} = B_{\mathrm{eff}}\cdot \psi_{\mathrm{pier}}(\mathbf{M}),\quad
+R_{\mathrm{slas}} = B_{\mathrm{eff}}\cdot \psi_{\mathrm{slas}}(\mathbf{M})
+\]
+
+Toy interpretations (not literal FEM):
+
+- **Concussive:** blunt impulse transmission vs damping — \(\psi_{\mathrm{con}}\) rises when rigid shells **transmit shock** into the body (high `rigidity`), drops when compliant layers dissipate (coordination with porosity / species tags).
+- **Piercing modality:** stress concentration against hardness / laminate ordering — \(\psi_{\mathrm{pier}}\) grows with `rigidity` (harder to punch through) unless fracture has softened the face (couple §5.7).
+- **Slashing:** surface shear + tearing — \(\psi_{\mathrm{slas}}\) mixes `rigidity` (cut resistance) with `porosity`/wetness hooks for **laceration** routes (Layer 3).
+
+**Per-channel pierce & saturation:**
+
+\[
+D_k = R_k\cdot\bigl(1 - \mathrm{pierce}_{\mathrm{move}}\cdot \lambda_k\cdot \lambda_p\bigr),\quad k\in\{\mathrm{con},\mathrm{pier},\mathrm{slas}\}
+\]
+
+\[
+\sigma_k = 1 - \exp\!\left(-\kappa \cdot \frac{1}{1 + D_k / x}\right),\quad
+D_{\mathrm{core},k} = F_{\mathrm{scale}}\cdot P\cdot \sigma_k\cdot S_L
+\]
+
+**Simplex blend** \(\boldsymbol{\omega}=(\omega_c,\omega_p,\omega_s)\), \(\sum\omega = 1\):
+
+\[
+D_{\mathrm{core}} = \omega_c D_{\mathrm{core},\mathrm{con}} + \omega_p D_{\mathrm{core},\mathrm{pier}} + \omega_s D_{\mathrm{core},\mathrm{slas}}
+\]
+
+**Audit / replay:** store \(\boldsymbol{\omega}\), each \(\sigma_k\), and \(D_{\mathrm{core},k}\) in `HitResolved.breakdown.modalities` for competitive disputes—see [`packages/combat`](../packages/combat/README.md).
+
+**Layer 3 impulses:** concussive fraction feeds **`concussion`** accumulation (tempo/focus coupling — [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5); slashing feeds **`laceration`** bleed drivers §3.6; piercing modality spikes **`fracture`** when paired with rigid ceramics—author specific impulses in Layer 2 rules to avoid double-counting.
 
 ### 5.5 Layer 1 — affinity multiplier `m1`
 
@@ -257,7 +306,7 @@ HP_d ← HP_d - damage_hp
 emit HitResolved { damage_hp, breakdown }    -- breakdown for UI/log/replay
 ```
 
-`breakdown` records each multiplier for debugging competitive disputes.
+`breakdown` records each multiplier for debugging competitive disputes; **`modalities`** carries \(\omega_k\) and per-channel cores when §5.4b applies.
 
 ---
 
@@ -314,8 +363,8 @@ Document in schema so tools can simulate.
 | `affinity_chart.json` | Matrix `[attack][defend] → multiplier`. |
 | `reaction_rules/*.yaml` | Predicate AST + effects + priority. |
 | `material_axes.json` | Names, defaults per species, normalization bounds. |
-| `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`. |
-| `moves.json` | Fields in §3 + versioning hash per patch. |
+| `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ coefficients & pierce shares \(\lambda_k\). |
+| `moves.json` | Fields in §3 + `strike_modalities` + versioning hash per patch. |
 
 Version every artifact; bake hash into replay header.
 
@@ -323,9 +372,9 @@ Version every artifact; bake hash into replay header.
 
 ## 10. Accessibility vs depth
 
-- **Beginner UI:** Shows Layer 1 multiplier only + damage category (strike/surge).
+- **Beginner UI:** Shows Layer 1 multiplier + strike/surge chips; if `strike_modalities` present, compact hammer/blade/stab glyph strip sums to 100%.
 - **Intermediate:** Surfaces tags icons when they triggered a rule (“Thermal shock!”).
-- **Advanced inspect:** Full breakdown JSON, material bars, accumulator trajectories.
+- **Advanced inspect:** Full breakdown JSON, material bars, accumulator trajectories, optional **§5.4b** per-channel σ / `d_core_k`.
 
 Formal STEM knowledge is **never** required—copy ties metaphors to observable meters.
 
@@ -349,8 +398,8 @@ TypeScript sources mirror this document:
 | File | Responsibility |
 |------|----------------|
 | [`packages/combat/src/types.ts`](../packages/combat/src/types.ts) | Immutable snapshot types (`Combatant`, `Move`, `BattleContext`, `HitResult`). |
-| [`packages/combat/src/math.ts`](../packages/combat/src/math.ts) | `TUNING` knobs, `calcLevelScaling`, `calcEffectiveDefense`, `calcCoreSaturation`. |
-| [`packages/combat/src/pipeline.ts`](../packages/combat/src/pipeline.ts) | `resolveHit` — Layers 1→3 order; `lookupAffinityChart` / `evaluateReactionRules` stubbed for JSON/YAML hydration. |
+| [`packages/combat/src/math.ts`](../packages/combat/src/math.ts) | `TUNING` knobs, `calcLevelScaling`, `calcEffectiveDefense`, `calcCoreSaturation`, **`normalizeStrikeModalities`**, **`calcStrikeResistanceTriplet`**, **`effectiveDefenseForModality`**. |
+| [`packages/combat/src/pipeline.ts`](../packages/combat/src/pipeline.ts) | `resolveHit` — strike modality blend (§5.4b) + Layers 1→3; chart/rules stubbed. |
 
 Build: `npm install` at repo root, then `npm run build -w @wildloom/combat`.
 
@@ -404,6 +453,7 @@ An external chat proposed an embedded slider widget for \(\kappa\), pierce, stat
 Layer 1 stays algebraic for onboarding; depth uses **smooth nonlinear maps** and **continuous flows**:
 
 - Saturation §13 gives bounded \(\sigma(A,D)\) with diminishing marginal returns vs armor.
+- §5.4b adds **three parallel saturation branches** for strike modalities, blended by \(\boldsymbol{\omega}\)—same asymptotics, different material-shaped defenses.
 - §6 couples HP evolution to \(\mathbf{u}\) via flows + impulses.
 - §7 treats combos as discrete samples along a posture/exposure curve.
 
@@ -424,3 +474,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Initial combat integration spec |
 | 2026-05-03 | Linked `packages/combat` implementation; saturation math appendix; devtools note |
 | 2026-05-03 | §6 coupled flows; §15–§16; [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) cross-links |
+| 2026-05-03 | §5.4b strike modalities (concussive / piercing / slashing); pierce vs modality clarified; pipeline + `math.ts` support |
