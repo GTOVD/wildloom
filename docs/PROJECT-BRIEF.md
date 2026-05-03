@@ -15,6 +15,7 @@ Wildloom is an independent work. Do not use trademarks, distinctive character na
 
 ## Next steps
 
+- Architecture and phased plan: [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) (updated during planning).
 - Monorepo layout (`apps/web`, `apps/server`, `packages/*`).
 - Protocol and room server MVP.
 - Shared battle engine (deterministic, tested).

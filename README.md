@@ -11,7 +11,10 @@ This project is **not affiliated with, endorsed by, or derived from** any third-
 
 ## Stack (planned)
 
-TypeScript monorepo: web client + authoritative game server + shared simulation packages. See `docs/PROJECT-BRIEF.md`.
+TypeScript monorepo: web client + authoritative game server + shared simulation packages.
+
+- **Planning / architecture:** [`docs/TECHNICAL-DESIGN.md`](docs/TECHNICAL-DESIGN.md) (living document until build kickoff)
+- **Vision & guardrails:** [`docs/PROJECT-BRIEF.md`](docs/PROJECT-BRIEF.md)
 
 ## License
 
