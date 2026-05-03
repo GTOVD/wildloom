@@ -2,7 +2,7 @@
 
 **Status:** Planning document. Additions and revisions land here until implementation kickoff. Treat sections marked **Open decision** as unresolved.
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails.
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline (implementable spec).
 
 ---
 
@@ -91,7 +91,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 2. **Room server** — tick loop (e.g. 10–20 Hz simulation), interest management (who sees whom), anti-cheat (server validates movement).
 3. **World state** — tiles, collisions, spawns (species, rarity), interactables; **room scaling config** feeding spawn resolution.
 4. **Encounter model** — wild encounters optional; **PvP:** propose → accept → battle instance.
-5. **Battle engine** — deterministic, server-authoritative, seedable RNG for replays and debugging; **element/reaction resolver** (see §6).
+5. **Battle engine** — deterministic, server-authoritative, seedable RNG for replays and debugging; **element/reaction resolver** — see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) for full pipeline (Layers 1–3, stats, formulas).
 6. **Creature model** — species, stage, level, deep stat blocks, training vectors, moves, held item, **appearance seed**, **variant flags** (e.g. lustrous/coveted).
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
@@ -144,6 +144,10 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 - **Battle state fields:** Ambient and local scalars the resolver reads (`wetness`, `temperature_delta`, `stress_fracture_accumulator`, …) updated by moves, weather, terrain, and reactions.
 
 ### Resolver shape
+
+**Detailed ordering, formulas, stacking policy, and data artifacts:** [`COMBAT-MODEL.md`](./COMBAT-MODEL.md).
+
+Summary:
 
 - **Layer 1:** Familiar effectiveness multipliers (baseline balance).
 - **Layer 2:** **Predicate → modifier** rules authored in data: e.g. `(affinity_fire ∧ surface_glass ∧ ΔT > θ) ⇒ bonus_shatter_chance + armor_saturation drop`.
@@ -230,4 +234,4 @@ Choose one to lock into design before heavy implementation:
 | Date | Change |
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
-| 2026-05-03 | Infinite progression (1–100 classic + post-100 MMO grind); room/party scaling; physics-forward elements; procedural genes & lustrous variants; build order + risks expanded |
+| 2026-05-03 | Infinite progression; room/party scaling; physics-forward elements; procedural genes; build order + risks; linked [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (attributes, Layers 1–3 damage pipeline) |

@@ -16,6 +16,7 @@ Wildloom is an independent work. Do not use trademarks, distinctive character na
 ## Next steps
 
 - Architecture and phased plan: [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) (updated during planning).
+- Combat attributes / damage / elements: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md).
 - Monorepo layout (`apps/web`, `apps/server`, `packages/*`).
 - Protocol and room server MVP.
 - Shared battle engine (deterministic, tested).

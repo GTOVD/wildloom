@@ -14,6 +14,7 @@ This project is **not affiliated with, endorsed by, or derived from** any third-
 TypeScript monorepo: web client + authoritative game server + shared simulation packages.
 
 - **Planning / architecture:** [`docs/TECHNICAL-DESIGN.md`](docs/TECHNICAL-DESIGN.md) (living document until build kickoff)
+- **Combat math & elements:** [`docs/COMBAT-MODEL.md`](docs/COMBAT-MODEL.md)
 - **Vision & guardrails:** [`docs/PROJECT-BRIEF.md`](docs/PROJECT-BRIEF.md)
 
 ## License
