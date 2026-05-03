@@ -15,6 +15,7 @@ TypeScript monorepo: web client + authoritative game server + shared simulation 
 
 - **Planning / architecture:** [`docs/TECHNICAL-DESIGN.md`](docs/TECHNICAL-DESIGN.md) (living document until build kickoff)
 - **Combat math & endurance pipeline:** [`docs/COMBAT-MODEL.md`](docs/COMBAT-MODEL.md)
+- **Composable attacks (templates + player affinity slots):** [`docs/ATTACK-CATALOG.md`](docs/ATTACK-CATALOG.md) · [`data/moves/`](data/moves/)
 - **Affinities, field, progression:** [`docs/GAMEPLAY-SYSTEMS.md`](docs/GAMEPLAY-SYSTEMS.md)
 - **Expanded design (12 affinities, biomes, combos):** [`docs/DESIGN-SUPPLEMENT.md`](docs/DESIGN-SUPPLEMENT.md)
 - **Combat package (TS):** [`packages/combat`](packages/combat/README.md)

@@ -1,6 +1,6 @@
 # Wildloom — combat model (attributes, affinities, endurance)
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — full 12×12 chart, nine stats, statuses, stances, expanded artifacts. Code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — full 12×12 chart, nine stats, statuses, stances, expanded artifacts. [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) — composable attack templates & player slots. Code: [`packages/combat`](../packages/combat/README.md).
 
 **Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (collapsed matchup chip + stats); optional depth from **material traits**, **field scalars**, and **continuous Layer 1 shaping**; no duplicated formulas across tiers.
 
@@ -435,7 +435,9 @@ Document in schema so tools can simulate.
 | `species/species.schema.json` | JSON Schema for catalog entries. |
 | `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
-| `moves.json` | §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
+| `moves.json` | Hydrated **instances** from templates — §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
+| `data/moves/attack_templates.catalog.json` | **Authoring library** of composable frames + per-slot bounds + `example_builds` — see [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md). |
+| `data/moves/attack_template.schema.json` | JSON Schema sketch for template entries (iterate with tooling). |
 
 Version every artifact; bake hash into replay header.
 
@@ -556,4 +558,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
-| 2026-05-03 | **§5.0 mathematical substrate:** hybrid \(\mathrm{d}S/\mathrm{d}t\) + jump hits; saturation as constitutive map; parallel modality impedances; hit/crit/spread as **probability law** with \(\mathbb{E}[\cdot]\) notes; §5.1/5.8 expanded; §13 log-elasticities; `math.ts` expectation + elasticity helpers. |
+| 2026-05-03 | **Attack template catalog:** [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) + [`data/moves/attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) — player slots for primary/secondary affinity, blend η, modalities, infusions; §9 checklist updated. |

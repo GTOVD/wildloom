@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wildloom.dev/schemas/attack-template.schema.json",
+  "title": "Wildloom attack template (player-composable frame)",
+  "type": "object",
+  "required": ["template_id", "display_name", "category", "customization"],
+  "properties": {
+    "template_id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "display_name": { "type": "string", "minLength": 1 },
+    "description": { "type": "string" },
+    "category": {
+      "type": "string",
+      "enum": ["strike", "surge", "true", "field", "channel", "reactive"]
+    },
+    "damage_kind_default": {
+      "type": "string",
+      "enum": ["endurance", "status", "utility"]
+    },
+    "mvp_resolver_note": {
+      "type": "string",
+      "description": "packages/combat Move today supports strike|surge|true — extended categories are design-forward."
+    },
+    "customization": { "$ref": "#/$defs/customizationBlock" },
+    "suggested_tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "example_builds": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/exampleBuild" }
+    }
+  },
+  "$defs": {
+    "affinity": {
+      "type": "string",
+      "enum": [
+        "thermal",
+        "cryo",
+        "aqueous",
+        "galvanic",
+        "mineral",
+        "flora",
+        "aero",
+        "luminous",
+        "void",
+        "sonic",
+        "corrosive",
+        "plasmic"
+      ]
+    },
+    "numericRange": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "default": { "type": "number" },
+        "step": { "type": "number" }
+      }
+    },
+    "customizationBlock": {
+      "type": "object",
+      "required": ["primary_affinity", "secondary_affinity"],
+      "properties": {
+        "primary_affinity": {
+          "type": "object",
+          "required": ["required"],
+          "properties": {
+            "required": { "const": true },
+            "help": { "type": "string" }
+          }
+        },
+        "secondary_affinity": {
+          "type": "object",
+          "required": ["required", "allow_null"],
+          "properties": {
+            "required": { "const": false },
+            "allow_null": { "type": "boolean" },
+            "must_differ_from_primary": { "type": "boolean" },
+            "help": { "type": "string" }
+          }
+        },
+        "blend_eta": {
+          "type": "object",
+          "description": "When secondary is set, portion of affinity_weights on secondary (remainder on primary unless advanced tail editor).",
+          "properties": {
+            "applies_when": { "type": "string" },
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "default": { "type": "number" },
+            "step": { "type": "number" }
+          }
+        },
+        "affinity_weights_rule": {
+          "type": "object",
+          "properties": {
+            "when_secondary_null": { "type": "string" },
+            "when_secondary_set": { "type": "string" },
+            "advanced_simplex_tail": { "type": "boolean" }
+          }
+        },
+        "base_power": { "$ref": "#/$defs/numericRange" },
+        "pierce": { "$ref": "#/$defs/numericRange" },
+        "accuracy": {
+          "allOf": [
+            { "$ref": "#/$defs/numericRange" },
+            {
+              "properties": {
+                "optional": { "type": "boolean" },
+                "omit_means_always_hit": { "type": "boolean" }
+              }
+            }
+          ]
+        },
+        "strike_modalities": {
+          "type": ["object", "null"],
+          "description": "null => strike uses resolver default (concussive-only) or template-fixed blend",
+          "properties": {
+            "concussive": { "$ref": "#/$defs/numericRange" },
+            "piercing": { "$ref": "#/$defs/numericRange" },
+            "slashing": { "$ref": "#/$defs/numericRange" },
+            "normalize_to_simplex_note": { "type": "string" }
+          }
+        },
+        "infusion_coeffs": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/numericRange" }
+        }
+      }
+    },
+    "exampleBuild": {
+      "type": "object",
+      "required": ["label", "primary_affinity"],
+      "properties": {
+        "label": { "type": "string" },
+        "primary_affinity": { "$ref": "#/$defs/affinity" },
+        "secondary_affinity": {
+          "anyOf": [{ "$ref": "#/$defs/affinity" }, { "type": "null" }]
+        },
+        "blend_eta": { "type": "number" },
+        "affinity_weights": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "base_power": { "type": "number", "minimum": 0 },
+        "pierce": { "type": "number", "minimum": 0, "maximum": 1 },
+        "accuracy": { "type": "number", "minimum": 0, "maximum": 100 },
+        "strike_modalities": {
+          "type": "object",
+          "properties": {
+            "concussive": { "type": "number" },
+            "piercing": { "type": "number" },
+            "slashing": { "type": "number" }
+          }
+        },
+        "infusion_coeffs": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}
