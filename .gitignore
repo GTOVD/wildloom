@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+build/
+.next/
+out/
+.turbo/
+
+# Env
+.env
+.env.*.local
+
+# Logs / cache
+*.log
+.cache/
+.npm/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test / coverage
+coverage/
+
+# Prisma (if added later)
+prisma/*.db
+prisma/*.db-journal
