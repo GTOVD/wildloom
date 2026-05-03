@@ -179,7 +179,7 @@ For scalar KPI \(J\) (expected damage, win-rate surrogate):
 \frac{\partial J}{\partial \theta} \approx \text{finite difference or adjoint-lite Monte Carlo}
 \]
 
-Where \(\theta\) includes \(\kappa\), pierce \(\lambda_p\), relaxation \(\tau\), chart entries. Surfaces **which knobs bend the curve**—consistent with COMBAT-MODEL accessibility vs depth goals.
+Where \(\theta\) includes \(\kappa\), pierce \(\lambda_p\), relaxation \(\tau\), chart entries. Surfaces **which knobs bend the curve**—consistent with COMBAT-MODEL accessibility vs depth goals. Single-hit **elasticities** of the saturation core (`coreSaturationOffenseLogElasticity` in `packages/combat`) and **mean damage before floor** (`expectedDamageMeanBeforeFloor`, COMBAT-MODEL §5.8) complement turn-scale Monte Carlo.
 
 ---
 
@@ -213,5 +213,5 @@ Marketing avoids implying laboratory-grade simulation.
 | 2026-05-03 | Initial pass: dynamical systems framing, toy flows, integration contract, pedagogy |
 | 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |
-| 2026-05-03 | §1.3 endurance-first metaphor; §2 explicit \(\mathrm{d}S/\mathrm{d}t\) alongside \(\mathbf{u}\); \(\tau_C(\texttt{stamina},\texttt{initiative})\); literacy hooks |
 | 2026-05-03 | §1.2 Layer 1 described as dynamic \(m_1\) + collapsed UI; aligns with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 |
+| 2026-05-03 | §7: COMBAT-MODEL §5.0 / §5.8 expectation helpers + saturation elasticities in `packages/combat`. |

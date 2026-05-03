@@ -19,7 +19,10 @@ export {
   calcEffectiveDefense,
   calcLevelScaling,
   calcStrikeResistanceTriplet,
+  coreSaturationDefenseLogElasticity,
+  coreSaturationOffenseLogElasticity,
   effectiveDefenseForModality,
+  expectedDamageMeanBeforeFloor,
   normalizeStrikeModalities,
 } from './math.js';
 export {

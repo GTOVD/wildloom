@@ -114,6 +114,39 @@ Immutable snapshot per resolution step (plus RNG stream):
 
 ## 5. Damage pipeline (single hit)
 
+### 5.0 Mathematical substrate — physics, calculus, and probability
+
+The resolver does **not** aim to be a spreadsheet of unrelated percentages. Each hit is one **sample** drawn from a model whose **definitions** are calculus- and physics-shaped:
+
+1. **Hybrid dynamical system (endurance):** Between discrete actions, endurance \(S(t)\) obeys smooth flows from recovery and DoT channels ([§6](#6-damage-over-time--coupled-flows)):
+   \[
+   \frac{\mathrm{d}S}{\mathrm{d}t} = -\sum_k \mathrm{potency}_k(\mathbf{u}(t)) + r(S,\mathbf{u}),\qquad
+   \frac{\mathrm{d}\mathbf{u}}{\mathrm{d}t} = \mathbf{g}(\mathbf{u}, \text{field}, \ldots).
+   \]
+   A resolved hit applies a **downward jump** \(\Delta S\) at a subtick boundary — a **piecewise-smooth / jump** process, not a lone subtraction isolated from \(\mathbf{u}\).
+
+2. **Nonlinear constitutive map (saturation):** For strike/surge cores, the scalar \(\sigma(A,D)\in(0,1)\) in §5.4 is a **smooth response function** (stress–strain / transfer-efficiency metaphor): raising offense \(A\) increases \(\sigma\) with **diminishing returns** against fixed mitigation \(D\); raising \(D\) lowers \(\sigma\) smoothly. Balance tools treat \(\partial \sigma/\partial A\) and \(\partial \sigma/\partial D\) (numerically or in closed form where authored) as **local elasticities** — see [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §7.
+
+3. **Multi-channel strikes as parallel pathways:** §5.4b is a **partition of coupling effort** \(\boldsymbol{\omega}\) across concussive / piercing / slashing branches. Each branch has its own resistance \(R_k = B_{\mathrm{eff}}\psi_k(\mathbf{M})\) — material fields \(\psi_k\) play the role of **geometry- and phase-dependent impedances**. The blended core is \(D_{\mathrm{core}}=\sum_k \omega_k D_{\mathrm{core},k}\): additive in **energy partitioned pathways**, each nonlinear in its own \(D_k\).
+
+4. **Probability layer (hit, crit, spread):** Let \(H\in\{0,1\}\) be hit/miss with \(\mathbb{P}(H{=}1)=p_{\mathrm{hit}}\) (§5.1). Conditional on \(H{=}1\), define multiplicative noise \(X = C\cdot \Xi\) where \(C\) is crit multiplier (Bernoulli / mixed distribution from data) and \(\Xi = 1+U\) with \(U\) symmetric on \([-\delta,\delta]\) (§5.8). With **independence** \(C \perp \Xi\),
+   \[
+   \mathbb{E}[\Delta S \mid H{=}1] \approx \mathbb{E}[D_{\mathrm{after}}]\,\mathbb{E}[C]\,\mathbb{E}[\Xi]
+   \]
+   before integer rounding — and \(\mathbb{E}[\Xi]=1\) for symmetric \(U\). The shipped **`resolveHit`** consumes one RNG stream outcome per hit: that is a **Monte Carlo draw** from this law; UX “expected damage” previews may show \(\mathbb{E}[\cdot]\) while logs retain the sample ([§5.8](#58-crit-and-variance) elaborates).
+
+5. **Layer 1 `m1` as deterministic field map:** \(m_1\) is a **smooth bounded functional** of emphasis vectors, materials, and field scalars (§5.5) — no RNG unless explicitly opted-in. It acts like a **position-dependent modifier** in a continuum-style matchup field, not a second arithmetic fudge isolated from physics metaphor.
+
+6. **Discrete evaluator:** The ordered steps in §5.1–5.9 are a **single-hit evaluator** that samples \(H,C,U\) and evaluates \(\sigma\), \(\psi_k\), and \(m_1\) at the current \(\mathbf{u}\) snapshot. Full-turn combat integrates \(\mathrm{d}S/\mathrm{d}t\) between hits on a subtick lattice ([§6.2](#62-integration-policy)).
+
+Optional **hit probability** beyond flat `accuracy/100`: author a **logistic link** on latent aim vs evasion (precision / initiative flavored),
+\[
+p_{\mathrm{hit}} = \mathrm{clamp}_{[0,1]}\Bigl(\bigl(1+\exp(-(\alpha + \boldsymbol{\beta}\cdot\mathbf{z}))\bigr)^{-1}\Bigr),
+\]
+with \(\mathbf{z}\) featuring attacker **`precision`**, defender evasion proxy, range, and stance — coefficients live in balance JSON.
+
+---
+
 Execute steps **in order**; each step consumes labeled modifiers so audits and replays stay readable.
 
 ```mermaid
@@ -134,15 +167,22 @@ flowchart TD
   L --> M[Clamp & apply stamina_loss → ΔS]
 ```
 
-### 5.1 Hit resolution (optional but recommended)
+### 5.1 Hit resolution (probability contract)
 
-Binary or phased—your choice—as long as RNG is seeded:
+Each attempt draws \(U \sim \mathrm{Uniform}(0,1)\) (seeded stream). One portable formulation:
 
-```
-p_hit = clamp01( p_base * acc_factor(attacker) / ev_factor(defender) )
-```
+\[
+H = \mathbb{1}\{ U < p_{\mathrm{hit}} \},\qquad
+p_{\mathrm{hit}} = \mathrm{clamp}_{[0,1]}\bigl(\sigma_{\mathrm{acc}}(\texttt{precision}_a,\texttt{initiative}_d,\ldots)\bigr).
+\]
 
-If miss: emit `miss` event; no on-hit reactions.
+**Baseline stub:** `p_hit = accuracy / 100` when only a scalar is authored.
+
+**Physics-shaped upgrade:** \(\sigma_{\mathrm{acc}}\) is a **sigmoid / logistic** (see §5.0 optional link) so marginal gains in **`precision`** change hit odds smoothly — no threshold cliffs unless a Layer 2 rule intentionally introduces one.
+
+If \(H{=}0\): emit `miss`; no on-hit reactions; \(\Delta S = 0\) for this impulse.
+
+If \(H{=}1\): proceed — conditional distribution of downstream noise is §5.8.
 
 ### 5.2 Effective defense and pierce
 
@@ -310,16 +350,23 @@ heat_load triggers overload moves or disables regeneration
 
 Apply **after** `D_after_chart` or split between pre/post depending on effect—**must be consistent per rule id** (document in rule schema).
 
-### 5.8 Crit and variance
+### 5.8 Crit and variance (stochastic decomposition)
 
-Prefer **bounded variance** over spike RNG:
+Let \(D_{\mathrm{after}} = D_{\mathrm{core}}\,m_1\,m_2 + \texttt{flat2}\) after Layers 1–2 (deterministic given snapshot).
 
-```
-crit_mult = 1 + bernoulli(p_crit) * (crit_bonus - 1)     -- seeded RNG
-spread = uniform_in_[−δ, +δ]                               -- small δ e.g. 0.03
+**Crit:** \(C = 1\) w.p. \(1-p_{\mathrm{crit}}\), else \(C = c_{\mathrm{crit}}\) (e.g. `CRIT_BONUS`). Then \(\mathbb{E}[C] = 1 + p_{\mathrm{crit}}(c_{\mathrm{crit}}-1)\).
 
-D_final_raw = D_after_chart * crit_mult * (1 + spread)
-```
+**Spread:** \(\Xi = 1+U\) with \(U \sim \mathrm{Uniform}[-\delta,\delta]\). Then \(\mathbb{E}[\Xi]=1\), \(\mathrm{Var}(\Xi)=\delta^2/3\).
+
+**Independence:** If \(C\) and \(\Xi\) are independent (default),
+\[
+\mathbb{E}[D_{\mathrm{final,raw}} \mid \mathrm{hit}] = D_{\mathrm{after}}\,\mathbb{E}[C]\,\mathbb{E}[\Xi]
+= D_{\mathrm{after}}\,\bigl(1 + p_{\mathrm{crit}}(c_{\mathrm{crit}}-1)\bigr).
+\]
+
+The reference implementation **samples** one \((C,\Xi)\) pair per hit (`packages/combat`). **`floor`** for integer `stamina_loss` breaks \(\mathbb{E}[\lfloor\cdot\rfloor]=\lfloor\mathbb{E}[\cdot]\rfloor\)` — tooling should integrate expectations **before** flooring when comparing builds.
+
+Prefer **bounded variance** over heavy-tailed spikes so outcomes stay interpretable under the same calculus metaphor.
 
 ### 5.9 Final application
 
@@ -424,7 +471,7 @@ TypeScript sources mirror this document:
 | File | Responsibility |
 |------|----------------|
 | [`packages/combat/src/types.ts`](../packages/combat/src/types.ts) | Immutable snapshot types (`Combatant`, `Move`, `BattleContext`, `HitResult`). |
-| [`packages/combat/src/math.ts`](../packages/combat/src/math.ts) | `TUNING` knobs, `calcLevelScaling`, `calcEffectiveDefense`, `calcCoreSaturation`, **`normalizeStrikeModalities`**, **`calcStrikeResistanceTriplet`**, **`effectiveDefenseForModality`**. |
+| [`packages/combat/src/math.ts`](../packages/combat/src/math.ts) | `TUNING`, scaling, saturation \(\sigma\), modality ψ helpers; **`expectedDamageMeanBeforeFloor`** (§5.8 law of total expectation); **`coreSaturationOffenseLogElasticity`** / **`coreSaturationDefenseLogElasticity`** (§13). |
 | [`packages/combat/src/pipeline.ts`](../packages/combat/src/pipeline.ts) | `resolveHit` — strike modality blend (§5.4b) + Layers 1→3; chart/rules stubbed. |
 
 Build: `npm install` at repo root, then `npm run build -w @wildloom/combat`.
@@ -463,7 +510,12 @@ Where \(P\) is modified move power (pre–Layer 1 modifiers), \(S_L\) is level s
 
 **Tuning intuition:** raising \(\kappa\) makes mid-armor transitions steeper; \(F_{\text{scale}}\) sets global pace; pierce \(\lambda_p\) trims effective \(D\) before \(y\) is formed.
 
----
+**Local sensitivity (calculus tools):** Holding \(P,S_L\) fixed, the **log-elasticity** of core damage w.r.t. offense,
+\[
+\varepsilon_{A} \equiv \frac{A}{D_{\text{core}}}\frac{\partial D_{\text{core}}}{\partial A}
+= \frac{A}{\sigma}\frac{\partial \sigma}{\partial A},
+\]
+measures percent change in \(D_{\text{core}}\) per percent change in \(A\) near a build — approximated numerically in [`packages/combat`](../packages/combat/src/math.ts) (`coreSaturationOffenseLogElasticity`). Mirror definition for \(\varepsilon_{D}\) w.r.t. mitigation (typically \(\varepsilon_{D}<0\); `coreSaturationDefenseLogElasticity`).
 
 ## 14. Interactive parameter explorer (devtools)
 
@@ -476,9 +528,9 @@ An external chat proposed an embedded slider widget for \(\kappa\), pierce, stat
 
 ## 15. Calculus-forward modeling (summary)
 
-Layer 1 uses a **smooth, bounded `m1`** tied to **`CHART₀` priors** and creature/move vectors (§5.5); novice UI **collapses** it to readable buckets. Depth uses **smooth nonlinear maps** and **continuous flows** everywhere else:
+Layer 1 uses a **smooth, bounded `m1`** tied to **`CHART₀` priors** and creature/move vectors (§5.5); novice UI **collapses** it to readable buckets. **[§5.0](#50-mathematical-substrate--physics-calculus-and-probability)** states the **continuous-time + probability** contract each hit samples. Depth uses **smooth nonlinear maps** and **continuous flows** everywhere else:
 
-- Saturation §13 gives bounded \(\sigma(A,D)\) with diminishing marginal returns vs armor.
+- Saturation §13 gives bounded \(\sigma(A,D)\) with diminishing marginal returns vs armor and explicit **log-elasticities** for balance gradients.
 - §5.4b adds **three parallel saturation branches** for strike modalities, blended by \(\boldsymbol{\omega}\)—same asymptotics, different material-shaped defenses.
 - §6 couples **endurance** \(S\) evolution to \(\mathbf{u}\) via flows + impulses; DoTs are \(\mathrm{d}S/\mathrm{d}t\) channels.
 - §7 treats combos as discrete samples along a posture/exposure curve.
@@ -504,4 +556,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
-| 2026-05-03 | **Stat vocabulary:** Renamed core schema ids for clarity — `might`→`physical_offense`, `bulwark`→`physical_mitigation`, `insight`→`special_offense`, `ward`→`special_mitigation`, `tempo`→`initiative`; **`stamina`** remains the schema id for **endurance capacity**. Extended stats: `acuity`→`precision`, `resilience`→`recovery`, `flux`→`coupling` ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §3). |
+| 2026-05-03 | **§5.0 mathematical substrate:** hybrid \(\mathrm{d}S/\mathrm{d}t\) + jump hits; saturation as constitutive map; parallel modality impedances; hit/crit/spread as **probability law** with \(\mathbb{E}[\cdot]\) notes; §5.1/5.8 expanded; §13 log-elasticities; `math.ts` expectation + elasticity helpers. |

@@ -125,6 +125,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 - **Stamina / recovery:** `stamina` sets \(S_{\max}\); recovery terms in \(\mathrm{d}S/\mathrm{d}t\) are usually small or rule-gated so pacing stays tactical.
 - **Multi-hit and exposure:** total **endurance loss** over a combo approximates an integral of a hit curve modulated by how enemy posture / stagger builds smoothly.
 - **Strike modalities:** blunt impulse vs penetration vs shear channels blend separate nonlinear saturation branches tied to material ψ maps (`COMBAT-MODEL` §5.4b)—distinct from move-field **`pierce`** scalar bypass.
+- **Probability-shaped hits:** miss/crit/spread form an explicit **random variable** law on top of the continuous core; conditional expectations \(\mathbb{E}[\Delta S \mid \mathrm{hit}]\) factor when independence holds (`COMBAT-MODEL` §§5.0, 5.8).
 - **Balance tooling:** expose sensitivities (e.g. impact of +1 defense on win rate) via Monte Carlo or closed-form approximations so tuning uses gradients, not only trial and error.
 
 All of this runs as **numeric integration per tick** on the server — no symbolic computer algebra required in production.

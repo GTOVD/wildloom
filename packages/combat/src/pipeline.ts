@@ -1,6 +1,10 @@
 /**
- * Damage pipeline Layers 1–3 ordering — docs/COMBAT-MODEL.md §5.
- * Stubs: chart + reaction rules hydrate from JSON/YAML artifacts.
+ * Single-hit evaluator — docs/COMBAT-MODEL.md §§5.0–5.9.
+ *
+ * Under the hood this samples one draw from the hit / crit / spread law while evaluating
+ * smooth saturation σ(A,D) and modality ψₖ(M). It is the discrete face of the hybrid
+ * dS/dt + jump process described in §5.0; use math.expectedDamageMeanBeforeFloor for E[·]
+ * previews and math.coreSaturation*LogElasticity for local sensitivities.
  */
 
 import type { BattleContext, Combatant, DamageBreakdown, HitResult, Move } from './types.js';

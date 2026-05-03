@@ -100,3 +100,51 @@ export function calcCoreSaturation(
   const dCore = TUNING.F_SCALE * movePower * sigma * sL;
   return { dCore, sigma };
 }
+
+/**
+ * Expected raw endurance loss before `floor`, conditional on hit, when crit Bernoulli and
+ * symmetric uniform spread are independent and E[1+U]=1 (COMBAT-MODEL §5.8).
+ */
+export function expectedDamageMeanBeforeFloor(
+  dAfterChart: number,
+  pCrit: number,
+  critBonus: number
+): number {
+  const eC = 1 + pCrit * (critBonus - 1);
+  return dAfterChart * eC;
+}
+
+/**
+ * Log-elasticity (A/dCore)(∂dCore/∂A) via forward finite difference on calcCoreSaturation output.
+ * COMBAT-MODEL §13 — balance gradients around a build.
+ */
+export function coreSaturationOffenseLogElasticity(
+  A: number,
+  D: number,
+  movePower: number,
+  sL: number,
+  relStep = 1e-5
+): number {
+  const h = Math.max(Math.abs(A) * relStep, TUNING.EPSILON);
+  const base = calcCoreSaturation(A, D, movePower, sL).dCore;
+  const up = calcCoreSaturation(A + h, D, movePower, sL).dCore;
+  if (base <= TUNING.EPSILON) return 0;
+  return (A / base) * ((up - base) / h);
+}
+
+/**
+ * Log-elasticity (D/dCore)(∂dCore/∂D); typically negative — forward finite difference.
+ */
+export function coreSaturationDefenseLogElasticity(
+  A: number,
+  D: number,
+  movePower: number,
+  sL: number,
+  relStep = 1e-5
+): number {
+  const h = Math.max(Math.abs(D) * relStep, TUNING.EPSILON);
+  const base = calcCoreSaturation(A, D, movePower, sL).dCore;
+  const up = calcCoreSaturation(A, D + h, movePower, sL).dCore;
+  if (base <= TUNING.EPSILON) return 0;
+  return (D / base) * ((up - base) / h);
+}

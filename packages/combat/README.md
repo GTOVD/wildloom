@@ -3,7 +3,7 @@
 Pure, deterministic combat math aligned with [`docs/COMBAT-MODEL.md`](../../docs/COMBAT-MODEL.md).
 
 - **`types.ts`** — immutable snapshot interfaces (`Combatant` with `CoreStats` — `stamina`, `physical_offense`, `physical_mitigation`, `special_offense`, `special_mitigation`, `initiative`; `Move.damage_kind` including `'endurance'`; `HitResult.stamina_loss`, …).
-- **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`.
+- **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`; **`expectedDamageMeanBeforeFloor`**, **`coreSaturationOffenseLogElasticity`** / **`coreSaturationDefenseLogElasticity`** (§5.8 / §13 expectation & elasticity helpers).
 - **`pipeline.ts`** — ordered resolver (`resolveHit`), optional **`strike_modalities`** blend (§5.4b); stubs for chart + reaction rules.
 
 ## Usage
