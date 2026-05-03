@@ -6,7 +6,7 @@
 - Host-created private rooms (instances); invite others via link or code.
 - Player-driven world: no computer-controlled stand-ins for human rivals; PvP challenges and trading between players.
 - One hundred unique creature species lines; each line has three transformational stages (naming TBD — not using “evolve” as a franchise hook).
-- Level cap 100; training budgets stay comparable across stages so preference for an earlier stage is a strategic choice, not a permanent handicap.
+- **Uncapped levels:** progression mirrors classic handheld pacing for early levels, then shifts to a deliberate super-grind curve; see [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1. Training budgets stay comparable across stages within a bracket so stage choice stays strategic, not a permanent handicap.
 - Combat modeling favors rich, continuous mathematics (nonlinear mitigation, resource flows, integrative effects) with server authority.
 
 ## Legal / branding
