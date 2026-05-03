@@ -1,8 +1,11 @@
 # Attack template catalog (player-composable moves)
 
 **Data:** [`data/moves/attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) — frames players customize.  
+**Flat roster (100 named abilities):** [`data/moves/abilities.catalog.json`](../data/moves/abilities.catalog.json) — concrete `ability_id`, **`display_name`**, **`category`** (strike / surge / true), **`damage_kind`**, affinities, weights, power, pierce, accuracy, modalities, tags. Regenerate with [`scripts/gen_abilities_catalog.py`](../scripts/gen_abilities_catalog.py).  
 **Affinity vocabulary:** [`data/moves/affinity_ids.json`](../data/moves/affinity_ids.json) (twelve IDs, matches [`data/species/species.schema.json`](../data/species/species.schema.json)).  
 **Schema sketch:** [`data/moves/attack_template.schema.json`](../data/moves/attack_template.schema.json).
+
+**Hydrating `packages/combat` `Move`:** set resolver `affinity` = **`primary_affinity`** (chart key); pass full **`affinity_weights`** / **`secondary_affinity`** when Layer 1 / Layer 2 consume fused emphasis ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3 — TS type may grow toward full compositional fields).
 
 **Resolver contract:** Resolved instances must match [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3 (`category`, `affinity`, optional `affinity_weights`, `strike_modalities`, `pierce`, `infusion_coeffs`, …). Today’s [`packages/combat`](../packages/combat/README.md) `Move` type implements the **strike / surge / true** slice; templates tagged `field`, `channel`, or `reactive` include `mvp_resolver_note` for the extended pipeline in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §5.
 
@@ -37,4 +40,4 @@ Each entry includes **`example_builds`** illustrating composed payloads for UX m
 
 ## Versioning
 
-Bump **`schema_version`** in `attack_templates.catalog.json` when adding breaking slot keys or changing semantic of `blend_eta`.
+Bump **`schema_version`** in `attack_templates.catalog.json` when adding breaking slot keys or changing semantic of `blend_eta`. Regenerate **`abilities.catalog.json`** after template bounds change so counts/stats stay coherent (`python scripts/gen_abilities_catalog.py`).

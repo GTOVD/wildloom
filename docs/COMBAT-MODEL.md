@@ -437,7 +437,7 @@ Document in schema so tools can simulate.
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
 | `moves.json` | Hydrated **instances** from templates — §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
 | `data/moves/attack_templates.catalog.json` | **Authoring library** of composable frames + per-slot bounds + `example_builds` — see [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md). |
-| `data/moves/attack_template.schema.json` | JSON Schema sketch for template entries (iterate with tooling). |
+| `data/moves/abilities.catalog.json` | **100 named abilities** — `display_name`, `category`, `damage_kind`, affinities, `affinity_weights`, `base_power`, `pierce`, `accuracy`, `strike_modalities`, `tags`; generated from templates via [`scripts/gen_abilities_catalog.py`](../scripts/gen_abilities_catalog.py). |
 
 Version every artifact; bake hash into replay header.
 
@@ -558,4 +558,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
-| 2026-05-03 | **Attack template catalog:** [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) + [`data/moves/attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) — player slots for primary/secondary affinity, blend η, modalities, infusions; §9 checklist updated. |
+| 2026-05-03 | **Abilities roster:** [`data/moves/abilities.catalog.json`](../data/moves/abilities.catalog.json) (100) + generator [`scripts/gen_abilities_catalog.py`](../scripts/gen_abilities_catalog.py); [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) documents templates vs flat list. |

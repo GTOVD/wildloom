@@ -1,0 +1,3013 @@
+{
+  "schema_version": "1.0.0",
+  "content_note": "100 authored-style abilities generated from attack_templates.catalog.json bounds via scripts/gen_abilities_catalog.py — regenerate; numbers are placeholders until Monte Carlo balance.",
+  "ability_count": 100,
+  "source_templates_ref": "./attack_templates.catalog.json",
+  "abilities": [
+    {
+      "ability_id": "abi_001_surge_blast_galvanic",
+      "display_name": "Arc Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "galvanic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 45,
+      "pierce": 0.207,
+      "accuracy": 92,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 1,
+        "layer1_soft_amp": 0.1194
+      },
+      "tags": [
+        "galvanic",
+        "ranged",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_002_surge_blast_plasmic_cryo",
+      "display_name": "Arcjet Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "cryo",
+      "affinity_weights": {
+        "plasmic": 0.83,
+        "cryo": 0.17
+      },
+      "blend_eta": 0.17,
+      "base_power": 54,
+      "pierce": 0.19,
+      "accuracy": 88,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 1,
+        "layer1_soft_amp": 0.0635
+      },
+      "tags": [
+        "cryo",
+        "plasmic",
+        "ranged",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_003_surge_blast_aero_sonic",
+      "display_name": "Vortex Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "sonic",
+      "affinity_weights": {
+        "aero": 0.68,
+        "sonic": 0.32
+      },
+      "blend_eta": 0.32,
+      "base_power": 35,
+      "pierce": 0.011,
+      "accuracy": 94,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 0,
+        "layer1_soft_amp": 0.0218
+      },
+      "tags": [
+        "aero",
+        "ranged",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_004_surge_blast_void_aqueous",
+      "display_name": "Singularity Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "void": 0.86,
+        "aqueous": 0.14
+      },
+      "blend_eta": 0.14,
+      "base_power": 92,
+      "pierce": 0.08,
+      "accuracy": 82,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 0,
+        "layer1_soft_amp": 0.0706
+      },
+      "tags": [
+        "aqueous",
+        "ranged",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_005_surge_blast_void",
+      "display_name": "TidalVoid Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "void": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 87,
+      "pierce": 0.419,
+      "accuracy": 77,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 1,
+        "layer1_soft_amp": 0.1471
+      },
+      "tags": [
+        "ranged",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_006_surge_blast_aero",
+      "display_name": "Jetstream Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aero": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 38,
+      "pierce": 0.129,
+      "accuracy": 98,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 1,
+        "layer1_soft_amp": -0.1413
+      },
+      "tags": [
+        "aero",
+        "ranged",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_007_surge_blast_aqueous",
+      "display_name": "Pressure Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aqueous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 81,
+      "pierce": 0.091,
+      "accuracy": 80,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 0,
+        "layer1_soft_amp": -0.147
+      },
+      "tags": [
+        "aqueous",
+        "ranged",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_008_surge_blast_luminous",
+      "display_name": "Corona Blast",
+      "template_id": "surge_blast",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "luminous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 41,
+      "pierce": 0.211,
+      "accuracy": 76,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "tag_pressure": 1,
+        "layer1_soft_amp": -0.1466
+      },
+      "tags": [
+        "luminous",
+        "ranged",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_009_surge_lance_galvanic_thermal",
+      "display_name": "Arc Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "galvanic": 0.85,
+        "thermal": 0.15
+      },
+      "blend_eta": 0.15,
+      "base_power": 58,
+      "pierce": 0.62,
+      "accuracy": 77,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 0,
+        "ward_coupling": -0.016
+      },
+      "tags": [
+        "beam",
+        "focused",
+        "galvanic",
+        "surge",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_010_surge_lance_sonic",
+      "display_name": "Oscill Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "sonic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 78,
+      "pierce": 0.197,
+      "accuracy": 83,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 1,
+        "ward_coupling": 0.086
+      },
+      "tags": [
+        "beam",
+        "focused",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_011_surge_lance_aero_aqueous",
+      "display_name": "Vortex Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "aero": 0.93,
+        "aqueous": 0.07
+      },
+      "blend_eta": 0.07,
+      "base_power": 93,
+      "pierce": 0.164,
+      "accuracy": null,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 0,
+        "ward_coupling": 0.0327
+      },
+      "tags": [
+        "aero",
+        "aqueous",
+        "beam",
+        "focused",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_012_surge_lance_void",
+      "display_name": "Singularity Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "void": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 61,
+      "pierce": 0.623,
+      "accuracy": 88,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 1,
+        "ward_coupling": 0.1203
+      },
+      "tags": [
+        "beam",
+        "focused",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_013_surge_lance_cryo",
+      "display_name": "Crystalline Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "cryo": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 63,
+      "pierce": 0.375,
+      "accuracy": 97,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 0,
+        "ward_coupling": -0.0995
+      },
+      "tags": [
+        "beam",
+        "cryo",
+        "focused",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_014_surge_lance_void",
+      "display_name": "Silence Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "void": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 30,
+      "pierce": 0.321,
+      "accuracy": 80,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 0,
+        "ward_coupling": 0.1454
+      },
+      "tags": [
+        "beam",
+        "focused",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_015_surge_lance_flora",
+      "display_name": "Pollen Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "flora",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "flora": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 86,
+      "pierce": 0.483,
+      "accuracy": 87,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 1,
+        "ward_coupling": 0.0577
+      },
+      "tags": [
+        "beam",
+        "flora",
+        "focused",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_016_surge_lance_aqueous_aero",
+      "display_name": "Foam Lance",
+      "template_id": "surge_lance",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "aero",
+      "affinity_weights": {
+        "aqueous": 0.67,
+        "aero": 0.33
+      },
+      "blend_eta": 0.33,
+      "base_power": 49,
+      "pierce": 0.173,
+      "accuracy": 77,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "beam_focus": 1,
+        "ward_coupling": 0.1539
+      },
+      "tags": [
+        "aero",
+        "aqueous",
+        "beam",
+        "focused",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_017_surge_burst_aqueous_galvanic",
+      "display_name": "Brine Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "galvanic",
+      "affinity_weights": {
+        "aqueous": 0.58,
+        "galvanic": 0.42
+      },
+      "blend_eta": 0.42,
+      "base_power": 100,
+      "pierce": 0.005,
+      "accuracy": 67,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 0,
+        "field_coupling": 0.1252
+      },
+      "tags": [
+        "aoe_flavor",
+        "aqueous",
+        "galvanic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_018_surge_burst_cryo",
+      "display_name": "Frost Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "cryo": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 90,
+      "pierce": 0.23,
+      "accuracy": 70,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 1,
+        "field_coupling": 0.1705
+      },
+      "tags": [
+        "aoe_flavor",
+        "cryo",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_019_surge_burst_void_sonic",
+      "display_name": "Collapse Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": "sonic",
+      "affinity_weights": {
+        "void": 0.9,
+        "sonic": 0.1
+      },
+      "blend_eta": 0.1,
+      "base_power": 52,
+      "pierce": 0.16,
+      "accuracy": null,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 1,
+        "field_coupling": 0.3402
+      },
+      "tags": [
+        "aoe_flavor",
+        "sonic",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_020_surge_burst_plasmic_thermal",
+      "display_name": "Ionflare Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "plasmic": 0.65,
+        "thermal": 0.35
+      },
+      "blend_eta": 0.35,
+      "base_power": 77,
+      "pierce": 0.052,
+      "accuracy": null,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 1,
+        "field_coupling": 0.2081
+      },
+      "tags": [
+        "aoe_flavor",
+        "plasmic",
+        "surge",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_021_surge_burst_galvanic_aero",
+      "display_name": "Ion Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aero",
+      "affinity_weights": {
+        "galvanic": 0.57,
+        "aero": 0.43
+      },
+      "blend_eta": 0.43,
+      "base_power": 38,
+      "pierce": 0.146,
+      "accuracy": 61,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 1,
+        "field_coupling": 0.0851
+      },
+      "tags": [
+        "aero",
+        "aoe_flavor",
+        "galvanic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_022_surge_burst_cryo_luminous",
+      "display_name": "Permafrost Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "luminous",
+      "affinity_weights": {
+        "cryo": 0.86,
+        "luminous": 0.14
+      },
+      "blend_eta": 0.14,
+      "base_power": 73,
+      "pierce": 0.148,
+      "accuracy": 84,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 0,
+        "field_coupling": 0.1364
+      },
+      "tags": [
+        "aoe_flavor",
+        "cryo",
+        "luminous",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_023_surge_burst_luminous",
+      "display_name": "Glare Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "luminous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 69,
+      "pierce": 0.005,
+      "accuracy": 89,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 0,
+        "field_coupling": 0.0375
+      },
+      "tags": [
+        "aoe_flavor",
+        "luminous",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_024_surge_burst_luminous_plasmic",
+      "display_name": "Corona Burst",
+      "template_id": "surge_burst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "plasmic",
+      "affinity_weights": {
+        "luminous": 0.75,
+        "plasmic": 0.25
+      },
+      "blend_eta": 0.25,
+      "base_power": 41,
+      "pierce": 0.051,
+      "accuracy": 71,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "splash_bias": 1,
+        "field_coupling": 0.0297
+      },
+      "tags": [
+        "aoe_flavor",
+        "luminous",
+        "plasmic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_025_surge_siphon_aero",
+      "display_name": "Gale Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aero": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 31,
+      "pierce": 0.26,
+      "accuracy": 79,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 0,
+        "reservoir_coupling": 0.1212
+      },
+      "tags": [
+        "aero",
+        "drain",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_026_surge_siphon_void_plasmic",
+      "display_name": "Pinch Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": "plasmic",
+      "affinity_weights": {
+        "void": 0.71,
+        "plasmic": 0.29
+      },
+      "blend_eta": 0.29,
+      "base_power": 33,
+      "pierce": 0.003,
+      "accuracy": 85,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 0,
+        "reservoir_coupling": 0.2499
+      },
+      "tags": [
+        "drain",
+        "plasmic",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_027_surge_siphon_sonic_aqueous",
+      "display_name": "Wavefront Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "sonic": 0.66,
+        "aqueous": 0.34
+      },
+      "blend_eta": 0.34,
+      "base_power": 47,
+      "pierce": 0.194,
+      "accuracy": 86,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 0,
+        "reservoir_coupling": 0.3903
+      },
+      "tags": [
+        "aqueous",
+        "drain",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_028_surge_siphon_thermal",
+      "display_name": "Smolder Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "thermal",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "thermal": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 61,
+      "pierce": 0.334,
+      "accuracy": 79,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 1,
+        "reservoir_coupling": 0.2185
+      },
+      "tags": [
+        "drain",
+        "surge",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_029_surge_siphon_aero",
+      "display_name": "Lift Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aero": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 88,
+      "pierce": 0.073,
+      "accuracy": 76,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 1,
+        "reservoir_coupling": 0.0448
+      },
+      "tags": [
+        "aero",
+        "drain",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_030_surge_siphon_cryo_thermal",
+      "display_name": "Permafrost Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "cryo": 0.72,
+        "thermal": 0.28
+      },
+      "blend_eta": 0.28,
+      "base_power": 84,
+      "pierce": 0.239,
+      "accuracy": 78,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 1,
+        "reservoir_coupling": 0.0365
+      },
+      "tags": [
+        "cryo",
+        "drain",
+        "surge",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_031_surge_siphon_plasmic_aero",
+      "display_name": "Spectral Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "aero",
+      "affinity_weights": {
+        "plasmic": 0.87,
+        "aero": 0.13
+      },
+      "blend_eta": 0.13,
+      "base_power": 49,
+      "pierce": 0.218,
+      "accuracy": 96,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 0,
+        "reservoir_coupling": 0.188
+      },
+      "tags": [
+        "aero",
+        "drain",
+        "plasmic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_032_surge_siphon_aero_flora",
+      "display_name": "Cyclone Siphon",
+      "template_id": "surge_siphon",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "flora",
+      "affinity_weights": {
+        "aero": 0.74,
+        "flora": 0.26
+      },
+      "blend_eta": 0.26,
+      "base_power": 30,
+      "pierce": 0.014,
+      "accuracy": 90,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dot_prime": 1,
+        "reservoir_coupling": 0.1444
+      },
+      "tags": [
+        "aero",
+        "drain",
+        "flora",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_033_strike_slam_aero_plasmic",
+      "display_name": "Gale Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "plasmic",
+      "affinity_weights": {
+        "aero": 0.77,
+        "plasmic": 0.23
+      },
+      "blend_eta": 0.23,
+      "base_power": 112,
+      "pierce": 0.178,
+      "accuracy": 90,
+      "strike_modalities": {
+        "concussive": 0.6974143707013981,
+        "piercing": 0.17004229538500037,
+        "slashing": 0.13254333391360149
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 0,
+        "posture_break_bias": -0.072
+      },
+      "tags": [
+        "aero",
+        "concussive",
+        "contact",
+        "plasmic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_034_strike_slam_aqueous",
+      "display_name": "Tidal Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aqueous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 59,
+      "pierce": 0.291,
+      "accuracy": 98,
+      "strike_modalities": {
+        "concussive": 0.6883389382992279,
+        "piercing": 0.30270252091632466,
+        "slashing": 0.008958540784447444
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 1,
+        "posture_break_bias": -0.0342
+      },
+      "tags": [
+        "aqueous",
+        "concussive",
+        "contact",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_035_strike_slam_luminous",
+      "display_name": "Radiant Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "luminous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 45,
+      "pierce": 0.261,
+      "accuracy": null,
+      "strike_modalities": {
+        "concussive": 0.5338456585247277,
+        "piercing": 0.18914113290820225,
+        "slashing": 0.2770132085670702
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 1,
+        "posture_break_bias": 0.0554
+      },
+      "tags": [
+        "concussive",
+        "contact",
+        "luminous",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_036_strike_slam_sonic",
+      "display_name": "Harmonic Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "sonic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 52,
+      "pierce": 0.003,
+      "accuracy": 84,
+      "strike_modalities": {
+        "concussive": 0.8857251306760886,
+        "piercing": 0.003041115669322494,
+        "slashing": 0.11123375365458893
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 0,
+        "posture_break_bias": 0.0732
+      },
+      "tags": [
+        "concussive",
+        "contact",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_037_strike_slam_galvanic",
+      "display_name": "Ion Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "galvanic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 49,
+      "pierce": 0.098,
+      "accuracy": 91,
+      "strike_modalities": {
+        "concussive": 0.5604310779644865,
+        "piercing": 0.17631789089221067,
+        "slashing": 0.26325103114330267
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 0,
+        "posture_break_bias": 0.043
+      },
+      "tags": [
+        "concussive",
+        "contact",
+        "galvanic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_038_strike_slam_thermal",
+      "display_name": "Ignition Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "thermal",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "thermal": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 79,
+      "pierce": 0.044,
+      "accuracy": 89,
+      "strike_modalities": {
+        "concussive": 0.7252392898251908,
+        "piercing": 0.20349266805417915,
+        "slashing": 0.07126804212063001
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 0,
+        "posture_break_bias": 0.0235
+      },
+      "tags": [
+        "concussive",
+        "contact",
+        "strike",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_039_strike_slam_thermal_galvanic",
+      "display_name": "Flashpoint Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "galvanic",
+      "affinity_weights": {
+        "thermal": 0.7,
+        "galvanic": 0.3
+      },
+      "blend_eta": 0.3,
+      "base_power": 89,
+      "pierce": 0.199,
+      "accuracy": 79,
+      "strike_modalities": {
+        "concussive": 0.6947959676895331,
+        "piercing": 0.14816501331105145,
+        "slashing": 0.15703901899941547
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 0,
+        "posture_break_bias": 0.063
+      },
+      "tags": [
+        "concussive",
+        "contact",
+        "galvanic",
+        "strike",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_040_strike_slam_plasmic_void",
+      "display_name": "Flash Slam",
+      "template_id": "strike_slam",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "void",
+      "affinity_weights": {
+        "plasmic": 0.66,
+        "void": 0.34
+      },
+      "blend_eta": 0.34,
+      "base_power": 81,
+      "pierce": 0.014,
+      "accuracy": 93,
+      "strike_modalities": {
+        "concussive": 0.6212710346467859,
+        "piercing": 0.23685289229197512,
+        "slashing": 0.1418760730612391
+      },
+      "infusion_coeffs": {
+        "concussion_impulse": 0,
+        "posture_break_bias": -0.0261
+      },
+      "tags": [
+        "concussive",
+        "contact",
+        "plasmic",
+        "strike",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_041_strike_thrust_plasmic",
+      "display_name": "Fusor Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "plasmic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 81,
+      "pierce": 0.163,
+      "accuracy": 85,
+      "strike_modalities": {
+        "concussive": 0.11991140810932101,
+        "piercing": 0.6631398840807965,
+        "slashing": 0.21694870780988243
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 0,
+        "pierce_channel_amp": -0.0274
+      },
+      "tags": [
+        "contact",
+        "piercing_modality",
+        "plasmic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_042_strike_thrust_aqueous_aero",
+      "display_name": "Tidal Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "aero",
+      "affinity_weights": {
+        "aqueous": 0.74,
+        "aero": 0.26
+      },
+      "blend_eta": 0.26,
+      "base_power": 36,
+      "pierce": 0.216,
+      "accuracy": 90,
+      "strike_modalities": {
+        "concussive": 0.08149941683498213,
+        "piercing": 0.7014990454683872,
+        "slashing": 0.2170015376966307
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 0,
+        "pierce_channel_amp": 0.0801
+      },
+      "tags": [
+        "aero",
+        "aqueous",
+        "contact",
+        "piercing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_043_strike_thrust_corrosive_luminous",
+      "display_name": "Vitriol Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "luminous",
+      "affinity_weights": {
+        "corrosive": 0.71,
+        "luminous": 0.29
+      },
+      "blend_eta": 0.29,
+      "base_power": 98,
+      "pierce": 0.492,
+      "accuracy": 74,
+      "strike_modalities": {
+        "concussive": 0.17539568685684606,
+        "piercing": 0.6792123171998554,
+        "slashing": 0.14539199594329866
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 1,
+        "pierce_channel_amp": 0.1391
+      },
+      "tags": [
+        "contact",
+        "corrosive",
+        "luminous",
+        "piercing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_044_strike_thrust_thermal_corrosive",
+      "display_name": "Smolder Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "corrosive",
+      "affinity_weights": {
+        "thermal": 0.72,
+        "corrosive": 0.28
+      },
+      "blend_eta": 0.28,
+      "base_power": 55,
+      "pierce": 0.107,
+      "accuracy": 92,
+      "strike_modalities": {
+        "concussive": 0.11155881151340243,
+        "piercing": 0.778272651711179,
+        "slashing": 0.11016853677541864
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 1,
+        "pierce_channel_amp": 0.0582
+      },
+      "tags": [
+        "contact",
+        "corrosive",
+        "piercing_modality",
+        "strike",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_045_strike_thrust_sonic",
+      "display_name": "Dissonant Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "sonic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 47,
+      "pierce": 0.483,
+      "accuracy": 78,
+      "strike_modalities": {
+        "concussive": 0.18109528750316045,
+        "piercing": 0.7270440980025392,
+        "slashing": 0.09186061449430036
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 1,
+        "pierce_channel_amp": -0.0042
+      },
+      "tags": [
+        "contact",
+        "piercing_modality",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_046_strike_thrust_mineral_luminous",
+      "display_name": "Fault Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "mineral",
+      "secondary_affinity": "luminous",
+      "affinity_weights": {
+        "mineral": 0.92,
+        "luminous": 0.08
+      },
+      "blend_eta": 0.08,
+      "base_power": 104,
+      "pierce": 0.462,
+      "accuracy": null,
+      "strike_modalities": {
+        "concussive": 0.09444882637252383,
+        "piercing": 0.6429964693165741,
+        "slashing": 0.262554704310902
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 0,
+        "pierce_channel_amp": -0.0642
+      },
+      "tags": [
+        "contact",
+        "luminous",
+        "mineral",
+        "piercing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_047_strike_thrust_luminous_plasmic",
+      "display_name": "Glare Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "plasmic",
+      "affinity_weights": {
+        "luminous": 0.69,
+        "plasmic": 0.31
+      },
+      "blend_eta": 0.31,
+      "base_power": 48,
+      "pierce": 0.37,
+      "accuracy": null,
+      "strike_modalities": {
+        "concussive": 0.2722334946588815,
+        "piercing": 0.6077708151068958,
+        "slashing": 0.11999569023422268
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 0,
+        "pierce_channel_amp": 0.1331
+      },
+      "tags": [
+        "contact",
+        "luminous",
+        "piercing_modality",
+        "plasmic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_048_strike_thrust_sonic",
+      "display_name": "Impulse Thrust",
+      "template_id": "strike_thrust",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "sonic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 101,
+      "pierce": 0.314,
+      "accuracy": 99,
+      "strike_modalities": {
+        "concussive": 0.32479808629955,
+        "piercing": 0.4613744737078702,
+        "slashing": 0.21382743999257986
+      },
+      "infusion_coeffs": {
+        "fracture_seed": 1,
+        "pierce_channel_amp": 0.1781
+      },
+      "tags": [
+        "contact",
+        "piercing_modality",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_049_strike_rend_corrosive_flora",
+      "display_name": "Caustic Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "flora",
+      "affinity_weights": {
+        "corrosive": 0.73,
+        "flora": 0.27
+      },
+      "blend_eta": 0.27,
+      "base_power": 32,
+      "pierce": 0.247,
+      "accuracy": 75,
+      "strike_modalities": {
+        "concussive": 0.11523278672455564,
+        "piercing": 0.1252777290142782,
+        "slashing": 0.7594894842611662
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 0,
+        "wetness_coupling": 0.0002
+      },
+      "tags": [
+        "contact",
+        "corrosive",
+        "flora",
+        "slashing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_050_strike_rend_sonic_luminous",
+      "display_name": "Oscill Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "luminous",
+      "affinity_weights": {
+        "sonic": 0.74,
+        "luminous": 0.26
+      },
+      "blend_eta": 0.26,
+      "base_power": 54,
+      "pierce": 0.358,
+      "accuracy": 94,
+      "strike_modalities": {
+        "concussive": 0.14363075665068348,
+        "piercing": 0.0022478596097060557,
+        "slashing": 0.8541213837396104
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 1,
+        "wetness_coupling": 0.1678
+      },
+      "tags": [
+        "contact",
+        "luminous",
+        "slashing_modality",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_051_strike_rend_plasmic",
+      "display_name": "Torch Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "plasmic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 93,
+      "pierce": 0.37,
+      "accuracy": 83,
+      "strike_modalities": {
+        "concussive": 0.04147528107989514,
+        "piercing": 0.22709103474033676,
+        "slashing": 0.7314336841797681
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 0,
+        "wetness_coupling": 0.0376
+      },
+      "tags": [
+        "contact",
+        "plasmic",
+        "slashing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_052_strike_rend_void_aero",
+      "display_name": "Singularity Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": "aero",
+      "affinity_weights": {
+        "void": 0.62,
+        "aero": 0.38
+      },
+      "blend_eta": 0.38,
+      "base_power": 60,
+      "pierce": 0.098,
+      "accuracy": 98,
+      "strike_modalities": {
+        "concussive": 0.1794979564781959,
+        "piercing": 0.12001940607614217,
+        "slashing": 0.7004826374456619
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 1,
+        "wetness_coupling": 0.2424
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "slashing_modality",
+        "strike",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_053_strike_rend_corrosive",
+      "display_name": "Fluxbite Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "corrosive": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 69,
+      "pierce": 0.224,
+      "accuracy": 85,
+      "strike_modalities": {
+        "concussive": 0.00664152306047208,
+        "piercing": 0.25071761336999715,
+        "slashing": 0.7426408635695307
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 1,
+        "wetness_coupling": 0.2925
+      },
+      "tags": [
+        "contact",
+        "corrosive",
+        "slashing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_054_strike_rend_sonic_mineral",
+      "display_name": "Echo Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "mineral",
+      "affinity_weights": {
+        "sonic": 0.78,
+        "mineral": 0.22
+      },
+      "blend_eta": 0.22,
+      "base_power": 89,
+      "pierce": 0.236,
+      "accuracy": null,
+      "strike_modalities": {
+        "concussive": 0.33115047893496,
+        "piercing": 0.1809172535871644,
+        "slashing": 0.48793226747787555
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 1,
+        "wetness_coupling": 0.2011
+      },
+      "tags": [
+        "contact",
+        "mineral",
+        "slashing_modality",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_055_strike_rend_corrosive_thermal",
+      "display_name": "Redox Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "corrosive": 0.67,
+        "thermal": 0.33
+      },
+      "blend_eta": 0.33,
+      "base_power": 47,
+      "pierce": 0.057,
+      "accuracy": 94,
+      "strike_modalities": {
+        "concussive": 0.0799501520344933,
+        "piercing": 0.01854363178022804,
+        "slashing": 0.9015062161852787
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 0,
+        "wetness_coupling": 0.0999
+      },
+      "tags": [
+        "contact",
+        "corrosive",
+        "slashing_modality",
+        "strike",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_056_strike_rend_aero_corrosive",
+      "display_name": "Cyclone Rend",
+      "template_id": "strike_rend",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "corrosive",
+      "affinity_weights": {
+        "aero": 0.7,
+        "corrosive": 0.3
+      },
+      "blend_eta": 0.3,
+      "base_power": 99,
+      "pierce": 0.011,
+      "accuracy": 76,
+      "strike_modalities": {
+        "concussive": 0.14946177571240024,
+        "piercing": 0.09849006534899508,
+        "slashing": 0.7520481589386047
+      },
+      "infusion_coeffs": {
+        "laceration_tone": 0,
+        "wetness_coupling": 0.2295
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "corrosive",
+        "slashing_modality",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_057_strike_tempered_aero",
+      "display_name": "Gale Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aero": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 63,
+      "pierce": 0.058,
+      "accuracy": 78,
+      "strike_modalities": {
+        "concussive": 0.5089313574369164,
+        "piercing": 0.4301998263918295,
+        "slashing": 0.06086881617125405
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 0,
+        "material_echo": 0.0046
+      },
+      "tags": [
+        "aero",
+        "modality_lab",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_058_strike_tempered_luminous_corrosive",
+      "display_name": "Gleam Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "corrosive",
+      "affinity_weights": {
+        "luminous": 0.93,
+        "corrosive": 0.07
+      },
+      "blend_eta": 0.07,
+      "base_power": 48,
+      "pierce": 0.236,
+      "accuracy": 94,
+      "strike_modalities": {
+        "concussive": 0.27095208082893796,
+        "piercing": 0.5579401157028604,
+        "slashing": 0.17110780346820165
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 0,
+        "material_echo": 0.0312
+      },
+      "tags": [
+        "corrosive",
+        "luminous",
+        "modality_lab",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_059_strike_tempered_aqueous",
+      "display_name": "Surge Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aqueous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 74,
+      "pierce": 0.415,
+      "accuracy": null,
+      "strike_modalities": {
+        "concussive": 0.17404883406958915,
+        "piercing": 0.09859198107746303,
+        "slashing": 0.7273591848529478
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 1,
+        "material_echo": 0.1098
+      },
+      "tags": [
+        "aqueous",
+        "modality_lab",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_060_strike_tempered_luminous_plasmic",
+      "display_name": "Beacon Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "plasmic",
+      "affinity_weights": {
+        "luminous": 0.88,
+        "plasmic": 0.12
+      },
+      "blend_eta": 0.12,
+      "base_power": 117,
+      "pierce": 0.018,
+      "accuracy": 98,
+      "strike_modalities": {
+        "concussive": 0.0778476220868759,
+        "piercing": 0.4743079615494176,
+        "slashing": 0.44784441636370637
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 1,
+        "material_echo": 0.0529
+      },
+      "tags": [
+        "luminous",
+        "modality_lab",
+        "plasmic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_061_strike_tempered_cryo",
+      "display_name": "Crystalline Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "cryo": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 55,
+      "pierce": 0.136,
+      "accuracy": 95,
+      "strike_modalities": {
+        "concussive": 0.4191750033241367,
+        "piercing": 0.40211034549373303,
+        "slashing": 0.17871465118213015
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 1,
+        "material_echo": -0.0941
+      },
+      "tags": [
+        "cryo",
+        "modality_lab",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_062_strike_tempered_aero_luminous",
+      "display_name": "Jetstream Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "luminous",
+      "affinity_weights": {
+        "aero": 0.91,
+        "luminous": 0.09
+      },
+      "blend_eta": 0.09,
+      "base_power": 62,
+      "pierce": 0.479,
+      "accuracy": 88,
+      "strike_modalities": {
+        "concussive": 0.3123435097470821,
+        "piercing": 0.338417682213276,
+        "slashing": 0.3492388080396419
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 0,
+        "material_echo": -0.0941
+      },
+      "tags": [
+        "aero",
+        "luminous",
+        "modality_lab",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_063_strike_tempered_aero_thermal",
+      "display_name": "Draft Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "aero": 0.61,
+        "thermal": 0.39
+      },
+      "blend_eta": 0.39,
+      "base_power": 117,
+      "pierce": 0.195,
+      "accuracy": 96,
+      "strike_modalities": {
+        "concussive": 0.06989352747999697,
+        "piercing": 0.28646073802739436,
+        "slashing": 0.6436457344926088
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 0,
+        "material_echo": 0.1483
+      },
+      "tags": [
+        "aero",
+        "modality_lab",
+        "strike",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_064_strike_tempered_sonic_corrosive",
+      "display_name": "Impulse Temper",
+      "template_id": "strike_tempered",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": "corrosive",
+      "affinity_weights": {
+        "sonic": 0.63,
+        "corrosive": 0.37
+      },
+      "blend_eta": 0.37,
+      "base_power": 92,
+      "pierce": 0.155,
+      "accuracy": null,
+      "strike_modalities": {
+        "concussive": 0.4098327545526542,
+        "piercing": 0.3614566260785872,
+        "slashing": 0.22871061936875858
+      },
+      "infusion_coeffs": {
+        "modality_bridge": 0,
+        "material_echo": -0.1407
+      },
+      "tags": [
+        "corrosive",
+        "modality_lab",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_065_true_spike_void",
+      "display_name": "Vacuum Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "void": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 29,
+      "pierce": 0.0,
+      "accuracy": 90,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "true",
+        "true_damage",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_066_true_spike_sonic",
+      "display_name": "Oscill Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "sonic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 54,
+      "pierce": 0.0,
+      "accuracy": null,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "sonic",
+        "true",
+        "true_damage"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_067_true_spike_galvanic_void",
+      "display_name": "Circuit Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "void",
+      "affinity_weights": {
+        "galvanic": 0.71,
+        "void": 0.29
+      },
+      "blend_eta": 0.29,
+      "base_power": 33,
+      "pierce": 0.0,
+      "accuracy": 91,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "galvanic",
+        "true",
+        "true_damage",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_068_true_spike_aqueous",
+      "display_name": "Vapor Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aqueous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 41,
+      "pierce": 0.0,
+      "accuracy": 86,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "aqueous",
+        "true",
+        "true_damage"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_069_true_spike_cryo_galvanic",
+      "display_name": "Crystalline Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": "galvanic",
+      "affinity_weights": {
+        "cryo": 0.85,
+        "galvanic": 0.15
+      },
+      "blend_eta": 0.15,
+      "base_power": 35,
+      "pierce": 0.0,
+      "accuracy": 85,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "cryo",
+        "galvanic",
+        "true",
+        "true_damage"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_070_true_spike_aqueous_flora",
+      "display_name": "Current Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "flora",
+      "affinity_weights": {
+        "aqueous": 0.73,
+        "flora": 0.27
+      },
+      "blend_eta": 0.27,
+      "base_power": 47,
+      "pierce": 0.0,
+      "accuracy": 89,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "aqueous",
+        "flora",
+        "true",
+        "true_damage"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_071_true_spike_flora_cryo",
+      "display_name": "Pollen Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "flora",
+      "secondary_affinity": "cryo",
+      "affinity_weights": {
+        "flora": 0.88,
+        "cryo": 0.12
+      },
+      "blend_eta": 0.12,
+      "base_power": 23,
+      "pierce": 0.0,
+      "accuracy": 88,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 1
+      },
+      "tags": [
+        "cryo",
+        "flora",
+        "true",
+        "true_damage"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_072_true_spike_galvanic_void",
+      "display_name": "Busbar Spike",
+      "template_id": "true_spike",
+      "category": "true",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "void",
+      "affinity_weights": {
+        "galvanic": 0.89,
+        "void": 0.11
+      },
+      "blend_eta": 0.11,
+      "base_power": 65,
+      "pierce": 0.0,
+      "accuracy": 95,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "rupture_cleanliness": 0
+      },
+      "tags": [
+        "galvanic",
+        "true",
+        "true_damage",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_073_surge_prism_corrosive",
+      "display_name": "Caustic Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "corrosive": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 83,
+      "pierce": 0.244,
+      "accuracy": 82,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 1,
+        "reflect_coupling": 0.161
+      },
+      "tags": [
+        "corrosive",
+        "luminous_hook",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_074_surge_prism_flora_plasmic",
+      "display_name": "Canopy Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "flora",
+      "secondary_affinity": "plasmic",
+      "affinity_weights": {
+        "flora": 0.67,
+        "plasmic": 0.33
+      },
+      "blend_eta": 0.33,
+      "base_power": 45,
+      "pierce": 0.166,
+      "accuracy": 96,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 1,
+        "reflect_coupling": -0.0202
+      },
+      "tags": [
+        "flora",
+        "luminous_hook",
+        "plasmic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_075_surge_prism_galvanic_aqueous",
+      "display_name": "Circuit Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "galvanic": 0.6,
+        "aqueous": 0.4
+      },
+      "blend_eta": 0.4,
+      "base_power": 53,
+      "pierce": 0.199,
+      "accuracy": 91,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 1,
+        "reflect_coupling": 0.0433
+      },
+      "tags": [
+        "aqueous",
+        "galvanic",
+        "luminous_hook",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_076_surge_prism_cryo",
+      "display_name": "Hoarfrost Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "cryo": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 43,
+      "pierce": 0.413,
+      "accuracy": 80,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 1,
+        "reflect_coupling": -0.0546
+      },
+      "tags": [
+        "cryo",
+        "luminous_hook",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_077_surge_prism_corrosive_flora",
+      "display_name": "Fluxbite Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "flora",
+      "affinity_weights": {
+        "corrosive": 0.7,
+        "flora": 0.3
+      },
+      "blend_eta": 0.3,
+      "base_power": 101,
+      "pierce": 0.232,
+      "accuracy": 80,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 1,
+        "reflect_coupling": -0.1118
+      },
+      "tags": [
+        "corrosive",
+        "flora",
+        "luminous_hook",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_078_surge_prism_galvanic",
+      "display_name": "Relay Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "galvanic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 32,
+      "pierce": 0.048,
+      "accuracy": 87,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 0,
+        "reflect_coupling": 0.1251
+      },
+      "tags": [
+        "galvanic",
+        "luminous_hook",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_079_surge_prism_galvanic_aqueous",
+      "display_name": "Spark Prism",
+      "template_id": "surge_prism",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "galvanic",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "galvanic": 0.64,
+        "aqueous": 0.36
+      },
+      "blend_eta": 0.36,
+      "base_power": 37,
+      "pierce": 0.329,
+      "accuracy": 80,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "dispersion": 1,
+        "reflect_coupling": 0.1248
+      },
+      "tags": [
+        "aqueous",
+        "galvanic",
+        "luminous_hook",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_080_surge_noiseburst_aero_luminous",
+      "display_name": "Gale Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "luminous",
+      "affinity_weights": {
+        "aero": 0.58,
+        "luminous": 0.42
+      },
+      "blend_eta": 0.42,
+      "base_power": 48,
+      "pierce": 0.058,
+      "accuracy": 66,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 0,
+        "impedance_mismatch": 0.098
+      },
+      "tags": [
+        "aero",
+        "luminous",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_081_surge_noiseburst_aqueous_mineral",
+      "display_name": "Tidal Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "mineral",
+      "affinity_weights": {
+        "aqueous": 0.77,
+        "mineral": 0.23
+      },
+      "blend_eta": 0.23,
+      "base_power": 87,
+      "pierce": 0.071,
+      "accuracy": 74,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 1,
+        "impedance_mismatch": -0.0538
+      },
+      "tags": [
+        "aero",
+        "aqueous",
+        "mineral",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_082_surge_noiseburst_plasmic_thermal",
+      "display_name": "Torch Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "plasmic": 0.89,
+        "thermal": 0.11
+      },
+      "blend_eta": 0.11,
+      "base_power": 43,
+      "pierce": 0.274,
+      "accuracy": 77,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 0,
+        "impedance_mismatch": -0.0229
+      },
+      "tags": [
+        "aero",
+        "plasmic",
+        "sonic",
+        "surge",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_083_surge_noiseburst_void_aqueous",
+      "display_name": "Singularity Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "void": 0.8,
+        "aqueous": 0.2
+      },
+      "blend_eta": 0.2,
+      "base_power": 62,
+      "pierce": 0.116,
+      "accuracy": 95,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 1,
+        "impedance_mismatch": -0.0272
+      },
+      "tags": [
+        "aero",
+        "aqueous",
+        "sonic",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_084_surge_noiseburst_luminous_aero",
+      "display_name": "Photosurge Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": "aero",
+      "affinity_weights": {
+        "luminous": 0.6,
+        "aero": 0.4
+      },
+      "blend_eta": 0.4,
+      "base_power": 46,
+      "pierce": 0.176,
+      "accuracy": 72,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 1,
+        "impedance_mismatch": 0.1109
+      },
+      "tags": [
+        "aero",
+        "luminous",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_085_surge_noiseburst_cryo",
+      "display_name": "Permafrost Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "cryo",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "cryo": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 74,
+      "pierce": 0.263,
+      "accuracy": 86,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 0,
+        "impedance_mismatch": 0.0707
+      },
+      "tags": [
+        "aero",
+        "cryo",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_086_surge_noiseburst_plasmic",
+      "display_name": "Spectral Noiseburst",
+      "template_id": "surge_noiseburst",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "plasmic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 33,
+      "pierce": 0.326,
+      "accuracy": 89,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "sonic_stress_impulse": 0,
+        "impedance_mismatch": 0.0563
+      },
+      "tags": [
+        "aero",
+        "plasmic",
+        "sonic",
+        "surge"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_087_surge_voidcollapse_flora",
+      "display_name": "Bloom Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "flora",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "flora": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 37,
+      "pierce": 0.26,
+      "accuracy": 99,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 0,
+        "medium_strip_bias": 0.0856
+      },
+      "tags": [
+        "flora",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_088_surge_voidcollapse_aqueous_thermal",
+      "display_name": "Tidal Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "aqueous",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "aqueous": 0.77,
+        "thermal": 0.23
+      },
+      "blend_eta": 0.23,
+      "base_power": 86,
+      "pierce": 0.018,
+      "accuracy": 87,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 0,
+        "medium_strip_bias": 0.0076
+      },
+      "tags": [
+        "aqueous",
+        "surge",
+        "thermal",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_089_surge_voidcollapse_sonic",
+      "display_name": "Wavefront Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "sonic",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "sonic": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 68,
+      "pierce": 0.036,
+      "accuracy": null,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 1,
+        "medium_strip_bias": 0.2507
+      },
+      "tags": [
+        "sonic",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_090_surge_voidcollapse_thermal_corrosive",
+      "display_name": "Smolder Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "corrosive",
+      "affinity_weights": {
+        "thermal": 0.78,
+        "corrosive": 0.22
+      },
+      "blend_eta": 0.22,
+      "base_power": 31,
+      "pierce": 0.206,
+      "accuracy": 98,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 0,
+        "medium_strip_bias": 0.152
+      },
+      "tags": [
+        "corrosive",
+        "surge",
+        "thermal",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_091_surge_voidcollapse_flora_galvanic",
+      "display_name": "Greenheat Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "flora",
+      "secondary_affinity": "galvanic",
+      "affinity_weights": {
+        "flora": 0.84,
+        "galvanic": 0.16
+      },
+      "blend_eta": 0.16,
+      "base_power": 82,
+      "pierce": 0.146,
+      "accuracy": 75,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 1,
+        "medium_strip_bias": 0.2709
+      },
+      "tags": [
+        "flora",
+        "galvanic",
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_092_surge_voidcollapse_thermal_cryo",
+      "display_name": "Ignition Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "thermal",
+      "secondary_affinity": "cryo",
+      "affinity_weights": {
+        "thermal": 0.92,
+        "cryo": 0.08
+      },
+      "blend_eta": 0.08,
+      "base_power": 53,
+      "pierce": 0.025,
+      "accuracy": 83,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 0,
+        "medium_strip_bias": 0.0572
+      },
+      "tags": [
+        "cryo",
+        "surge",
+        "thermal",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_093_surge_voidcollapse_void",
+      "display_name": "Unwind Collapse",
+      "template_id": "surge_voidcollapse",
+      "category": "surge",
+      "damage_kind": "endurance",
+      "primary_affinity": "void",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "void": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 55,
+      "pierce": 0.103,
+      "accuracy": 92,
+      "strike_modalities": null,
+      "infusion_coeffs": {
+        "compression_tone": 0,
+        "medium_strip_bias": 0.291
+      },
+      "tags": [
+        "surge",
+        "void"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_094_strike_gale_drive_corrosive_aqueous",
+      "display_name": "Caustic Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "corrosive",
+      "secondary_affinity": "aqueous",
+      "affinity_weights": {
+        "corrosive": 0.88,
+        "aqueous": 0.12
+      },
+      "blend_eta": 0.12,
+      "base_power": 40,
+      "pierce": 0.139,
+      "accuracy": 96,
+      "strike_modalities": {
+        "concussive": 0.5774235542723775,
+        "piercing": 0.11529738676870989,
+        "slashing": 0.30727905895891267
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 0,
+        "lift_bias": 0.1163
+      },
+      "tags": [
+        "aero",
+        "aqueous",
+        "contact",
+        "corrosive",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_095_strike_gale_drive_aero",
+      "display_name": "Shear Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "aero": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 78,
+      "pierce": 0.133,
+      "accuracy": 79,
+      "strike_modalities": {
+        "concussive": 0.48819709113616205,
+        "piercing": 0.306004782425591,
+        "slashing": 0.20579812643824683
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 0,
+        "lift_bias": 0.0108
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_096_strike_gale_drive_aero_galvanic",
+      "display_name": "Vortex Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "aero",
+      "secondary_affinity": "galvanic",
+      "affinity_weights": {
+        "aero": 0.6,
+        "galvanic": 0.4
+      },
+      "blend_eta": 0.4,
+      "base_power": 106,
+      "pierce": 0.199,
+      "accuracy": 99,
+      "strike_modalities": {
+        "concussive": 0.4172811896427394,
+        "piercing": 0.17017853312450065,
+        "slashing": 0.41254027723276
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 0,
+        "lift_bias": 0.0058
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "galvanic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_097_strike_gale_drive_mineral_sonic",
+      "display_name": "Oreline Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "mineral",
+      "secondary_affinity": "sonic",
+      "affinity_weights": {
+        "mineral": 0.77,
+        "sonic": 0.23
+      },
+      "blend_eta": 0.23,
+      "base_power": 87,
+      "pierce": 0.172,
+      "accuracy": 88,
+      "strike_modalities": {
+        "concussive": 0.6503098437369751,
+        "piercing": 0.11344078243251697,
+        "slashing": 0.23624937383050787
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 1,
+        "lift_bias": 0.0147
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "mineral",
+        "sonic",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_098_strike_gale_drive_luminous",
+      "display_name": "Photosurge Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "luminous",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "luminous": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 99,
+      "pierce": 0.137,
+      "accuracy": 100,
+      "strike_modalities": {
+        "concussive": 0.5479990076295891,
+        "piercing": 0.2704513377758132,
+        "slashing": 0.18154965459459765
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 1,
+        "lift_bias": 0.0196
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "luminous",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_099_strike_gale_drive_flora",
+      "display_name": "Rootlace Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "flora",
+      "secondary_affinity": null,
+      "affinity_weights": {
+        "flora": 1.0
+      },
+      "blend_eta": null,
+      "base_power": 72,
+      "pierce": 0.163,
+      "accuracy": 96,
+      "strike_modalities": {
+        "concussive": 0.3887951809763246,
+        "piercing": 0.2779553475602649,
+        "slashing": 0.3332494714634105
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 1,
+        "lift_bias": 0.0421
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "flora",
+        "strike"
+      ],
+      "balance_band": "reference_generated_v1"
+    },
+    {
+      "ability_id": "abi_100_strike_gale_drive_plasmic_thermal",
+      "display_name": "Spectral Drive",
+      "template_id": "strike_gale_drive",
+      "category": "strike",
+      "damage_kind": "endurance",
+      "primary_affinity": "plasmic",
+      "secondary_affinity": "thermal",
+      "affinity_weights": {
+        "plasmic": 0.68,
+        "thermal": 0.32
+      },
+      "blend_eta": 0.32,
+      "base_power": 93,
+      "pierce": 0.089,
+      "accuracy": 84,
+      "strike_modalities": {
+        "concussive": 0.6138438211812813,
+        "piercing": 0.17287385521976423,
+        "slashing": 0.21328232359895452
+      },
+      "infusion_coeffs": {
+        "drag_coupling": 0,
+        "lift_bias": -0.045
+      },
+      "tags": [
+        "aero",
+        "contact",
+        "plasmic",
+        "strike",
+        "thermal"
+      ],
+      "balance_band": "reference_generated_v1"
+    }
+  ]
+}
