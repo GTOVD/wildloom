@@ -1,8 +1,8 @@
 # Wildloom — combat model (attributes, affinities, damage)
 
-**Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Implement verbatim in `packages/combat` on both server and client preview.
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. Code: [`packages/combat`](../packages/combat/README.md).
 
-**Goals:** Server-authoritative, deterministic given RNG inputs; readable “simple view” (chart + stats); optional depth from **material traits** and **field scalars**; no duplicated formulas across tiers.
+**Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (chart + stats); optional depth from **material traits** and **field scalars**; no duplicated formulas across tiers.
 
 ---
 
@@ -17,7 +17,7 @@
 | **Layer 2** | Data-driven predicate rules (physics-flavored hooks). |
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
 
-Affinity names in examples below are **placeholders** (`Solar`, `Tidal`, `Mineral`, …). Ship with an original chart.
+Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) (nine originals). Older examples in this doc may still say “Solar/Tidal” as generic placeholders—swap at authoring time.
 
 ---
 
@@ -334,8 +334,66 @@ Document chosen defaults after first Monte Carlo pass:
 
 ---
 
+## 12. Reference implementation (`packages/combat`)
+
+TypeScript sources mirror this document:
+
+| File | Responsibility |
+|------|----------------|
+| [`packages/combat/src/types.ts`](../packages/combat/src/types.ts) | Immutable snapshot types (`Combatant`, `Move`, `BattleContext`, `HitResult`). |
+| [`packages/combat/src/math.ts`](../packages/combat/src/math.ts) | `TUNING` knobs, `calcLevelScaling`, `calcEffectiveDefense`, `calcCoreSaturation`. |
+| [`packages/combat/src/pipeline.ts`](../packages/combat/src/pipeline.ts) | `resolveHit` — Layers 1→3 order; `lookupAffinityChart` / `evaluateReactionRules` stubbed for JSON/YAML hydration. |
+
+Build: `npm install` at repo root, then `npm run build -w @wildloom/combat`.
+
+**Guarantees:** No hidden globals in math helpers; RNG enters only through `BattleContext.rng` for deterministic replay when the stream is seeded deterministically.
+
+---
+
+## 13. Core saturation mathematics (§5.4 reference)
+
+Let \(A\) be effective offense and \(D\) effective defense (after pierce). Normalize offense away from division hazards:
+
+\[
+x = \max\left(\frac{A}{\varepsilon}, \varepsilon\right)
+\]
+
+Defense-heavy ratio:
+
+\[
+y = \frac{D}{x}
+\]
+
+Saturation scalar (bounded smooth response):
+
+\[
+\sigma = 1 - \exp\left(-\kappa \cdot \frac{1}{1 + y}\right)
+\]
+
+Core damage before chart layers:
+
+\[
+D_{\text{core}} = F_{\text{scale}} \cdot P \cdot \sigma \cdot S_L
+\]
+
+Where \(P\) is modified move power (pre–Layer 1 modifiers), \(S_L\) is level scaling (§5.3), \(\kappa\) shapes how quickly offense converts through armor, and \(\varepsilon\) avoids singularities.
+
+**Tuning intuition:** raising \(\kappa\) makes mid-armor transitions steeper; \(F_{\text{scale}}\) sets global pace; pierce \(\lambda_p\) trims effective \(D\) before \(y\) is formed.
+
+---
+
+## 14. Interactive parameter explorer (devtools)
+
+An external chat proposed an embedded slider widget for \(\kappa\), pierce, stats, and a defense-sweep chart. That artifact is **not** checked into this repo. Equivalent options:
+
+- Add a small internal **React/Vite** dev page under `packages/combat-devtools/` that imports `@wildloom/combat` and plots \(D_{\text{core}}(D)\) with sliders.
+- Export a CSV sweep from a Vitest benchmark using the same pure functions.
+
+---
+
 ## Document changelog
 
 | Date | Change |
 |------|--------|
 | 2026-05-03 | Initial combat integration spec |
+| 2026-05-03 | Linked `packages/combat` implementation; saturation math appendix; devtools note |

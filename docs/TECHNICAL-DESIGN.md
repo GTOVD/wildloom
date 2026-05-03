@@ -2,7 +2,7 @@
 
 **Status:** Planning document. Additions and revisions land here until implementation kickoff. Treat sections marked **Open decision** as unresolved.
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline (implementable spec).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — nine affinities, reactions/field, resonance progression. Reference code: [`packages/combat`](../packages/combat/README.md).
 
 ---
 
@@ -157,6 +157,8 @@ Summary:
 
 **Legal/branding:** All affinity names, charts, and metaphors are original—no reuse of proprietary type sets.
 
+**Concrete affinity catalog & example Layer 2 rules:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md).
+
 ---
 
 ## 7. Procedural appearance & collector rarity
@@ -234,4 +236,4 @@ Choose one to lock into design before heavy implementation:
 | Date | Change |
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
-| 2026-05-03 | Infinite progression; room/party scaling; physics-forward elements; procedural genes; build order + risks; linked [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (attributes, Layers 1–3 damage pipeline) |
+| 2026-05-03 | Infinite progression; scaling; elements/procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md); [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`packages/combat`](../packages/combat/README.md) |
