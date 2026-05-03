@@ -137,11 +137,16 @@ export function resolveHit(
     modalities = undefined;
   }
 
-  const m1 = lookupAffinityChart(move.affinity, defender.primary_affinity, defender.secondary_affinity);
-  const stab =
-    move.affinity === attacker.primary_affinity
+  const moveAff = move.affinity?.trim();
+  const hasAff = Boolean(moveAff);
+  const m1 = hasAff
+    ? lookupAffinityChart(moveAff!, defender.primary_affinity, defender.secondary_affinity)
+    : 1.0;
+  const stab = !hasAff
+    ? 1
+    : moveAff === attacker.primary_affinity
       ? 1.15
-      : move.affinity === attacker.secondary_affinity
+      : moveAff === attacker.secondary_affinity
         ? 1.08
         : 1;
   const m1_final = Math.max(0.25, Math.min(m1 * stab, 4.0));

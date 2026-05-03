@@ -65,9 +65,11 @@
       "properties": {
         "primary_affinity": {
           "type": "object",
-          "required": ["required"],
+          "required": ["required", "allow_null"],
           "properties": {
-            "required": { "const": true },
+            "required": { "type": "boolean" },
+            "allow_null": { "type": "boolean" },
+            "choices_ref": { "type": "string" },
             "help": { "type": "string" }
           }
         },
@@ -131,10 +133,12 @@
     },
     "exampleBuild": {
       "type": "object",
-      "required": ["label", "primary_affinity"],
+      "required": ["label"],
       "properties": {
         "label": { "type": "string" },
-        "primary_affinity": { "$ref": "#/$defs/affinity" },
+        "primary_affinity": {
+          "anyOf": [{ "$ref": "#/$defs/affinity" }, { "type": "null" }]
+        },
         "secondary_affinity": {
           "anyOf": [{ "$ref": "#/$defs/affinity" }, { "type": "null" }]
         },

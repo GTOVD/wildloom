@@ -37,7 +37,7 @@ Wildloom is a large, multi-subsystem game: sessions, world sync, combat authorit
 
 - **Typing as composition, not a preset pair:** Display labels combine biology/flavor + **rolled affinity_emphasis** vectors (e.g. “floral–luminous jellyfish”). Optional `primary`/`secondary` summaries are **collapsed views** derived from the vector or omitted.
 - **Ability acquisition:** Moves and passives come from a **broad learnable pool**; soft gates use stats, materials, and affinity emphasis (e.g. high `conductivity` + Galvanic tendency unlocks chain arcs faster)—not a single rigid tree per species. Players and procedural trainers both assign **sliding coefficients** within authored bounds (`base_power`, modality weights, tag intensities).
-- **Moves as authored compositions:** A frame like **“Blast”** is a template; infusion layers add affinity flavor (**Void Blast**, **Luminous–Mineral Blast**, …) with **continuous knobs** that feed Layer 1 shaping, Layer 2 predicates, and Layer 3 impulses—see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5, §3 and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md).
+- **Moves as authored compositions:** **Templates** (frames such as **Blast**, **Slam**) expose numeric bands + optional affinity slots; players bind **`null`** or elemental IDs and sliders — resolved payloads drive Layer 1–3 ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5, §3 and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md)).
 
 ### World & battles
 

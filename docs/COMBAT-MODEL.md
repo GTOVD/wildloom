@@ -81,7 +81,7 @@ Each move carries:
 |-------|---------|
 | `category` | `strike` \| `surge` \| `true` |
 | `base_power` | Non-negative scalar; can be 0 for utility. |
-| `affinity` | Primary chart key for Layer 1 / display; fused moves may still carry secondary weights below. |
+| `affinity` | Optional chart key for Layer 1 / stab hooks — **omit or null** for non-elemental builds (neutral baseline multiplier until emphasis/`affinity_weights` fully reshape §5.5). |
 | `affinity_weights` | Optional simplex over affinity IDs (sums to `1`) — **Luminous–Mineral Blast** style fusion; feeds §5.5 with `affinity`. |
 | `template_id` | Optional frame (`blast`, `lash`, …) for authoring pipelines, tutorials, and combo detection. |
 | `infusion_coeffs` | Optional bag of **continuous** tuning knobs (e.g. tag intensity, modality tilt, pierce bias)—serialized for replay; bounded per move family. |
@@ -436,8 +436,7 @@ Document in schema so tools can simulate.
 | `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
 | `moves.json` | Hydrated **instances** from templates — §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
-| `data/moves/attack_templates.catalog.json` | **Authoring library** of composable frames + per-slot bounds + `example_builds` — see [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md). |
-| `data/moves/abilities.catalog.json` | **`catalog_role: reference_fixtures`** — ~100 deterministic mocks (`ref_move_XXX`); affinities inside rows are **example rolls** only. Canonical move defs = templates + resolved instances ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
+| `data/moves/attack_templates.catalog.json` | **Authoring library** — move frames + per-slot bounds + optional `example_builds`; player fills affinities and sliders at resolve time ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
 
 Version every artifact; bake hash into replay header.
 
@@ -558,4 +557,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
-| 2026-05-03 | **Species / abilities data clarified:** catalog species rows default **`null`** typing; [`abilities.catalog.json`](../data/moves/abilities.catalog.json) is **`reference_fixtures`** with neutral ids (`ref_move_XXX`) and generator [`scripts/gen_abilities_catalog.py`](../scripts/gen_abilities_catalog.py) — see [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md). |
+| 2026-05-03 | **Species lines & move frames:** catalog species default **`null`** typing; moves authored only as [`attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) (removed flat abilities roster); **`Move.affinity`** optional ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |

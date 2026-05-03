@@ -52,7 +52,8 @@ export interface Move {
   id: string;
   category: MoveCategory;
   base_power: number;
-  affinity: Affinity;
+  /** Chart key + stab hooks — omit or empty when move is non-elemental (neutral Layer 1 baseline). */
+  affinity?: Affinity;
   tags: string[];
   /** Fraction in `[0, 1]` — armor bypass; strongest on piercing modality by default */
   pierce: number;

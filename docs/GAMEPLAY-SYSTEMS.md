@@ -59,7 +59,7 @@ To keep the matchup chart readable during onboarding, tutorials may **collapse**
 
 **Typing:** Combat uses **`affinity_emphasis`** vectors over the twelve IDs (or nine until unlocked). **Authoritative** emphasis always comes from the instance payload; catalog rows do not assign typings unless you opt into optional dex fields.
 
-**Abilities & moves:** **Templates** (frames + numeric bounds) are canonical; [`data/moves/abilities.catalog.json`](../data/moves/abilities.catalog.json) is **`reference_fixtures` only** — example resolved rows for tests, not a roster of “Galvanic moves.” Players/procedural trainers **resolve** a template with **0 / 1 / 2** affinities (per template rules), η blend, and sliders. **Soft unlock gates** use **rolled** stats/materials/emphasis.
+**Abilities & moves:** **`attack_templates.catalog.json`** lists frames (`Blast`, `Slam`, …) with **bounds only**. Players resolve a frame by choosing **`primary_affinity` / `secondary_affinity`** (each **`null`** or any vocabulary ID per rules), **`affinity_weights`** / η, **`base_power`**, **`pierce`**, **`accuracy`**, modalities, and infusions — all within those bands. No separate authored roster assigns affinities per row. **Soft unlock gates** use rolled stats/materials/emphasis.
 
 **Battles:** Arenas compose from **biome / field primitives** with procedural seeds while replay stays deterministic ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12; [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 *World & battles*).
 

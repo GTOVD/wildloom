@@ -1,49 +1,54 @@
 # Attack template catalog (player-composable moves)
 
-**Data:** [`data/moves/attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) — **canonical frames**: strike/surge/true shells, numeric bounds, optional notes. A move instance does **not** exist until someone assigns affinities (none where rules allow, primary only, or primary + secondary) and sliders within those bounds.  
-**Reference fixtures (100 rows, not a move roster):** [`data/moves/abilities.catalog.json`](../data/moves/abilities.catalog.json) — deterministic **`catalog_role: reference_fixtures`** mocks for tests/balance. Each row has neutral **`ability_id`** (`ref_move_XXX`), affinity-agnostic **`display_name`**, optional **`example_generated_label`** (what a naming pass might emit for that *rolled* primary), plus **`primary_affinity` / `secondary_affinity`** as **example picks only**. Regenerate with [`scripts/gen_abilities_catalog.py`](../scripts/gen_abilities_catalog.py).  
-**Affinity vocabulary:** [`data/moves/affinity_ids.json`](../data/moves/affinity_ids.json) (twelve IDs, matches [`data/species/species.schema.json`](../data/species/species.schema.json)).  
+**Authoritative list of move *frames*:** [`data/moves/attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) — one row per frame (`template_id`, short **`display_name`** like **Blast** / **Slam**, `category`, default `damage_kind`, and **`customization`** bounds).
+
+There is **no** separate “abilities catalog” with hundreds of pre-filled rows. A row here does **not** include Plasmic, Cryo, or any affinity until a player (or resolver) **assigns** them within the documented ranges.
+
+**Affinity vocabulary (allowed elemental IDs):** [`data/moves/affinity_ids.json`](../data/moves/affinity_ids.json) (twelve strings; same enum as [`data/species/species.schema.json`](../data/species/species.schema.json)).
+
 **Schema sketch:** [`data/moves/attack_template.schema.json`](../data/moves/attack_template.schema.json).
-
-### Three layers (affinities are never “baked into” a template row)
-
-1. **Vocabulary** — twelve string IDs (chart keys, predicates, UI chips).  
-2. **Template** — mechanics + slider ranges; `example_builds` inside the JSON are **illustrations**, not definitions.  
-3. **Resolved instance** — player or generator chooses **0 / 1 / 2** dominant affinities (subject to template rules), η blend, power, modalities, infusions. That payload is what combat consumes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
-
-**Hydrating `packages/combat` `Move`:** use the **resolved** primary as chart key `affinity`; thread **`affinity_weights`** / secondary when Layer 1 / Layer 2 need the fused vector ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3 — TS type may grow toward full compositional fields).
-
-**Resolver contract:** Resolved instances must match [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3 (`category`, `affinity`, optional `affinity_weights`, `strike_modalities`, `pierce`, `infusion_coeffs`, …). Today’s [`packages/combat`](../packages/combat/README.md) `Move` type implements the **strike / surge / true** slice; templates tagged `field`, `channel`, or `reactive` include `mvp_resolver_note` for the extended pipeline in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §5.
 
 ---
 
-## Customization dimensions (every template)
+## What the player configures (every template)
 
 | Dimension | Player control |
 |-----------|----------------|
-| **Primary affinity** | Required — drives chart key `affinity`, dominant fusion flavor, Layer 2 tags. |
-| **Secondary affinity** | Optional **`null`** — omit for single-type builds; must differ from primary when set. |
-| **Blend mass η** | When secondary is set, slider `blend_eta` ∈ authored `[min,max]` splits weights between primary and secondary (see below). |
-| **`affinity_weights`** | Default rule: secondary **`null`** ⇒ vertex `{primary: 1}`; secondary set ⇒ `{primary: 1−η, secondary: η}`. Advanced UI may open a **simplex tail** (small ε spread across other affinities) when `advanced_simplex_tail: true`. |
-| **`base_power` / `pierce` / `accuracy`** | Bounded sliders per template (accuracy optional → treat as auto-hit when omitted). |
-| **`strike_modalities` ω** | Strikes only — concussive / piercing / slashing weights renormalized to sum **1** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b). |
-| **`infusion_coeffs`** | Per-template continuous knobs (tag pressure, DoT primes, field duration, channel ticks, …). |
+| **Primary affinity** | **`null`** or **any ID** from `affinity_ids.json` — optional chart key / infusion palette; **`null`** ⇒ non-elemental baseline (neutral Layer 1 multiplier in resolver stub until emphasis vectors extend). |
+| **Secondary affinity** | **`null`** or a **different** ID when fusion is desired |
+| **Blend η** | When secondary is set, slider `blend_eta` ∈ template `[min,max]` splits weights between primary and secondary |
+| **`affinity_weights`** | Defaults from η plus vertex rule; **`advanced_simplex_tail`** templates allow spreading ε across other affinities in an advanced editor ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3). Fully editable within authored normalization rules. |
+| **`base_power` / `pierce` / `accuracy`** | Continuous sliders inside template **min/max/step** |
+| **`strike_modalities` ω** | Strikes: concussive / piercing / slashing ranges → UI renormalizes to sum **1** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
+| **`infusion_coeffs`** | Per-template knobs — each has numeric bounds |
 
-Display names such as **“Thermal blast”** are **generated** from template + chosen affinities + infusions — mechanics depend on weights and stats, not on the label ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
+**`damage_kind`** for resolved combat payloads follows **`damage_kind_default`** on the template (`endurance`, `status`, `utility`) unless extended pipelines remap it.
+
+Flavor titles (**Thermal blast**, **Void spike**) are **generated labels** from chosen affinities + template — they are not authored rows in JSON.
+
+---
+
+## Three layers
+
+1. **Vocabulary** — twelve elemental IDs (expandable in design docs).
+2. **Template** — frame ID + numeric bands + affinity-slot rules; `example_builds` are **illustrative payloads**, not the authoritative definition.
+3. **Resolved instance** — concrete assignment (affinities, η, weights, sliders) persisted per creature/move slot — what combat consumes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
+
+**Hydrating `packages/combat` `Move`:** set **`affinity`** only when the player picks an elemental chart key; omit or leave unset for non-elemental builds ([`packages/combat`](../packages/combat/README.md)).
+
+**Resolver contract:** Resolved instances must match [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3. Today’s `Move` type implements **strike / surge / true**; templates tagged `field`, `channel`, or `reactive` include `mvp_resolver_note` for the extended pipeline in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §5.
 
 ---
 
 ## Template families in the JSON
 
-- **Surge:** `surge_blast`, `surge_lance`, `surge_burst`, `surge_siphon`, `surge_prism`, `surge_noiseburst`, `surge_voidcollapse` — special-offense saturation path; rich pierce / accuracy / infusion tuning.
-- **Strike:** `strike_slam`, `strike_thrust`, `strike_rend`, `strike_tempered`, `strike_gale_drive` — physical-offense path + modality ω sliders where applicable.
-- **True:** `true_spike` — bypass path; narrow numeric customization; affinities still gate predicates.
-- **Extended:** `field_gradient_seed`, `channel_focus_bridge`, `reactive_parried_arc` — utility / scheduling / counter shells (`damage_kind_default` + notes).
-
-Each entry includes **`example_builds`** illustrating composed payloads for UX mocks and balance fixtures.
+- **Surge:** `surge_blast`, `surge_lance`, `surge_burst`, `surge_siphon`, `surge_prism`, `surge_noiseburst`, `surge_voidcollapse` — special-offense saturation path.
+- **Strike:** `strike_slam`, `strike_thrust`, `strike_rend`, `strike_tempered`, `strike_gale_drive` — physical-offense path + modality ω where present.
+- **True:** `true_spike` — bypass path.
+- **Extended:** `field_gradient_seed`, `channel_focus_bridge`, `reactive_parried_arc` — utility / scheduling / counter shells.
 
 ---
 
 ## Versioning
 
-Bump **`schema_version`** in `attack_templates.catalog.json` when adding breaking slot keys or changing semantic of `blend_eta`. Regenerate **`abilities.catalog.json`** after template bounds change so fixture rows stay coherent (`python scripts/gen_abilities_catalog.py`).
+Bump **`schema_version`** in `attack_templates.catalog.json` when breaking customization slots or changing `blend_eta` semantics.
