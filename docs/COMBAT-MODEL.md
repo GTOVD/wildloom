@@ -90,6 +90,9 @@ Each move carries:
 | `strike_modalities` | Optional ω simplex on **strike** moves (`delivery_modalities` absent); omit ⇒ blunt-only legacy path. |
 | `delivery_modalities` | Same ω shape on **surge** moves (e.g. Blast) — partitions coupling across concussive / piercing / slashing **delivery** into **`special_mitigation`** with the same material ψ kernels as §5.4b. Resolver prefers `delivery_modalities` when both fields are present. |
 | `cooldown_turns` | Integer turns before reuse — hydrate from template **`cooldown_scaling`** × **`base_power`** (stronger customization ⇒ longer wait); consumed by turn scheduler, not `resolveHit`. |
+| **`status_payloads`** (planned hydrate) | Optional **`on_hit` / `on_tick` / `self`** status applications — effect id, duration subticks, potency, stacking rule ref, proc chance — **bounded per template** like other sliders ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.3). |
+| **`accumulator_impulses`** (planned hydrate) | Optional structured deltas on Layer 3 keys (`heat_load`, `wetness`, `fracture`, …) triggered on hit / crit / channel tick — same accumulator vocabulary creatures use ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §2.1). |
+| **`passive_hooks`** (planned hydrate) | Optional slot-bound **passive affinity emphasis**, aura ticks, or stance coupling — player selects within authored simplex / intensity bands; mirrors passive-ish creature traits without duplicating math. |
 | `damage_kind` | Usually `endurance` (depletes \(S\)); some moves only tick accumulators or apply disables (`status`, `utility`). |
 
 **True damage:** Skips **saturation path using `physical_mitigation` / `special_mitigation`** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
@@ -110,6 +113,7 @@ Immutable snapshot per resolution step (plus RNG stream):
 - **Material** vectors `M_a`, `M_d`.
 - **Field scalars:** `ambient_temp`, `humidity`, `terrain_id`, etc.
 - **Per-combatant scalars:** `wetness`, `heat_load`, `fracture`, `corrosion`, `charge_buildup` (Layer 3 accumulators).
+- **Active statuses** from terrain, abilities, items — predicates read **`volatile`** / **`status`** bags ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) statuses).
 - Move **tags** and **category**.
 
 ---
@@ -437,8 +441,10 @@ Document in schema so tools can simulate.
 | `species/species.schema.json` | JSON Schema for catalog entries. |
 | `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
-| `moves.json` | Hydrated **instances** from templates — §3 fields (`damage_kind`, `strike_modalities`, optional **`affinity_weights`**, **`infusion_coeffs`**, **`template_id`**) + versioning hash per patch. |
-| `data/moves/attack_templates.catalog.json` | **Authoring library** — move frames + per-slot bounds + optional `example_builds`; player fills affinities and sliders at resolve time ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
+| `moves.json` | Hydrated **instances** from templates — §3 fields including modalities, **`cooldown_turns`**, planned **`status_payloads`** / **`accumulator_impulses`** / **`passive_hooks`**, versioning hash per patch. |
+| `data/moves/attack_templates.catalog.json` | **Authoring library** — frames + customization bands; **extend** with status / accumulator / passive slots per [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md). |
+| `status_catalog.json` (planned) | Status definitions — stacking rules, cleanse families, icon ids — consumed by move payloads & terrain. |
+| `move_effect_extensions.schema.json` (planned) | JSON Schema sketch for §3 effect payloads — keep aligned with `attack_template.schema.json`. |
 
 Version every artifact; bake hash into replay header.
 
@@ -560,3 +566,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
 | 2026-05-03 | **Species lines & move frames:** catalog species default **`null`** typing; moves authored only as [`attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) (removed flat abilities roster); **`Move.affinity`** optional ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
+| 2026-05-03 | §3 / §4 / §9: documented planned **`status_payloads`**, **`accumulator_impulses`**, **`passive_hooks`** on moves; volatile/status bags in §4 context; artifact rows for `status_catalog` + effect schema — aligned with [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) status/accumulator/passive section and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.3. |

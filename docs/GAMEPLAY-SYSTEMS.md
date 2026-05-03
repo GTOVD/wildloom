@@ -2,7 +2,7 @@
 
 **Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 uses **dynamic `m1`** (§5.5) anchored by **`CHART₀`** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §2). **Twelve** affinity IDs are the target roster; **nine** ship first in MVP enums ([§1](#1-affinity-framework--twelve-ids-mvp-ships-nine)).
 
-**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — rolled typings (including optional null secondary), aptitude tiers, inspectable rarity metadata on instances. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
+**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — **biome-conditioned spawn**, neutral-primary odds, bell-curve aptitudes, composite rarity. [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) — customizable moves vs spawned creatures. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
 
 **Implementation:** Reference resolver lives in [`packages/combat`](../packages/combat/README.md).
 
@@ -55,13 +55,29 @@ To keep the matchup chart readable during onboarding, tutorials may **collapse**
 
 ## 1.2 Procedural uniqueness, composed typings, and move authoring
 
-**Creature instances:** Every animal is a **pure roll**: **no species line defines base stats, substats, materials, or affinity weights** for combat. The species row is **identity** (names, stages, habitat); optional dex hints may exist in schema but the generated catalog uses **`null`** typing on the row. Stats/materials/emphasis are drawn at spawn/capture from **global + stage (+ optional encounter biome) distributions**, then advanced by **Resonance** / training ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5). Rarity-facing knobs (dual-chip odds, aptitude tier masses, UI-facing percentile snapshots) live in [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md). Examples with fake numbers: [`SPECIES-INSTANCE-EXAMPLES.md`](../docs/SPECIES-INSTANCE-EXAMPLES.md).
+**Creature instances:** Spawns and hatchlings roll from **`biome_id` + seed** — elemental emphasis is **biased to the biome**, with **`p_neutral_primary`** for no dominant affinity and a **secondary-chip roll** for dual-type rarity ([`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md)). **Nine stats** use **tier-gated bell-curve** draws (truncated normal / Beta-on-bracket), not species-fixed sheets. The species catalog row is **identity only** (names, stages, habitat). Examples: [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md).
 
-**Typing:** Combat uses **`affinity_emphasis`** vectors over the twelve IDs (or nine until unlocked). **Authoritative** emphasis always comes from the instance payload; catalog rows do not assign typings unless you opt into optional dex fields.
+**Typing:** Combat uses **`affinity_emphasis`** vectors over the twelve IDs (or nine until unlocked). **Authoritative** emphasis always comes from the instance payload.
 
-**Abilities & moves:** **`attack_templates.catalog.json`** lists frames (`Blast`, `Slam`, …) with **bounds only**. Players resolve a frame by choosing **`primary_affinity` / `secondary_affinity`** (each **`null`** or any vocabulary ID per rules), **`affinity_weights`** / η, **`base_power`**, **`pierce`**, **`accuracy`**, **`strike_modalities`** or **`delivery_modalities`** (concussive / piercing / slashing ω), **`cooldown_scaling`** → hydrated **`cooldown_turns`**, and infusions — all within those bands. **Soft unlock gates** use rolled stats/materials/emphasis.
+**Abilities & moves:** **`attack_templates.catalog.json`** lists frames with **bounds only**. Players resolve knobs including affinities, power, pierce, modalities, cooldown — and **the same families of effects creatures feel in battle** — **status payloads**, **accumulator impulses**, optional **passive affinity emphasis** on slot-local passives — all within template budgets ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) — [Status effects, accumulators, passive hooks](#status-effects-accumulators-passive-hooks-planned-hydration)); [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3). **Soft unlock gates** use rolled stats/materials/emphasis.
 
 **Battles:** Arenas compose from **biome / field primitives** with procedural seeds while replay stays deterministic ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12; [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 *World & battles*).
+
+---
+
+## 1.3 Ability payloads mirror creature battle hooks
+
+**Design rule:** Anything that can meaningfully attach to a **creature instance** in combat — **volatile statuses**, **Layer 3 accumulator deltas**, **passive affinity shaping**, aura ticks — must also be expressible as **player-authored selections** on **moves / passives / slot augments**, bounded per template so builders cannot silently exceed authored ceilings.
+
+| Hook family | On creatures | On abilities (templates → resolved move) |
+|-------------|--------------|------------------------------------------|
+| Elemental emphasis | Rolled at spawn from biome + RNG | Player picks **`primary` / `secondary` / `affinity_weights`** within template |
+| Stats | Rolled aptitudes + growth | N/A directly — abilities scale off **attacker stats** via resolver |
+| Statuses | Boss auras, terrain, items apply | **`on_hit_status`**, **`self_status`**, **`target_status`** payloads with potency/duration/chance bands |
+| Accumulators | Trait passives integrate \(\mathrm{d}u/\mathrm{d}t\) | **`accumulator_impulses`** — e.g. +\(\Delta\)heat_load, +\(\Delta\)wetness on hit; decay rules data-owned |
+| Passive affinity | Species/flavor can bias Layer 2 | **`passive_affinity_emphasis`** optional vector on **passive shell** tied to ability slot |
+
+Resolver ordering stays **`COMBAT-MODEL.md`** §5 — impulses feed **Layer 3** after Layer 2 predicates unless a rule declares preempt.
 
 ---
 
@@ -69,7 +85,7 @@ To keep the matchup chart readable during onboarding, tutorials may **collapse**
 
 ### 2.1 Core accumulators (Layer 3)
 
-Accumulators are continuous battle scalars (per combatant unless noted). They decay or integrate per subtick (see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6).
+Accumulators are continuous battle scalars (per combatant unless noted). They decay or integrate per subtick (see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6). **Moves** also push structured deltas into the same keys via **`accumulator_impulses`** on resolved instances ([§1.3](#13-ability-payloads-mirror-creature-battle-hooks); [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
 
 | Key | Build sources (examples) | Mechanical role |
 |-----|--------------------------|-----------------|
