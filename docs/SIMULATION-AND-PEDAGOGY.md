@@ -2,7 +2,7 @@
 
 **Purpose:** Expand **why** Wildloom leans on continuous mathematics—not as trivia or algebra homework—and **how** we encode calculus-flavored dynamics in a **deterministic, server-authoritative** engine players can learn from organically.
 
-**Related:** [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (pipeline), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) (affinities & accumulators), [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4.
+**Related:** [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (pipeline), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) (affinities & accumulators), [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4, [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) (extended accumulators, statuses, stance coupling, biome pedagogy).
 
 ---
 
@@ -197,3 +197,4 @@ Marketing avoids implying laboratory-grade simulation.
 |------|--------|
 | 2026-05-03 | Initial pass: dynamical systems framing, toy flows, integration contract, pedagogy |
 | 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
+| 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |

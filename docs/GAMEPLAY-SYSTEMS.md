@@ -2,7 +2,7 @@
 
 **Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 chart values and rule IDs remain **data-driven** until balance passes.
 
-**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract.
+**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
 
 **Implementation:** Reference resolver lives in [`packages/combat`](../packages/combat/README.md).
 
@@ -25,6 +25,8 @@ To keep the matchup chart readable (under ~10 affinities) while supporting physi
 | **Void** | Gravity, vacuum, isolation | Compression on `vitality`; deliberately orthogonal physics hooks. |
 
 **Open decision:** Keep this “physics-first” naming, push further into non-element metaphors, or split “identity” vs “damage flavor” for readability—finalize before shipping tutorial copy.
+
+**Post-MVP expansion:** Three additional affinities (**Sonic**, **Corrosive**, **Plasmic**), dual-affinity blend defaults, and the complete matchup matrix are specified in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2—implement after the nine-type chart ships.
 
 ---
 
@@ -171,3 +173,4 @@ Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-
 | 2026-05-03 | Initial import: nine affinities, accumulator/reaction catalog, field scalars, resonance framing |
 | 2026-05-03 | Physics-literacy map; optional accumulators; simulation doc link; §4 stat growth restored |
 | 2026-05-03 | `concussion` / `laceration`; modality reaction sketches; §5.2 strike modality literacy |
+| 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §1 post-MVP twelve-affinity pointer |

@@ -1,6 +1,6 @@
 # Wildloom — combat model (attributes, affinities, damage)
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. Code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — full 12×12 chart, nine stats, statuses, stances, expanded artifacts. Code: [`packages/combat`](../packages/combat/README.md).
 
 **Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (chart + stats); optional depth from **material traits** and **field scalars**; no duplicated formulas across tiers.
 
@@ -18,7 +18,7 @@
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
 | **Strike modality** | How a **strike** splits across **concussive / piercing / slashing** channels (physics-flavored wound mechanics). Distinct from move-field **`pierce`** (numeric armor bypass). |
 
-Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) (nine originals). Older examples in this doc may still say “Solar/Tidal” as generic placeholders—swap at authoring time.
+Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) for the **nine-affinity MVP**. Target-state additions (**Sonic**, **Corrosive**, **Plasmic**) and the authoritative 12×12 matrix live in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md). Older examples in this doc may still say “Solar/Tidal” as generic placeholders—swap at authoring time.
 
 ---
 
@@ -368,6 +368,8 @@ Document in schema so tools can simulate.
 
 Version every artifact; bake hash into replay header.
 
+**Expanded checklist** (twelve affinities, statuses, accumulators, stances, biomes, combo splits): [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §15.
+
 ---
 
 ## 10. Accessibility vs depth
@@ -475,3 +477,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Linked `packages/combat` implementation; saturation math appendix; devtools note |
 | 2026-05-03 | §6 coupled flows; §15–§16; [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) cross-links |
 | 2026-05-03 | §5.4b strike modalities (concussive / piercing / slashing); pierce vs modality clarified; pipeline + `math.ts` support |
+| 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |

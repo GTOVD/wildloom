@@ -20,6 +20,7 @@ Wildloom is an independent work. Do not use trademarks, distinctive character na
 - Combat attributes / damage pipeline: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md).
 - Affinities, field, resonance, physics-literacy map: [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md).
 - Continuous dynamics & pedagogy: [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
+- Post-MVP combat expansion (twelve affinities, biomes, combos): [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md).
 - Monorepo layout (`apps/web`, `apps/server`, `packages/*`).
 - Protocol and room server MVP.
 - Shared battle engine (deterministic, tested).

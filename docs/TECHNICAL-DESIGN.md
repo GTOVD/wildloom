@@ -2,7 +2,7 @@
 
 **Status:** Planning document. Additions and revisions land here until implementation kickoff. Treat sections marked **Open decision** as unresolved.
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — nine affinities, reactions/field, resonance progression. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. Reference code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — nine affinities, reactions/field, resonance progression. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — twelve-affinity expansion, chart, biomes, combos, extended artifacts. Reference code: [`packages/combat`](../packages/combat/README.md).
 
 ---
 
@@ -247,3 +247,4 @@ Choose one to lock into design before heavy implementation:
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
 | 2026-05-03 | Infinite progression; scaling; procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) incl. strike modalities §5.4b; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |
+| 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
