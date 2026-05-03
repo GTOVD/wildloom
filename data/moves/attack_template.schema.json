@@ -117,12 +117,32 @@
         },
         "strike_modalities": {
           "type": ["object", "null"],
-          "description": "null => strike uses resolver default (concussive-only) or template-fixed blend",
+          "description": "Strike-only delivery ω — null ⇒ concussive-only legacy path",
           "properties": {
             "concussive": { "$ref": "#/$defs/numericRange" },
             "piercing": { "$ref": "#/$defs/numericRange" },
             "slashing": { "$ref": "#/$defs/numericRange" },
             "normalize_to_simplex_note": { "type": "string" }
+          }
+        },
+        "delivery_modalities": {
+          "type": ["object", "null"],
+          "description": "Surge delivery ω — same simplex as strikes; blends blunt vs pierce vs slash into special mitigation",
+          "properties": {
+            "concussive": { "$ref": "#/$defs/numericRange" },
+            "piercing": { "$ref": "#/$defs/numericRange" },
+            "slashing": { "$ref": "#/$defs/numericRange" },
+            "normalize_to_simplex_note": { "type": "string" }
+          }
+        },
+        "cooldown_scaling": {
+          "type": "object",
+          "required": ["min_turns", "max_turns", "scales_with"],
+          "properties": {
+            "min_turns": { "type": "number", "minimum": 0 },
+            "max_turns": { "type": "number", "minimum": 0 },
+            "scales_with": { "type": "string" },
+            "help": { "type": "string" }
           }
         },
         "infusion_coeffs": {
@@ -158,6 +178,15 @@
             "slashing": { "type": "number" }
           }
         },
+        "delivery_modalities": {
+          "type": "object",
+          "properties": {
+            "concussive": { "type": "number" },
+            "piercing": { "type": "number" },
+            "slashing": { "type": "number" }
+          }
+        },
+        "cooldown_turns": { "type": "integer", "minimum": 0 },
         "infusion_coeffs": {
           "type": "object",
           "additionalProperties": { "type": "number" }

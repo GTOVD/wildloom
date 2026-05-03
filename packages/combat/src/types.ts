@@ -61,8 +61,12 @@ export interface Move {
   damage_kind: 'endurance' | 'status' | 'utility';
   /** 0–100 optional; if omitted treat as automatic hit */
   accuracy?: number;
-  /** §5.4b — omit for legacy single-path strike saturation */
+  /** §5.4b — contact strike delivery mix */
   strike_modalities?: StrikeModalities;
+  /** Same ω simplex — surge paths (e.g. Blast) blend blunt vs pierce vs slash into special mitigation */
+  delivery_modalities?: StrikeModalities;
+  /** From template cooldown_scaling × base_power at equip time (turn scheduler; not read in resolveHit). */
+  cooldown_turns?: number;
 }
 
 export interface BattleContext {

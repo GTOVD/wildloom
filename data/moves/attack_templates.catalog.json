@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "content_note": "Composable attack frames — stable template_id + player-facing display_name (no affinity in the title). Primary affinity is optional (null = non-elemental / chart-neutral); secondary optional; affinity_weights, blend_eta, base_power, pierce, accuracy, strike_modalities, and infusion_coeffs are player-set within bounds. affinity_ids.json lists allowed elemental IDs. See docs/COMBAT-MODEL.md §3.",
+  "content_note": "Composable attack frames — display_name without affinity in title. Affinity slots optional. Surge frames expose delivery_modalities (concussive/piercing/slashing ω) like strikes; flat pierce still applies per-channel. cooldown_scaling derives cooldown_turns from base_power (anti-spam). See docs/ATTACK-CATALOG.md.",
   "template_schema_ref": "./attack_template.schema.json",
   "affinity_ref": "./affinity_ids.json",
   "templates": [
@@ -57,7 +57,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "tag_pressure": {
             "min": 0,
@@ -71,6 +70,33 @@
             "default": 0,
             "step": 0.01
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 5,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.05,
+            "max": 0.85,
+            "default": 0.33,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.05,
+            "max": 0.85,
+            "default": 0.34,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.05,
+            "max": 0.85,
+            "default": 0.33,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1 — player shapes concussive vs piercing vs slashing coupling on special mitigation (same ψ kernels as strikes)."
         }
       },
       "suggested_tags": [
@@ -94,7 +120,13 @@
             "ranged",
             "surge",
             "neutral_build"
-          ]
+          ],
+          "delivery_modalities": {
+            "concussive": 0.4,
+            "piercing": 0.35,
+            "slashing": 0.25
+          },
+          "cooldown_turns": 2
         },
         {
           "label": "Pure thermal blast",
@@ -114,7 +146,13 @@
             "thermal",
             "ranged",
             "surge"
-          ]
+          ],
+          "delivery_modalities": {
+            "concussive": 0.25,
+            "piercing": 0.55,
+            "slashing": 0.2
+          },
+          "cooldown_turns": 3
         },
         {
           "label": "Galvanic–aqueous fusion",
@@ -187,7 +225,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "beam_focus": {
             "min": 0,
@@ -199,6 +236,33 @@
             "max": 0.2,
             "default": 0.05
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 4,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.05,
+            "max": 0.4,
+            "default": 0.12,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.35,
+            "max": 0.92,
+            "default": 0.68,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.03,
+            "max": 0.45,
+            "default": 0.2,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1."
         }
       },
       "suggested_tags": [
@@ -275,7 +339,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "splash_bias": {
             "min": 0,
@@ -287,6 +350,33 @@
             "max": 0.35,
             "default": 0.12
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 5,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.25,
+            "max": 0.88,
+            "default": 0.52,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.05,
+            "max": 0.55,
+            "default": 0.28,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.05,
+            "max": 0.55,
+            "default": 0.2,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1."
         }
       },
       "suggested_tags": [
@@ -365,7 +455,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "dot_prime": {
             "min": 0,
@@ -377,6 +466,33 @@
             "max": 0.4,
             "default": 0.18
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 4,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.1,
+            "max": 0.55,
+            "default": 0.28,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.15,
+            "max": 0.65,
+            "default": 0.42,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.1,
+            "max": 0.55,
+            "default": 0.3,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1."
         }
       },
       "suggested_tags": [
@@ -485,6 +601,12 @@
             "max": 0.12,
             "default": 0
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 3,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -597,6 +719,12 @@
             "max": 0.18,
             "default": 0.06
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 3,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -712,6 +840,12 @@
             "max": 0.3,
             "default": 0.1
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 3,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -823,6 +957,12 @@
             "max": 0.15,
             "default": 0
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 3,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -911,6 +1051,12 @@
             "max": 1,
             "default": 0.4
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 7,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -984,7 +1130,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "dispersion": {
             "min": 0,
@@ -996,6 +1141,33 @@
             "max": 0.18,
             "default": 0.04
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 4,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.08,
+            "max": 0.55,
+            "default": 0.22,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.2,
+            "max": 0.82,
+            "default": 0.48,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.08,
+            "max": 0.62,
+            "default": 0.3,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1."
         }
       },
       "suggested_tags": [
@@ -1074,7 +1246,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "sonic_stress_impulse": {
             "min": 0,
@@ -1086,6 +1257,33 @@
             "max": 0.15,
             "default": 0.05
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 4,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.35,
+            "max": 0.88,
+            "default": 0.58,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.05,
+            "max": 0.45,
+            "default": 0.22,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.05,
+            "max": 0.45,
+            "default": 0.2,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1."
         }
       },
       "suggested_tags": [
@@ -1163,7 +1361,6 @@
           "optional": true,
           "omit_means_always_hit": true
         },
-        "strike_modalities": null,
         "infusion_coeffs": {
           "compression_tone": {
             "min": 0,
@@ -1175,6 +1372,33 @@
             "max": 0.3,
             "default": 0.14
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 5,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
+        },
+        "delivery_modalities": {
+          "concussive": {
+            "min": 0.35,
+            "max": 0.9,
+            "default": 0.55,
+            "step": 0.02
+          },
+          "piercing": {
+            "min": 0.05,
+            "max": 0.5,
+            "default": 0.25,
+            "step": 0.02
+          },
+          "slashing": {
+            "min": 0.05,
+            "max": 0.45,
+            "default": 0.2,
+            "step": 0.02
+          },
+          "normalize_to_simplex_note": "Renormalize ω to sum 1."
         }
       },
       "suggested_tags": [
@@ -1280,6 +1504,12 @@
             "max": 0.12,
             "default": 0.02
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 3,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -1380,6 +1610,12 @@
             "max": 0.2,
             "default": 0.05
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 6,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -1480,6 +1716,12 @@
             "max": 0.35,
             "default": 0.12
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 5,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [
@@ -1592,6 +1834,12 @@
             "max": 1,
             "default": 0.5
           }
+        },
+        "cooldown_scaling": {
+          "min_turns": 0,
+          "max_turns": 4,
+          "scales_with": "base_power",
+          "help": "At resolve/equip time: cooldown_turns = round(min_turns + (max_turns-min_turns) * (base_power - base_power.min)/(base_power.max - base_power.min)); clamp to [min_turns, max_turns]. Weaker slider ⇒ shorter cooldown; maxed power ⇒ longest cooldown for this frame."
         }
       },
       "suggested_tags": [

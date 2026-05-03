@@ -19,7 +19,9 @@ There is **no** separate “abilities catalog” with hundreds of pre-filled row
 | **Blend η** | When secondary is set, slider `blend_eta` ∈ template `[min,max]` splits weights between primary and secondary |
 | **`affinity_weights`** | Defaults from η plus vertex rule; **`advanced_simplex_tail`** templates allow spreading ε across other affinities in an advanced editor ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3). Fully editable within authored normalization rules. |
 | **`base_power` / `pierce` / `accuracy`** | Continuous sliders inside template **min/max/step** |
-| **`strike_modalities` ω** | Strikes: concussive / piercing / slashing ranges → UI renormalizes to sum **1** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
+| **`strike_modalities` ω** | **Strikes:** concussive / piercing / slashing ranges → UI renormalizes to sum **1** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b). |
+| **`delivery_modalities` ω** | **Surges** (Blast, Lance, …): same ω simplex — splits how the hit couples to blunt vs pierce vs slash **into special mitigation**, alongside the global **`pierce`** scalar (per-channel armor bypass §5.4b). Lets a Blast read as needle beam vs shockwave vs slashy arc per player. |
+| **`cooldown_scaling`** | Every template: **`min_turns`** … **`max_turns`** mapped linearly from **`base_power`** slider within that frame’s band — higher power ⇒ longer cooldown (anti-spam). Hydrate **`Move.cooldown_turns`** via **`resolveCooldownTurnsFromPower`** ([`packages/combat`](../packages/combat/README.md)). |
 | **`infusion_coeffs`** | Per-template knobs — each has numeric bounds |
 
 **`damage_kind`** for resolved combat payloads follows **`damage_kind_default`** on the template (`endurance`, `status`, `utility`) unless extended pipelines remap it.
@@ -37,7 +39,7 @@ At runtime / persistence, legal builds still need **economy and validation** lay
 | Mechanism | Role |
 |-----------|------|
 | **Loadout / tuning budget** | Each equipped move (or each customization session) spends from a finite budget — raising **`base_power`** leaves fewer points for **`pierce`**, **`accuracy`**, **`infusion_coeffs`**, modality emphasis, etc. Server rejects over-budget payloads. |
-| **Meta costs** | Using a “fully juiced” variant can cost more **stamina / tempo / cooldown / Resonance** (see [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) Resonance notes; [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 training brackets). |
+| **Meta costs** | Using a “fully juiced” variant can cost more **stamina / tempo / cooldown** (template **`cooldown_scaling`** grows with **`base_power`**), **Resonance**, etc. ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
 | **Trade-offs in data (optional)** | Future authoring can add explicit **couplings** (e.g. power vs accuracy ceilings within the same template) so the envelope is not a flat rectangle of independent maxes. |
 | **Combat saturation** | Even high **`base_power`** faces diminishing returns through **`σ`** / saturation in the damage pipeline ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5), so outcome is not linear in “always pick max.” |
 
@@ -51,7 +53,7 @@ So: **nothing “hidden” in `attack_templates.catalog.json` stops someone from
 2. **Template** — frame ID + numeric bands + affinity-slot rules; `example_builds` are **illustrative payloads**, not the authoritative definition.
 3. **Resolved instance** — concrete assignment (affinities, η, weights, sliders) persisted per creature/move slot — what combat consumes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
 
-**Hydrating `packages/combat` `Move`:** set **`affinity`** only when the player picks an elemental chart key; omit or leave unset for non-elemental builds ([`packages/combat`](../packages/combat/README.md)).
+**Hydrating `packages/combat` `Move`:** set **`affinity`** only when the player picks an elemental chart key; omit or leave unset for non-elemental builds. Populate **`strike_modalities`** (strikes) or **`delivery_modalities`** (surges); **`cooldown_turns`** from **`resolveCooldownTurnsFromPower(base_power, template.base_power range, template.cooldown_scaling)`** ([`packages/combat`](../packages/combat/README.md)).
 
 **Resolver contract:** Resolved instances must match [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3. Today’s `Move` type implements **strike / surge / true**; templates tagged `field`, `channel`, or `reactive` include `mvp_resolver_note` for the extended pipeline in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §5.
 

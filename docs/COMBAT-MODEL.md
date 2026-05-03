@@ -87,7 +87,9 @@ Each move carries:
 | `infusion_coeffs` | Optional bag of **continuous** tuning knobs (e.g. tag intensity, modality tilt, pierce bias)—serialized for replay; bounded per move family. |
 | `tags` | Set of strings for predicates (`thermal`, `aqueous`, `contact`, …). |
 | `pierce` | Fraction in `[0, 1]` — geometric / armor bypass applied **per modality** (§5.4b); strongest on the **piercing** channel by default. |
-| `strike_modalities` | Optional simplex weights `{ concussive, piercing, slashing }` summing to `1` on **strike** moves; omit ⇒ `{1,0,0}` (legacy blunt-only path). |
+| `strike_modalities` | Optional ω simplex on **strike** moves (`delivery_modalities` absent); omit ⇒ blunt-only legacy path. |
+| `delivery_modalities` | Same ω shape on **surge** moves (e.g. Blast) — partitions coupling across concussive / piercing / slashing **delivery** into **`special_mitigation`** with the same material ψ kernels as §5.4b. Resolver prefers `delivery_modalities` when both fields are present. |
+| `cooldown_turns` | Integer turns before reuse — hydrate from template **`cooldown_scaling`** × **`base_power`** (stronger customization ⇒ longer wait); consumed by turn scheduler, not `resolveHit`. |
 | `damage_kind` | Usually `endurance` (depletes \(S\)); some moves only tick accumulators or apply disables (`status`, `utility`). |
 
 **True damage:** Skips **saturation path using `physical_mitigation` / `special_mitigation`** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
@@ -127,7 +129,7 @@ The resolver does **not** aim to be a spreadsheet of unrelated percentages. Each
 
 2. **Nonlinear constitutive map (saturation):** For strike/surge cores, the scalar \(\sigma(A,D)\in(0,1)\) in §5.4 is a **smooth response function** (stress–strain / transfer-efficiency metaphor): raising offense \(A\) increases \(\sigma\) with **diminishing returns** against fixed mitigation \(D\); raising \(D\) lowers \(\sigma\) smoothly. Balance tools treat \(\partial \sigma/\partial A\) and \(\partial \sigma/\partial D\) (numerically or in closed form where authored) as **local elasticities** — see [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §7.
 
-3. **Multi-channel strikes as parallel pathways:** §5.4b is a **partition of coupling effort** \(\boldsymbol{\omega}\) across concussive / piercing / slashing branches. Each branch has its own resistance \(R_k = B_{\mathrm{eff}}\psi_k(\mathbf{M})\) — material fields \(\psi_k\) play the role of **geometry- and phase-dependent impedances**. The blended core is \(D_{\mathrm{core}}=\sum_k \omega_k D_{\mathrm{core},k}\): additive in **energy partitioned pathways**, each nonlinear in its own \(D_k\).
+3. **Multi-channel strikes and surges as parallel pathways:** §5.4b is a **partition of coupling effort** \(\boldsymbol{\omega}\) across concussive / piercing / slashing branches (strikes on **`physical_mitigation`**, surges on **`special_mitigation`**). Each branch has its own resistance \(R_k = B_{\mathrm{eff}}\psi_k(\mathbf{M})\) — material fields \(\psi_k\) play the role of **geometry- and phase-dependent impedances**. The blended core is \(D_{\mathrm{core}}=\sum_k \omega_k D_{\mathrm{core},k}\): additive in **energy partitioned pathways**, each nonlinear in its own \(D_k\).
 
 4. **Probability layer (hit, crit, spread):** Let \(H\in\{0,1\}\) be hit/miss with \(\mathbb{P}(H{=}1)=p_{\mathrm{hit}}\) (§5.1). Conditional on \(H{=}1\), define multiplicative noise \(X = C\cdot \Xi\) where \(C\) is crit multiplier (Bernoulli / mixed distribution from data) and \(\Xi = 1+U\) with \(U\) symmetric on \([-\delta,\delta]\) (§5.8). With **independence** \(C \perp \Xi\),
    \[
@@ -193,7 +195,7 @@ For **surge** (and single-path strike fallback):
 Def_eff ← relevant_defense_eff * (1 - pierce_move * λ_p)    -- scalar bypass
 ```
 
-For **strike modality blend** (§5.4b), the same `pierce_move` scalar is applied **after** splitting resistances, with **channel-specific weights** \(\lambda_{\mathrm{con}}, \lambda_{\mathrm{pier}}, \lambda_{\mathrm{slas}}\) (usually \(\lambda_{\mathrm{pier}} \approx 1\), smaller shares on blunt/slash—data-tuned).
+For **strike / surge modality blend** (§5.4b), the same `pierce_move` scalar is applied **after** splitting resistances, with **channel-specific weights** \(\lambda_{\mathrm{con}}, \lambda_{\mathrm{pier}}, \lambda_{\mathrm{slas}}\) (usually \(\lambda_{\mathrm{pier}} \approx 1\), smaller shares on blunt/slash—data-tuned).
 
 `λ_p` is a global tuning constant (e.g. `1` means “pierce ignores that fraction of **that channel’s** resistance before saturation”).
 
@@ -233,11 +235,11 @@ D_core = F_scale * move_power_modified * sigma * S_L
 - Raising `D` reduces `sigma` smoothly.
 - Raising `A` increases `sigma` with diminishing returns vs large `D`.
 
-### 5.4b Strike modality blend — concussive, piercing, slashing
+### 5.4b Delivery modality blend — concussive, piercing, slashing (strike & surge)
 
-**Intent:** One **strike** can carry a mixture of **impulse** (concussive), **localized penetration** (piercing modality), and **shear / cutting** (slashing). Each channel gets its own smooth saturation against a **material-shaped** resistance before blending—same calculus spirit as §13, repeated three times with different \(D_k\).
+**Intent:** A move can carry a mixture of **impulse** (concussive), **localized penetration** (piercing modality), and **shear / cutting** (slashing). **Strikes** partition **`physical_mitigation`**; **surges** (e.g. Blast) use the **same ω machinery** against **`special_mitigation`** so players can shape “beam vs shear vs blunt pulse” without a second math system. Each channel gets its own smooth saturation against a **material-shaped** resistance before blending.
 
-Let \(B_{\mathrm{eff}}\) be defender **effective physical mitigation** after fracture/posture hooks (§5.7) but **before** per-channel pierce. Let \(\mathbf{M}\) be defender material profile (`rigidity`, `porosity`, …—bounded \([0,1]\)).
+**Surge vs strike:** Let \(B_{\mathrm{eff}}\) be defender **effective mitigation** for the path in use — **`physical_mitigation`** (post-fracture hooks for strikes, §5.7) or **`special_mitigation`** (surge). The same \(\psi_k(\mathbf{M})\) impedance story applies to \(R_k = B_{\mathrm{eff}}\cdot \psi_k(\mathbf{M})\).
 
 **Resistance shaping (examples — ship ψ from `scaling_curves.json`):**
 
@@ -553,7 +555,7 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | Initial combat integration spec |
 | 2026-05-03 | Linked `packages/combat` implementation; saturation math appendix; devtools note |
 | 2026-05-03 | §6 coupled flows; §15–§16; [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) cross-links |
-| 2026-05-03 | §5.4b strike modalities (concussive / piercing / slashing); pierce vs modality clarified; pipeline + `math.ts` support |
+| 2026-05-03 | **Surge delivery ω + cooldown scaling:** `delivery_modalities` on surge templates; `cooldown_scaling` on all frames; `resolveCooldownTurnsFromPower` + surge path uses §5.4b blend on **`special_mitigation`** ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
 | 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |

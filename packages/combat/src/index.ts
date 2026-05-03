@@ -24,6 +24,7 @@ export {
   effectiveDefenseForModality,
   expectedDamageMeanBeforeFloor,
   normalizeStrikeModalities,
+  resolveCooldownTurnsFromPower,
 } from './math.js';
 export {
   evaluateReactionRules,

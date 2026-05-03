@@ -7,7 +7,7 @@
  * previews and math.coreSaturation*LogElasticity for local sensitivities.
  */
 
-import type { BattleContext, Combatant, DamageBreakdown, HitResult, Move } from './types.js';
+import type { BattleContext, Combatant, DamageBreakdown, HitResult, Move, StrikeModalities } from './types.js';
 import {
   MODALITY_TUNING,
   TUNING,
@@ -33,23 +33,27 @@ const ZERO_BREAKDOWN: DamageBreakdown = {
 /** Layer 3 coupling: fracture reduces effective physical defense (tuning γ). */
 const FRACTURE_DEFENSE_GAMMA = 0.2;
 
-function computeStrikeDCore(
-  attacker: Combatant,
-  defender: Combatant,
-  move: Move,
+/** Surge uses delivery_modalities; strikes use strike_modalities — same ω shape (§5.4b). */
+function moveDeliveryMix(move: Move): StrikeModalities | undefined {
+  return move.delivery_modalities ?? move.strike_modalities;
+}
+
+function computeBlendedSaturationCore(
+  offenseA: number,
   D_raw: number,
+  materials: Combatant['materials'],
+  move: Move,
+  modalities: StrikeModalities | undefined,
   S_L: number
 ): Pick<DamageBreakdown, 'D_core' | 'sigma' | 'modalities'> {
-  const A = attacker.stats_eff.physical_offense;
-
-  if (move.strike_modalities === undefined) {
+  if (modalities === undefined) {
     const D_eff = calcEffectiveDefense(D_raw, move.pierce);
-    const { dCore, sigma } = calcCoreSaturation(A, D_eff, move.base_power, S_L);
+    const { dCore, sigma } = calcCoreSaturation(offenseA, D_eff, move.base_power, S_L);
     return { D_core: dCore, sigma };
   }
 
-  const ω = normalizeStrikeModalities(move.strike_modalities);
-  const { rCon, rPier, rSlas } = calcStrikeResistanceTriplet(D_raw, defender.materials);
+  const ω = normalizeStrikeModalities(modalities);
+  const { rCon, rPier, rSlas } = calcStrikeResistanceTriplet(D_raw, materials);
 
   const D_con = effectiveDefenseForModality(
     rCon,
@@ -67,9 +71,9 @@ function computeStrikeDCore(
     MODALITY_TUNING.PIERCE_SHARE_SLASHING
   );
 
-  const cC = calcCoreSaturation(A, D_con, move.base_power, S_L);
-  const cP = calcCoreSaturation(A, D_pier, move.base_power, S_L);
-  const cS = calcCoreSaturation(A, D_slas, move.base_power, S_L);
+  const cC = calcCoreSaturation(offenseA, D_con, move.base_power, S_L);
+  const cP = calcCoreSaturation(offenseA, D_pier, move.base_power, S_L);
+  const cS = calcCoreSaturation(offenseA, D_slas, move.base_power, S_L);
 
   const D_core =
     ω.concussive * cC.dCore + ω.piercing * cP.dCore + ω.slashing * cS.dCore;
@@ -91,6 +95,24 @@ function computeStrikeDCore(
       d_core_s: cS.dCore,
     },
   };
+}
+
+function computeStrikeDCore(
+  attacker: Combatant,
+  defender: Combatant,
+  move: Move,
+  D_raw: number,
+  S_L: number
+): Pick<DamageBreakdown, 'D_core' | 'sigma' | 'modalities'> {
+  const A = attacker.stats_eff.physical_offense;
+  return computeBlendedSaturationCore(
+    A,
+    D_raw,
+    defender.materials,
+    move,
+    moveDeliveryMix(move),
+    S_L
+  );
 }
 
 export function resolveHit(
@@ -130,11 +152,17 @@ export function resolveHit(
   } else {
     const D_raw = defender.stats_eff.special_mitigation;
     const A = attacker.stats_eff.special_offense;
-    const D_eff = calcEffectiveDefense(D_raw, move.pierce);
-    const core = calcCoreSaturation(A, D_eff, move.base_power, S_L);
-    D_core = core.dCore;
-    sigma = core.sigma;
-    modalities = undefined;
+    const sc = computeBlendedSaturationCore(
+      A,
+      D_raw,
+      defender.materials,
+      move,
+      moveDeliveryMix(move),
+      S_L
+    );
+    D_core = sc.D_core;
+    sigma = sc.sigma;
+    modalities = sc.modalities;
   }
 
   const moveAff = move.affinity?.trim();

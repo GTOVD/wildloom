@@ -46,6 +46,23 @@ export function normalizeStrikeModalities(m?: StrikeModalities): StrikeModalitie
   };
 }
 
+/**
+ * Cooldown from authored template bands — stronger base_power ⇒ longer wait (anti-spam).
+ * Hydrate onto Move.cooldown_turns when customizing/equipping (battle loop consumes it).
+ */
+export function resolveCooldownTurnsFromPower(
+  basePower: number,
+  powerRange: { min: number; max: number },
+  cd: { min_turns: number; max_turns: number }
+): number {
+  const pMin = powerRange.min;
+  const pMax = powerRange.max;
+  const span = Math.max(0, pMax - pMin);
+  const u = span <= 0 ? 1 : (basePower - pMin) / span;
+  const t = Math.max(0, Math.min(1, u));
+  return Math.round(cd.min_turns + t * (cd.max_turns - cd.min_turns));
+}
+
 export function calcLevelScaling(lA: number, lD: number): number {
   const { c0, c1, c2, c3 } = TUNING.L_SCALING;
   return (c0 + c1 * lA) / (c2 + c3 * lD);

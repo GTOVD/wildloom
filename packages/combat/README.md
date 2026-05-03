@@ -2,9 +2,9 @@
 
 Pure, deterministic combat math aligned with [`docs/COMBAT-MODEL.md`](../../docs/COMBAT-MODEL.md).
 
-- **`types.ts`** — immutable snapshot interfaces (`Combatant` with `CoreStats` — `stamina`, `physical_offense`, `physical_mitigation`, `special_offense`, `special_mitigation`, `initiative`; `Move.damage_kind` including `'endurance'`; **`Move.affinity` optional** for non-elemental moves; `HitResult.stamina_loss`, …).
-- **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`; **`expectedDamageMeanBeforeFloor`**, **`coreSaturationOffenseLogElasticity`** / **`coreSaturationDefenseLogElasticity`** (§5.8 / §13 expectation & elasticity helpers).
-- **`pipeline.ts`** — ordered resolver (`resolveHit`), optional **`strike_modalities`** blend (§5.4b); stubs for chart + reaction rules.
+- **`types.ts`** — immutable snapshot interfaces (`Combatant` with `CoreStats`; `Move` including optional **`affinity`**, **`strike_modalities`**, **`delivery_modalities`**, **`cooldown_turns`**; `HitResult.stamina_loss`, …).
+- **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`; **`resolveCooldownTurnsFromPower`** (cooldown vs **`base_power`**); **`expectedDamageMeanBeforeFloor`**, **`coreSaturationOffenseLogElasticity`** / **`coreSaturationDefenseLogElasticity`** (§5.8 / §13).
+- **`pipeline.ts`** — `resolveHit`; §5.4b blend on strikes and surges via **`strike_modalities` / `delivery_modalities`**; chart/rules stubbed.
 
 ## Usage
 
