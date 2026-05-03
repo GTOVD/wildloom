@@ -1,6 +1,6 @@
 # Species catalog → procedural instances (examples)
 
-**Companion:** [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 & §5 (**no species-fixed stats**), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §§1–4 (twelve affinities, rolled aptitudes, Resonance), [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§3–4 (nine stats, twelve material axes).
+**Companion:** [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 & §5 (**no species-fixed stats**), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §§1–4 (twelve affinities, rolled aptitudes, Resonance), [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) (spawn typing independent of catalog, aptitude tiers, rarity odds), [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§3–4 (nine stats, twelve material axes).
 
 [`data/species/catalog.json`](../data/species/catalog.json) lists **100 species lines**: display names, three stages, habitat string, plus **`primary_affinity`**, **`secondary_affinity`**, **`affinity_emphasis_hint`** for **dex/UI/procedural naming only**. **They are not combat authority.** Every battle-ready creature is an **instance** whose **stats, materials, and affinity_emphasis** are **rolled** (then advanced by training).
 
@@ -61,12 +61,24 @@ Full **twelve-weight** `affinity_emphasis` objects (sum **1.0**) live in the YAM
 | Caldera bulwark | **0.84** | **0.89** | 0.14 | **0.83** | **0.09** |
 | Mossback grazer | 0.49 | 0.41 | **0.58** | 0.44 | **0.64** |
 | Rimeplate wanderer | 0.56 | **0.86** | 0.22 | 0.71 | 0.26 |
-| Echo-shell sentinel | 0.52 | 0.71 | 0.21 | **0.78** | 0.24 |
+| **Echo-shell sentinel** | 0.52 | 0.71 | 0.21 | **0.78** | 0.24 |
+
+---
+
+## 2.5 Spawn rarity annotations (reference math)
+
+The YAML samples attach a **`spawn_roll`** block per instance (authoring-only until the encounter pipeline ships). It records:
+
+- **Affinity branch:** Whether a **secondary dex chip** rolled present (~65% reference) or absent (~35%); when both chips exist, **exact ordered pair** odds follow `p_secondary_present × (1/12) × (1/11)` under a uniform twelve-way primary and distinct secondary draw ([`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) §3).
+- **Stat branch:** **`aptitude_tier_spawn_only_label`** plus **`approximate_probability_exact_tier_spawn_only_mass_reference_table`** from [`data/procedural/spawn_model.reference.json`](../data/procedural/spawn_model.reference.json) (e.g. common ~52%, stellar ~1%).
+- **Per-axis readability:** **`population_percentiles_higher_stat_means_higher_percentile`** and **`weakest_axis_percentile`** are illustrative stand-ins for IV-like spreads once Monte Carlo tables exist.
+
+An additional row **`example_primary_only_no_secondary_chip`** in the same YAML shows **`secondary_affinity: null`** with emphasis still spread across the simplex — dual-chip geometry does not apply for that spawn’s dex presentation.
 
 ---
 
 ## 3. Machine-readable samples
 
-[`data/species/examples/rolled_instances.sample.yaml`](../data/species/examples/rolled_instances.sample.yaml) → **`tortoise_comparison`**.
+[`data/species/examples/rolled_instances.sample.yaml`](../data/species/examples/rolled_instances.sample.yaml) → **`tortoise_comparison`** (four rolls) and **`example_primary_only_no_secondary_chip`** (null secondary illustration).
 
 Numbers are **balance placeholders** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §16).

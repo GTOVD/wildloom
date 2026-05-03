@@ -5,7 +5,11 @@
 #   - affinity_emphasis.* → weights on a simplex (each in [0,1], together sum to 1) for Layer 1 emphasis / typing display.
 #   - material_profile.*  → normalized material axes in [0,1] for Layers 2–3 (different meaning than stat budgets).
 #
-# Catalog primary/secondary on a dex row are flavor-only; here they mirror how UI might *collapse* emphasis to two chips.
+# Catalog primary/secondary on a dex row are flavor-only; chips below collapse rolled affinity_emphasis.
+# Spawn ignores catalog hints — typing/stat tiers independent — see docs/PROCEDURAL-GENERATION.md
+# and data/procedural/spawn_model.reference.json.
+#
+# spawn_roll annotations use illustrative math (Monte Carlo replaces naive fractions once wired).
 
 tortoise_comparison:
   shared_notes:
@@ -64,6 +68,33 @@ tortoise_comparison:
       chemical_reactivity: 0.46
       magnetization: 0.14
       permeability: 0.09
+    spawn_roll:
+      spawn_model_ref: data/procedural/spawn_model.reference.json
+      affinity_rarity_annotation:
+        ignores_catalog_primary_secondary_hint: true
+        approximate_probability_exact_ordered_chip_pair:
+          formula: "P(secondary_present) × P(primary) × P(secondary | distinct)"
+          reference_numbers: "0.65 × (1/12) × (1/11) ≈ 1 / 203 ≈ 0.49%"
+        approximate_probability_named_primary_any_secondary_combo:
+          "≈ 8.33% (uniform primary among twelve affinities; biome-neutral demo)"
+        secondary_chip_spawned_this_instance: true
+      stat_rarity_annotation:
+        aptitude_tier_spawn_only_label: stellar
+        approximate_probability_exact_tier_spawn_only_mass_reference_table:
+          "~1% (stellar tier baseline probability_mass demo)."
+        population_percentiles_higher_stat_means_higher_percentile:
+          stamina: 97
+          might: 72
+          bulwark: 96
+          insight: 38
+          ward: 62
+          tempo: 16
+          acuity: 41
+          resilience: 91
+          flux: 37
+        weakest_axis_percentile: 16
+        tooltip_human_readable_spawn_joint_estimate_order_one:
+          "Affinity geometry ~1 in 203 wild odds for exact ordered chip pair (reference rule); aptitude tier drawn separately (~1% stellar)."
 
   mossback_grazer:
     identity:
@@ -116,6 +147,27 @@ tortoise_comparison:
       chemical_reactivity: 0.52
       magnetization: 0.18
       permeability: 0.64
+    spawn_roll:
+      affinity_rarity_annotation:
+        ignores_catalog_primary_secondary_hint: true
+        approximate_probability_exact_ordered_chip_pair:
+          "≈ 0.49% (same geometry as caldera row — biome-neutral demo)"
+        secondary_chip_spawned_this_instance: true
+      stat_rarity_annotation:
+        aptitude_tier_spawn_only_label: rare
+        approximate_probability_exact_tier_spawn_only_mass_reference_table:
+          "~14% (rare tier baseline probability_mass demo)."
+        population_percentiles_higher_stat_means_higher_percentile:
+          stamina: 63
+          might: 38
+          bulwark: 52
+          insight: 88
+          ward: 92
+          tempo: 76
+          acuity: 81
+          resilience: 46
+          flux: 54
+        weakest_axis_percentile: 38
 
   rimeplate_wanderer:
     identity:
@@ -168,6 +220,27 @@ tortoise_comparison:
       chemical_reactivity: 0.34
       magnetization: 0.17
       permeability: 0.26
+    spawn_roll:
+      affinity_rarity_annotation:
+        ignores_catalog_primary_secondary_hint: true
+        approximate_probability_exact_ordered_chip_pair:
+          "≈ 0.49% reference geometry"
+        secondary_chip_spawned_this_instance: true
+      stat_rarity_annotation:
+        aptitude_tier_spawn_only_label: uncommon
+        approximate_probability_exact_tier_spawn_only_mass_reference_table:
+          "~28% (uncommon tier baseline probability_mass demo)."
+        population_percentiles_higher_stat_means_higher_percentile:
+          stamina: 74
+          might: 79
+          bulwark: 71
+          insight: 58
+          ward: 81
+          tempo: 46
+          acuity: 52
+          resilience: 69
+          flux: 61
+        weakest_axis_percentile: 46
 
   echo_shell_sentinel:
     identity:
@@ -220,3 +293,107 @@ tortoise_comparison:
       chemical_reactivity: 0.39
       magnetization: 0.22
       permeability: 0.24
+    spawn_roll:
+      affinity_rarity_annotation:
+        ignores_catalog_primary_secondary_hint: true
+        approximate_probability_exact_ordered_chip_pair:
+          "≈ 0.49%; sonic-led combos equally rare under geometry demo prior"
+        secondary_chip_spawned_this_instance: true
+      stat_rarity_annotation:
+        aptitude_tier_spawn_only_label: epic
+        approximate_probability_exact_tier_spawn_only_mass_reference_table:
+          "~5% (epic tier baseline probability_mass demo)."
+        aptitude_tilt_note:
+          "Positive tempo/insight/acuity skew vs low stamina pool — Pokémon-style nature tilt illustration."
+        population_percentiles_higher_stat_means_higher_percentile:
+          stamina: 21
+          might: 55
+          bulwark: 63
+          insight: 99
+          ward: 54
+          tempo: 93
+          acuity: 96
+          resilience: 35
+          flux: 68
+        weakest_axis_percentile: 21
+        tooltip_human_readable_spawn_profile_estimate:
+          "High-tier aptitude roll redistributed into speed/special stats — inspect percentiles + tier together."
+
+# Illustrates secondary chip absent: dex shows primary only; emphasis still spreads across the simplex.
+example_primary_only_no_secondary_chip:
+  identity:
+    instance_label: void_led_single_chip_demo
+    species_line_id: ash_mantle
+    species_zenith_name: Ash Mantle
+    stage: 3
+    stage_code: zenith
+    habitat_tag: mist basin (spawn flavor only)
+    species_tags: []
+  typing:
+    primary_affinity: void
+    secondary_affinity: null
+    affinity_emphasis:
+      void: 0.48
+      thermal: 0.12
+      cryo: 0.09
+      aqueous: 0.08
+      galvanic: 0.06
+      mineral: 0.05
+      flora: 0.04
+      aero: 0.03
+      luminous: 0.025
+      sonic: 0.015
+      corrosive: 0.01
+      plasmic: 0.005
+  stats:
+    stamina: 102
+    might: 58
+    bulwark: 79
+    insight: 71
+    ward: 62
+    tempo: 55
+    acuity: 48
+    resilience: 51
+    flux: 42
+  material_profile:
+    thermal_mass: 0.41
+    conductivity: 0.22
+    rigidity: 0.62
+    porosity: 0.31
+    polarity: 0.28
+    density: 0.55
+    elasticity: 0.35
+    reflectivity: 0.18
+    acoustic_impedance: 0.44
+    chemical_reactivity: 0.38
+    magnetization: 0.12
+    permeability: 0.36
+  spawn_roll:
+    spawn_model_ref: data/procedural/spawn_model.reference.json
+    affinity_rarity_annotation:
+      ignores_catalog_primary_secondary_hint: true
+      secondary_chip_spawned_this_instance: false
+      approximate_probability_no_secondary_chip:
+        "~35% (reference: 1 − p_secondary_present = 1 − 0.65)"
+      approximate_probability_primary_named_void_given_no_secondary_geometry_demo:
+        "P(no secondary) × P(primary = void) ≈ 0.35 × (1/12) ≈ 2.9%"
+      note_ordered_pair_formula_not_applicable:
+        "Exact dual-chip pair probability does not apply — secondary chip omitted this spawn."
+    stat_rarity_annotation:
+      aptitude_tier_spawn_only_label: common
+      approximate_probability_exact_tier_spawn_only_mass_reference_table:
+        "~52% (common tier baseline probability_mass demo)."
+      population_percentiles_higher_stat_means_higher_percentile:
+        stamina: 44
+        might: 41
+        bulwark: 48
+        insight: 53
+        ward: 46
+        tempo: 52
+        acuity: 39
+        resilience: 43
+        flux: 51
+      weakest_axis_percentile: 39
+      tooltip_human_readable_spawn_profile_estimate:
+        "Single-chip spawn — affinity rarity from no-secondary branch; stats sit mid-pack (common tier illustration)."
+

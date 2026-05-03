@@ -2,7 +2,7 @@
 
 **Status:** Design draft aligned with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) and [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md). Layer 1 uses **dynamic `m1`** (§5.5) anchored by **`CHART₀`** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §2). **Twelve** affinity IDs are the target roster; **nine** ship first in MVP enums ([§1](#1-affinity-framework--twelve-ids-mvp-ships-nine)).
 
-**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
+**Related:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous flows, pedagogy, integration contract. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — rolled typings (including optional null secondary), aptitude tiers, inspectable rarity metadata on instances. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — **twelve-affinity** target, Sonic/Corrosive/Plasmic, full chart, stances, statuses, biomes (phase in after MVP).
 
 **Implementation:** Reference resolver lives in [`packages/combat`](../packages/combat/README.md).
 
@@ -55,7 +55,7 @@ To keep the matchup chart readable during onboarding, tutorials may **collapse**
 
 ## 1.2 Procedural uniqueness, composed typings, and move authoring
 
-**Creature instances:** Every animal is a **pure roll**: **no species line defines base stats, substats, materials, or affinity weights** for combat. The species row is **identity + dex flavor** (names, stages, habitat string, optional non-binding hints). Stats/materials/emphasis are drawn at spawn/capture from **global + stage (+ optional encounter biome) distributions**, then advanced by **Resonance** / training ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5). Examples with fake numbers: [`SPECIES-INSTANCE-EXAMPLES.md`](../docs/SPECIES-INSTANCE-EXAMPLES.md).
+**Creature instances:** Every animal is a **pure roll**: **no species line defines base stats, substats, materials, or affinity weights** for combat. The species row is **identity + dex flavor** (names, stages, habitat string, optional non-binding hints). Stats/materials/emphasis are drawn at spawn/capture from **global + stage (+ optional encounter biome) distributions**, then advanced by **Resonance** / training ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5). Rarity-facing knobs (dual-chip odds, aptitude tier masses, UI-facing percentile snapshots) live in [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md). Examples with fake numbers: [`SPECIES-INSTANCE-EXAMPLES.md`](../docs/SPECIES-INSTANCE-EXAMPLES.md).
 
 **Typing:** Combat uses **`affinity_emphasis`** vectors over the twelve IDs (or nine until unlocked). Catalog `primary_affinity` / `affinity_emphasis_hint` are **dex/UI seeds only** unless you explicitly mirror them into a legacy preview—**authoritative** emphasis always comes from the instance payload.
 

@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1.0",
+  "affinity": {
+    "primary_distribution": "uniform_over_twelve",
+    "secondary_present_probability": 0.65,
+    "secondary_given_present_draw": "uniform_over_remaining_eleven_distinct_from_primary",
+    "emphasis_tail": "dirichlet_over_non_chip_affinities",
+    "dirichlet_alpha_note": "Author per-biome alpha overrides in spawn_tables when biome_bias ships"
+  },
+  "dex_chips": {
+    "primary_chip_rule": "argmax_affinity_emphasis",
+    "secondary_chip_rule": "second_largest_if_secondary_present_flag_else_null"
+  },
+  "stats": {
+    "aptitude_model": "tier_then_uniform_noise",
+    "aptitude_tiers": [
+      { "id": "common", "probability_mass": 0.52 },
+      { "id": "uncommon", "probability_mass": 0.28 },
+      { "id": "rare", "probability_mass": 0.14 },
+      { "id": "epic", "probability_mass": 0.05 },
+      { "id": "stellar", "probability_mass": 0.01 }
+    ],
+    "percentile_tables_note": "Regenerate via Monte Carlo per ruleset_id + level_band; instances store snapshot percentiles at hatch"
+  },
+  "materials": {
+    "model": "independent_uniform_axes_pending_balance",
+    "optional_quality_factor": null
+  }
+}
