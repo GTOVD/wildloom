@@ -22,7 +22,7 @@ To keep the matchup chart readable (under ~10 affinities) while supporting physi
 | **Flora** | Biomass, vines, spores | Sustain / drains (DoT); often higher `thermal_mass`. |
 | **Aero** | Gas, pressure waves, wind | Evasion hooks; spreads field accumulators. |
 | **Luminous** | Light, lasers, radiation | Surge-focused piercing; interacts with `ward` more than `bulwark`. |
-| **Void** | Gravity, vacuum, isolation | Compression on `vitality`; deliberately orthogonal physics hooks. |
+| **Void** | Gravity, vacuum, isolation | Compression on effective **`stamina` / endurance ceiling**; deliberately orthogonal physics hooks. |
 
 **Open decision:** Keep this “physics-first” naming, push further into non-element metaphors, or split “identity” vs “damage flavor” for readability—finalize before shipping tutorial copy.
 
@@ -42,7 +42,7 @@ Accumulators are continuous battle scalars (per combatant unless noted). They de
 | `heat_load` | Thermal moves, exertion, hot fields | DoT or overload thresholds; `thermal_mass` slows heating **and** cooling. |
 | `wetness` | Aqueous moves, humidity | Amplifies galvanic pathways; enables steam / shock rules. |
 | `concussion` | Concussive-heavy strikes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b; weight ω_con) | Tempo / accuracy decay via smooth coupling—[`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §3.5. |
-| `laceration` | Slashing-heavy strikes (weight ω_slash), esp. high porosity/wetness | Feeds bleed **`d(HP)/dt`** channels §3.6; Layer 2 gates severity caps. |
+| `laceration` | Slashing-heavy strikes (weight ω_slash), esp. high porosity/wetness | Feeds bleed **`\mathrm{d}S/\mathrm{d}t`** channels §3.6; Layer 2 gates severity caps. |
 
 Additional scalars (`charge_buildup`, etc.) stay in `Combatant.scalars` per [`packages/combat`](../packages/combat/src/types.ts).
 
@@ -140,7 +140,7 @@ Not lesson plans—**design targets** for observable behavior + copy. Real class
 | Flora | Mass dampens thermal swings | slower \(dH/dt\) ramps |
 | Aero | Fluids carry scalars (spread/dilute) | field clears / spreads accumulators |
 | Luminous | Energy carriers bypass some material paths | surge-first tuning |
-| Void | Isolation / compression metaphors | vitality compression separate from chemical physics |
+| Void | Isolation / compression metaphors | **`stamina` / \(S_{\max}\)** compression separate from chemical physics |
 
 ### 5.2 Strike modalities (concussive / piercing / slashing)
 
@@ -174,3 +174,4 @@ Each requires explicit decay law in [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-
 | 2026-05-03 | Physics-literacy map; optional accumulators; simulation doc link; §4 stat growth restored |
 | 2026-05-03 | `concussion` / `laceration`; modality reaction sketches; §5.2 strike modality literacy |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §1 post-MVP twelve-affinity pointer |
+| 2026-05-03 | Void / bleed copy aligned with endurance pool \(S\) and **`stamina`** ceiling ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2, §6). |

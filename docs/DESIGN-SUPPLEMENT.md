@@ -4,7 +4,7 @@
 
 **Purpose:** Fills gaps and expands systems that are framework-only elsewhere. Sections are organized for implementation. Where existing docs define structure, this doc adds concrete first-pass targets, extra mechanics, and extended physics-education hooks.
 
-**Scope:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) describes the **nine-affinity MVP**. This supplement defines the **twelve-affinity** target, nine core stats, twelve material axes, extended move categories, stances, statuses, biomes, combos, and data artifacts—**phase in**; numbers require Monte Carlo before shipping.
+**Scope:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) describes the **nine-affinity MVP**. This supplement defines the **twelve-affinity** target, nine core stats, twelve material axes, extended move categories, stances, statuses, biomes, combos, and data artifacts—**phase in**; numbers require Monte Carlo before shipping. Stat naming follows [`COMBAT-MODEL.md`](./COMBAT-MODEL.md): **`stamina`** + current **endurance** \(S(t)\), DoTs as \(\mathrm{d}S/\mathrm{d}t\).
 
 **Status:** Design expansion — first-pass balance targets; run Monte Carlo before shipping.
 
@@ -55,7 +55,7 @@ The original nine affinities cover thermodynamics, electromagnetism, matter phas
 | `FL` | **Flora** | Biomass, vines, spores, mycelium | Sustain / DoT; thermal_mass; entanglement | Biochemistry, metabolic rate |
 | `AE` | **Aero** | Gas, pressure waves, turbulence | Evasion; spreads / clears field scalars | Bernoulli, Reynolds number |
 | `LU` | **Luminous** | Light, lasers, UV, radiation | Surge pierce; bypasses some material paths | \(E = hf\), spectrum |
-| `VO` | **Void** | Gravity, vacuum, isolation | Compression on vitality; removes medium | Gravitational potential, tidal stress |
+| `VO` | **Void** | Gravity, vacuum, isolation | Compression on **`stamina` / endurance ceiling**; removes medium | Gravitational potential, tidal stress |
 | `SO` | **Sonic** *(new)* | Sound, resonance, vibration | Setup / detonation; resonant shattering | Wave equation, impedance, resonance |
 | `CR` | **Corrosive** *(new)* | Acid/base, oxidation | Accumulator erosion; armor degradation over time | Rate laws, Arrhenius, Le Chatelier |
 | `PL` | **Plasmic** *(new)* | Ionized plasma, high-energy matter | Burst; breaches bulwark + ward angles | Ionization, Debye shielding; \(T^4\) radiative flavor |
@@ -118,7 +118,7 @@ m1_final = m1_primary * (1 - η) + CHART[attack][defender_secondary] * η
 
 | Id | Role | Combat use | Hook |
 |----|------|------------|------|
-| `vitality` | HP capacity | Max HP | — |
+| `stamina` | Endurance capacity | \(S_{\max}\); pool sized by stat + level/budget | — |
 | `might` | Physical offense | Strike | \(F = ma\) metaphor |
 | `bulwark` | Physical mitigation | Strike saturation | Stress–strain |
 | `insight` | Special offense | Surge / resonance moves | Energy / amplitude |
@@ -136,7 +136,7 @@ m1_final = m1_primary * (1 - η) + CHART[attack][defender_secondary] * η
 
 ### 3.3 Migration defaults
 
-`acuity = insight * 0.6`, `resilience = vitality * 0.4`, `flux = (might + insight) * 0.2` — **migration baselines only**; species should diverge. Optional **classic mode** fixes three stats to constants.
+`acuity = insight * 0.6`, `resilience = stamina * 0.4`, `flux = (might + insight) * 0.2` — **migration baselines only**; species should diverge. Optional **classic mode** fixes three stats to constants.
 
 ---
 
@@ -241,7 +241,7 @@ Author as Layer 2 rules with `ability_id`. Illustrative table (Thermal Inertia, 
 
 ## 8. Status condition registry — 12 named thresholds
 
-**Philosophy:** Status = threshold-crossing on accumulators → persistent modifier + cure rules.
+**Philosophy:** Status = threshold-crossing on accumulators → persistent modifier + cure rules; DoT rows act as explicit \(\mathrm{d}S/\mathrm{d}t\) drivers ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6).
 
 | ID | Trigger (accumulator) | Effects (summary) | Cure sketch |
 |----|------------------------|-------------------|-------------|
@@ -280,7 +280,7 @@ Align with [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §8: nov
 
 ## 10. Battle phase structure
 
-Ordered phases: **PRE-TURN** (passives, field tick, bench decay) → **ACTION DECLARATION** (sealed) → **PRIORITY RESOLUTION** (tiers −3..+3, tempo tie-break, seeded RNG) → **EXECUTION** (hit → dispatch → pipeline → impulses → Layer 2 → reactive → status checks) → **END-OF-TURN** (DoT, Euler substeps, threshold queue, catalyst decay, status ticks, faint, switch-in, replay snapshot).
+Ordered phases: **PRE-TURN** (passives, field tick, bench decay) → **ACTION DECLARATION** (sealed) → **PRIORITY RESOLUTION** (tiers −3..+3, tempo tie-break, seeded RNG) → **EXECUTION** (hit → dispatch → pipeline → impulses → Layer 2 → reactive → status checks) → **END-OF-TURN** (integrate DoT / \(\mathrm{d}S/\mathrm{d}t\), Euler substeps for \(\mathbf{u}\), threshold queue, catalyst decay, status ticks, **incapacitation** check, switch-in, replay snapshot).
 
 **Replay:** `ReplayFrame { turn_id, actions, rng_seed_delta, pre_state_hash }` — deterministic given declarations + stats.
 
@@ -289,8 +289,8 @@ Ordered phases: **PRE-TURN** (passives, field tick, bench decay) → **ACTION DE
 ## 11. Team and party composition
 
 - Party **6**; active **1** (Singles MVP) or **2** (Doubles backlog).  
-- Switch = action; faint switch free.  
-- Bench: accumulators decay **3×** faster; HP regen only via abilities / fields (anti-stall).  
+- Switch = action; replacement after **incapacitation** (\(S \le 0\)) is free.  
+- Bench: accumulators decay **3×** faster; **endurance** \(S\) does not refill naturally unless abilities / fields say so (anti-stall).  
 - Synergy passives: thematic field bias; “conductor chain” GA–AQ–PL education archetype.
 
 ---
@@ -329,7 +329,7 @@ field_flags: []
 
 **Ancient Rainforest** — high humidity, passive `bio_resonance_delta +0.05`, `wetness_delta +0.04`; FL dominant.
 
-**Near-Vacuum Expanse** — `humidity: 0`, `acoustic_reflection: 0`; passive cooling; SO ×0 **field**, AE harmed; passive HP drain on AE/SO-primary bodies; VO ×1.35; flags `no_atmosphere`, `vacuum`.
+**Near-Vacuum Expanse** — `humidity: 0`, `acoustic_reflection: 0`; passive cooling; SO ×0 **field**, AE harmed; passive **endurance** drain on AE/SO-primary bodies; VO ×1.35; flags `no_atmosphere`, `vacuum`.
 
 **Magma Chamber** — `ambient_temp +80`, `humidity: 0.05`, `luminance: 0.95`, `acoustic_reflection: 0.60`; passive `heat_load_change +0.07`, `ionization_delta +0.04`; affinity mods PL ×1.30, TH ×1.20, LU ×1.10; flags `extreme_heat`, `ionized_gas`.
 
@@ -415,3 +415,4 @@ Chart symmetry, \(\kappa\) saturation bounds, status permanence without reinvest
 |------|--------|
 | 2026-05-03 | Initial comprehensive expansion imported into repo (affinities 12, chart, stats, materials, moves, stances, abilities, statuses, accumulators, phases, team, biomes, combos, pedagogy, artifacts, balance) |
 | 2026-05-03 | Biome schema + preset bullets; full combo table §13; cross-links from TECH/COMBAT/GAMEPLAY/SIMULATION/README/PROJECT-BRIEF |
+| 2026-05-03 | Aligned with endurance-first combat: **`stamina`**, \(\mathrm{d}S/\mathrm{d}t\) DoT language; faint → incapacitation |

@@ -102,14 +102,14 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 
 ## 4. “Calculus-based” damage (realistic, still shippable)
 
-“Calculus” here does **not** mean obscure math for its own sake. It means **continuous, nonlinear, coupled dynamics** instead of a single linear formula everywhere—aligned with players who enjoy **systems they can reason about** (rates, equilibria, thresholds) rather than opaque buckets.
+“Calculus” here does **not** mean obscure math for its own sake. It means **continuous, nonlinear, coupled dynamics** instead of a single linear formula everywhere—aligned with players who enjoy **systems they can reason about** (rates, equilibria, thresholds) rather than opaque buckets. **Primary defeat condition:** depletion of **endurance** \(S(t)\) (capacity to continue fighting), driven by both discrete hits and integrated DoT—not a metaphorical “life bar” as the headline mechanic.
 
 ### Patterns that map well to implementation
 
-- **Mitigation as a smooth asymptote:** effective damage uses saturation-style curves (e.g. piercing versus mitigation approaching a ceiling) so armor does not behave like a straight percentage forever.
-- **DoT / erosion:** damage-over-time as rate-of-change of HP with resist decay; stacking caps defined by equilibrium limits or explicit caps.
-- **Stamina / focus:** resources as continuous recovery rate as a function of current resource and stress; actions spend discrete chunks with smooth penalties near empty — not staircase “you have 0 MP.”
-- **Multi-hit and exposure:** total damage over a combo approximates an integral of a hit curve modulated by how enemy posture / stagger builds smoothly.
+- **Mitigation as a smooth asymptote:** effective **endurance loss** uses saturation-style curves (e.g. offense versus mitigation approaching a ceiling) so defense does not behave like a straight percentage forever.
+- **DoT / erosion:** explicit \(\mathrm{d}S/\mathrm{d}t\) contributions from burns, bleeds, toxins, etc., with decay/resist channels—stacking caps from equilibrium limits or data caps.
+- **Stamina / recovery:** `stamina` sets \(S_{\max}\); recovery terms in \(\mathrm{d}S/\mathrm{d}t\) are usually small or rule-gated so pacing stays tactical.
+- **Multi-hit and exposure:** total **endurance loss** over a combo approximates an integral of a hit curve modulated by how enemy posture / stagger builds smoothly.
 - **Strike modalities:** blunt impulse vs penetration vs shear channels blend separate nonlinear saturation branches tied to material ψ maps (`COMBAT-MODEL` §5.4b)—distinct from move-field **`pierce`** scalar bypass.
 - **Balance tooling:** expose sensitivities (e.g. impact of +1 defense on win rate) via Monte Carlo or closed-form approximations so tuning uses gradients, not only trial and error.
 
@@ -136,7 +136,7 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 **Concrete pattern:**
 
 - Define total stat budget **B(L)** per level for every creature (same formula for all stages at a given `L`; see §1 for two-phase behavior).
-- Each stage **s ∈ {1, 2, 3}** has a base spread vector **w_s** over core stats (HP, physical offense/defense, special offense/defense, speed — exact schema TBD) that **sums to 1**.
+- Each stage **s ∈ {1, 2, 3}** has a base spread vector **w_s** over core stats (**stamina**, physical offense/defense, special offense/defense, speed — exact schema TBD) that **sums to 1**.
 - **Training** adds a bounded tunable vector **t(L)** with **diminishing returns** as `L` grows so incremental grind shifts distribution without breaking brackets—caps may be **percentage of B(L)** rather than a single L=100 constant.
 - **Stage advancement** unlocks moves/passives and may shift **w_s**, but **must not** grant a hidden higher **B(L)** than another creature at the same level/stage ruleset. Competitive meta = **roles and reactions**, not raw tier.
 
@@ -248,3 +248,4 @@ Choose one to lock into design before heavy implementation:
 | Planning | Initial consolidation from planning chat into repo |
 | 2026-05-03 | Infinite progression; scaling; procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) incl. strike modalities §5.4b; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |
 | 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
+| 2026-05-03 | §4 endurance-first framing: DoT as \(\mathrm{d}S/\mathrm{d}t\); core stat **`stamina`** (replaces HP metaphor in progression spread). |

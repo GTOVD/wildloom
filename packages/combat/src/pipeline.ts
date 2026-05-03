@@ -95,13 +95,13 @@ export function resolveHit(
   move: Move,
   ctx: BattleContext
 ): HitResult {
-  if (move.damage_kind !== 'hp') {
-    return { hit: true, damage_hp: 0, breakdown: { ...ZERO_BREAKDOWN } };
+  if (move.damage_kind !== 'endurance') {
+    return { hit: true, stamina_loss: 0, breakdown: { ...ZERO_BREAKDOWN } };
   }
 
   const p_hit = move.accuracy !== undefined ? move.accuracy / 100 : 1;
   if (ctx.rng() > p_hit) {
-    return { hit: false, damage_hp: 0, breakdown: { ...ZERO_BREAKDOWN } };
+    return { hit: false, stamina_loss: 0, breakdown: { ...ZERO_BREAKDOWN } };
   }
 
   if (move.category === 'true') {
@@ -151,11 +151,11 @@ export function resolveHit(
   const spread = ctx.rng() * 2 * TUNING.SPREAD_DELTA - TUNING.SPREAD_DELTA;
 
   const D_final_raw = D_after_chart * crit_mult * (1 + spread);
-  const damage_hp = Math.max(0, Math.floor(D_final_raw));
+  const stamina_loss = Math.max(0, Math.floor(D_final_raw));
 
   return {
     hit: true,
-    damage_hp,
+    stamina_loss,
     breakdown: {
       S_L,
       sigma,
@@ -172,10 +172,10 @@ export function resolveHit(
 
 function resolveTrueDamage(move: Move, ctx: BattleContext): HitResult {
   const spread = ctx.rng() * 2 * TUNING.SPREAD_DELTA - TUNING.SPREAD_DELTA;
-  const damage_hp = Math.max(0, Math.floor(move.base_power * (1 + spread)));
+  const stamina_loss = Math.max(0, Math.floor(move.base_power * (1 + spread)));
   return {
     hit: true,
-    damage_hp,
+    stamina_loss,
     breakdown: {
       S_L: 1,
       sigma: 1,

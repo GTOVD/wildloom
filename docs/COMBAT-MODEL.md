@@ -1,8 +1,10 @@
-# Wildloom — combat model (attributes, affinities, damage)
+# Wildloom — combat model (attributes, affinities, endurance)
 
 **Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — affinity catalog & example reactions. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics, stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — full 12×12 chart, nine stats, statuses, stances, expanded artifacts. Code: [`packages/combat`](../packages/combat/README.md).
 
 **Status:** Specification draft aligned with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4–§6. Server-authoritative, deterministic given RNG inputs; readable “simple view” (chart + stats); optional depth from **material traits** and **field scalars**; no duplicated formulas across tiers.
+
+**Design principle:** Fights are modeled **calculus-forward**: discrete actions inject **impulses** into continuous state, and **damage-over-time** channels are explicit \(\mathrm{d}S/\mathrm{d}t\) terms—not afterthoughts. The primary battle pool is **current endurance** \(S(t)\), capped by the **`stamina`** stat (capacity to keep fighting). When \(S \le 0\), the combatant is **incapacitated** (unable to continue)—the usual JRPG “HP bar” is deliberately avoided as the core metaphor; narration can still imply lethal outcomes without centering “fatality” as a separate meter.
 
 ---
 
@@ -17,6 +19,9 @@
 | **Layer 2** | Data-driven predicate rules (physics-flavored hooks). |
 | **Layer 3** | Continuous accumulators (fracture, corrosion, heat load) updated each tick/subtick. |
 | **Strike modality** | How a **strike** splits across **concussive / piercing / slashing** channels (physics-flavored wound mechanics). Distinct from move-field **`pierce`** (numeric armor bypass). |
+| **`stamina`** | Stat: maximum **endurance pool** capacity (training + species)—how long the creature can sustain effort before collapse. |
+| **Current endurance** \(S(t)\) | Battle state scalar depleted by hits and continuous drains; UI may label “readiness” / “fight stamina.” Not “hit points” as a metaphor. |
+| **Incapacitated** | \(S \le 0\) — combat loss condition (collapse / exhaustion); switches and XP behave like a knockout. |
 
 Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) for the **nine-affinity MVP**. Target-state additions (**Sonic**, **Corrosive**, **Plasmic**) and the authoritative 12×12 matrix live in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md). Older examples in this doc may still say “Solar/Tidal” as generic placeholders—swap at authoring time.
 
@@ -26,15 +31,15 @@ Affinity IDs in **content data** follow [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTE
 
 ### 2.1 Core stats (six-tuple)
 
-Used everywhere in damage, speed order, and HP.
+Used everywhere in damage coupling, speed order, and **endurance pool** sizing.
 
 | Id | Role | Notes |
 |----|------|--------|
-| `vitality` | HP capacity | Current HP is battle state; max derives from vitality + level/budget. |
+| `stamina` | Endurance capacity | Sets maximum battle pool \(S_{\max}\); current endurance \(S\) is battle state (\(0 \le S \le S_{\max}\)). Species + level/budget derive \(S_{\max}\). |
 | `might` | Physical offense | Used by **strike** moves. |
-| `bulwark` | Physical mitigation | Reduces strike damage (with saturation). |
+| `bulwark` | Physical mitigation | Reduces strike **endurance loss** (with saturation). |
 | `insight` | Special offense | Used by **surge** moves. |
-| `ward` | Special mitigation | Reduces surge damage. |
+| `ward` | Special mitigation | Reduces surge **endurance loss**. |
 | `tempo` | Speed / initiative | Turn order; optional accuracy/evasion hooks. |
 
 **Derived convenience (optional, recomputed each battle tick):**
@@ -75,7 +80,7 @@ Each move carries:
 | `tags` | Set of strings for predicates (`thermal`, `aqueous`, `contact`, …). |
 | `pierce` | Fraction in `[0, 1]` — geometric / armor bypass applied **per modality** (§5.4b); strongest on the **piercing** channel by default. |
 | `strike_modalities` | Optional simplex weights `{ concussive, piercing, slashing }` summing to `1` on **strike** moves; omit ⇒ `{1,0,0}` (legacy blunt-only path). |
-| `damage_kind` | Usually `hp`; some moves only tick accumulators or apply disables. |
+| `damage_kind` | Usually `endurance` (depletes \(S\)); some moves only tick accumulators or apply disables (`status`, `utility`). |
 
 **True damage:** Skips **saturation path using bulwark/ward** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
 
@@ -116,7 +121,7 @@ flowchart TD
   I --> J[Layer 2 rules m2 + flats]
   J --> K[Layer 3 accumulator impulses]
   K --> L[Crit / spread RNG]
-  L --> M[Clamp & apply HP]
+  L --> M[Clamp & apply stamina_loss → ΔS]
 ```
 
 ### 5.1 Hit resolution (optional but recommended)
@@ -301,9 +306,9 @@ D_final_raw = D_after_chart * crit_mult * (1 + spread)
 ### 5.9 Final application
 
 ```
-damage_hp = max(0, floor(D_final_raw))
-HP_d ← HP_d - damage_hp
-emit HitResolved { damage_hp, breakdown }    -- breakdown for UI/log/replay
+stamina_loss = max(0, floor(D_final_raw))
+S_d ← S_d - stamina_loss
+emit HitResolved { stamina_loss, breakdown }    -- breakdown for UI/log/replay
 ```
 
 `breakdown` records each multiplier for debugging competitive disputes; **`modalities`** carries \(\omega_k\) and per-channel cores when §5.4b applies.
@@ -312,22 +317,24 @@ emit HitResolved { damage_hp, breakdown }    -- breakdown for UI/log/replay
 
 ## 6. Damage over time & coupled flows
 
-DoTs are **not** re-run through full strike/surge chart unless a rule explicitly routes partial damage back through saturation.
+DoTs are **first-class \(\mathrm{d}S/\mathrm{d}t\) terms**: they integrate alongside accumulator flows each subtick. They are **not** (unless a rule says otherwise) re-run through the full strike/surge saturation pipeline—their potency functions \(\mathrm{potency}_k(\mathbf{u})\) are authored as smooth rates tied to bleed, burn, neuro-disruption, corrosion, etc.
 
 ### 6.1 Coupled state view
 
 Let \(\mathbf{u}\) bundle Layer 3 scalars (`heat_load`, `wetness`, `fracture`, `charge_buildup`, …). Between discrete actions:
 
 \[
-\frac{d(\mathrm{HP})}{dt} = -\sum_k \mathrm{potency}_k(\mathbf{u}) + \text{recovery},\qquad
-\frac{d\mathbf{u}}{dt} = \mathbf{g}(\mathbf{u}, \text{field}, \text{materials}, \ldots)
+\frac{\mathrm{d}S}{\mathrm{d}t} = -\sum_k \mathrm{potency}_k(\mathbf{u}) + \text{recovery},\qquad
+\frac{\mathrm{d}\mathbf{u}}{\mathrm{d}t} = \mathbf{g}(\mathbf{u}, \text{field}, \text{materials}, \ldots)
 \]
+
+Here \(S\) is **current endurance** (same pool discrete hits shrink via `stamina_loss`). Recovery is usually small or rule-gated so stall-heavy regeneration cannot dominate without investment.
 
 Hits inject **impulses** \(\Delta \mathbf{u}\) and may reshape effective defense before \(\sigma\) is evaluated—ordering must match [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §4.
 
 ### 6.2 Integration policy
 
-Integrate with **fixed subticks** per turn (e.g. `1/10`) for deterministic replays. Stack merging uses explicit policies (`max stacks`, duration refresh, harmonic sum). Full toy flows (cooling, wetness exchange, charge leakage) live in the simulation doc—not duplicated here.
+Integrate with **fixed subticks** per turn (e.g. `1/10`) for deterministic replays. \(\int \mathrm{potency}_k \, \mathrm{d}t\) over a turn is the canonical DoT contribution to \(S\). Stack merging uses explicit policies (`max stacks`, duration refresh, harmonic sum). Full toy flows (cooling, wetness exchange, charge leakage) live in the simulation doc—not duplicated here.
 
 ---
 
@@ -364,7 +371,7 @@ Document in schema so tools can simulate.
 | `reaction_rules/*.yaml` | Predicate AST + effects + priority. |
 | `material_axes.json` | Names, defaults per species, normalization bounds. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ coefficients & pierce shares \(\lambda_k\). |
-| `moves.json` | Fields in §3 + `strike_modalities` + versioning hash per patch. |
+| `moves.json` | Fields in §3 (`damage_kind`: **`endurance`** depletes \(S\)) + `strike_modalities` + versioning hash per patch. |
 
 Version every artifact; bake hash into replay header.
 
@@ -374,7 +381,7 @@ Version every artifact; bake hash into replay header.
 
 ## 10. Accessibility vs depth
 
-- **Beginner UI:** Shows Layer 1 multiplier + strike/surge chips; if `strike_modalities` present, compact hammer/blade/stab glyph strip sums to 100%.
+- **Beginner UI:** Endurance bar (friendly copy: “fight stamina” / “readiness”) + Layer 1 multiplier + strike/surge chips; if `strike_modalities` present, compact hammer/blade/stab glyph strip sums to 100%.
 - **Intermediate:** Surfaces tags icons when they triggered a rule (“Thermal shock!”).
 - **Advanced inspect:** Full breakdown JSON, material bars, accumulator trajectories, optional **§5.4b** per-channel σ / `d_core_k`.
 
@@ -456,7 +463,7 @@ Layer 1 stays algebraic for onboarding; depth uses **smooth nonlinear maps** and
 
 - Saturation §13 gives bounded \(\sigma(A,D)\) with diminishing marginal returns vs armor.
 - §5.4b adds **three parallel saturation branches** for strike modalities, blended by \(\boldsymbol{\omega}\)—same asymptotics, different material-shaped defenses.
-- §6 couples HP evolution to \(\mathbf{u}\) via flows + impulses.
+- §6 couples **endurance** \(S\) evolution to \(\mathbf{u}\) via flows + impulses; DoTs are \(\mathrm{d}S/\mathrm{d}t\) channels.
 - §7 treats combos as discrete samples along a posture/exposure curve.
 
 **Full formalism** (ODE templates, integration contract, threshold events, honesty bar): [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
@@ -478,3 +485,4 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | §6 coupled flows; §15–§16; [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) cross-links |
 | 2026-05-03 | §5.4b strike modalities (concussive / piercing / slashing); pierce vs modality clarified; pipeline + `math.ts` support |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md); §9 pointer to expanded artifact list |
+| 2026-05-03 | **Endurance-first model:** `vitality` → **`stamina`**; battle pool \(S(t)\); DoTs as explicit \(\mathrm{d}S/\mathrm{d}t\); `damage_kind` / resolver field names aligned with [`packages/combat`](../packages/combat/README.md) (`endurance`, `stamina_loss`). |

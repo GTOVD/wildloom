@@ -22,24 +22,39 @@ Layer 1 (affinity chart) stays **algebraic** for readability. Depth lives where 
 - **Damage saturation** is a smooth nonlinear map (already in COMBAT-MODEL §5.4).
 - **Multi-hit exposure** behaves like integrating an intensity curve against posture.
 
-That stack rewards thinking in **derivatives and elasticities** (“If I push wetness 10% higher, does galvanic spike damage rise linearly or bend?”) without forcing symbolic manipulation.
+That stack rewards thinking in **derivatives and elasticities** (“If I push wetness 10% higher, does galvanic spike **endurance loss** rise linearly or bend?”) without forcing symbolic manipulation.
+
+### 1.3 Endurance-first combat (why not “HP”?)
+
+Real organisms usually stop fighting because **they cannot sustain effort**—shock, blood loss, overheating, and neuro-fatigue integrate over time. Wildloom mirrors that in systems language:
+
+- **`stamina`** (stat) fixes how large the battle pool can be; **current endurance** \(S(t)\) is what discrete hits and DoTs erode.
+- **Defeat** at \(S \le 0\) is **incapacity** (collapse / cannot continue), which reads more honestly than a detached “HP fatality” bar—lore can still describe lethality without making “hit points” the headline metaphor.
+- Teaching payoff: players reason about **rates** (\(\mathrm{d}S/\mathrm{d}t\)) and **impulses** (\(\Delta S\) from a connected strike) the same way physics problems separate continuous flows from sudden kicks.
+
+Full coupled equations and integration contract: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6, [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §2–§4.
 
 ---
 
 ## 2. Battle state as a dynamical system
 
-Pack Layer 3 scalars for combatant \(i\) into a vector \(\mathbf{u}_i \in \mathbb{R}^k\) (e.g. `fracture`, `heat_load`, `wetness`, `charge_buildup`, `concussion`, `laceration`, …). Pack field scalars into \(\mathbf{f}\).
+Let \(S_i(t)\) be combatant \(i\)'s **current endurance** (depleted by hits and DoTs; capped by **`stamina`**). Pack Layer 3 scalars into \(\mathbf{u}_i \in \mathbb{R}^k\) (e.g. `fracture`, `heat_load`, `wetness`, `charge_buildup`, `concussion`, `laceration`, …). Pack field scalars into \(\mathbf{f}\).
 
-Between discrete player actions, advance:
+Between discrete player actions, advance \(S_i\) and \(\mathbf{u}_i\) on the **same** subtick grid ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6): integrate \(\mathrm{d}S_i/\mathrm{d}t\) alongside \(\mathrm{d}\mathbf{u}_i/\mathrm{d}t\).
 
 \[
 \frac{d\mathbf{u}_i}{dt} = \mathbf{g}_i(\mathbf{u}_1,\ldots,\mathbf{u}_n,\mathbf{f},\text{materials},\text{terrain})
 \]
 
-Discrete moves inject **impulses** \(\Delta \mathbf{u}_i\) (and discrete rule firings at Layer 2). Conceptually:
+\[
+\frac{d S_i}{dt} = -\sum_k \mathrm{potency}_{i,k}(\mathbf{u}_i,\ldots) + \mathrm{recovery}_i(S_i,\mathbf{u}_i)
+\]
+
+Discrete moves inject **impulses** \(\Delta \mathbf{u}_i\) and \(\Delta S_i\) (from resolved move potency — [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.9), plus discrete rule firings at Layer 2. Conceptually:
 
 \[
-\mathbf{u}_i(t^+) = \mathbf{u}_i(t^-) + \Delta \mathbf{u}_i[\text{hit}] + \int_{t^-}^{t^+} \mathbf{g}_i\, dt
+\mathbf{u}_i(t^+) = \mathbf{u}_i(t^-) + \Delta \mathbf{u}_i[\text{hit}] + \int_{t^-}^{t^+} \mathbf{g}_i\, dt,\qquad
+S_i(t^+) = S_i(t^-) + \Delta S_i[\text{hit}] + \int_{t^-}^{t^+} \frac{d S_i}{dt}\, dt
 \]
 
 **Implementation contract:** Fixed subtick \(\Delta t\) (e.g. `turn_substeps = 10`), **explicit integration** by default for determinism:
@@ -101,12 +116,12 @@ High rigidity raises \(\psi\) (brittle channels crack stress). Relaxation \(\lam
 Let \(C\) track neurologically flavored impairment meters (**game abstraction**, not medical realism):
 
 \[
-\frac{dC}{dt} = \zeta_{\text{in}}\,\omega_{\mathrm{con}}\!\cdot J_{\mathrm{hit}} - \frac{C}{\tau_C(\text{vitality},\mathrm{tempo})}
+\frac{dC}{dt} = \zeta_{\text{in}}\,\omega_{\mathrm{con}}\!\cdot J_{\mathrm{hit}} - \frac{C}{\tau_C(\text{stamina},\mathrm{tempo})}
 \]
 
 \(J_{\mathrm{hit}}\) is proportional to resolved concussive channel potency **before** optional stance shields—authors clamp \(\omega_{\mathrm{con}}\) coupling via Layer 2 to prevent tempo-lock exploits.
 
-**Literacy hook:** Impulses accumulate and **decay**; mitigation stacks damp \(\zeta_{\text{in}}\)—players learn “inertial insult ≠ instantaneous HP bar.”
+**Literacy hook:** Impulses accumulate and **decay**; mitigation stacks damp \(\zeta_{\text{in}}\)—players learn “inertial insult ≠ one-shot abstract HP”; it lingers and couples into **endurance** drain rates.
 
 ### 3.6 Laceration / shear bleed driver (slashing modality hook)
 
@@ -198,3 +213,4 @@ Marketing avoids implying laboratory-grade simulation.
 | 2026-05-03 | Initial pass: dynamical systems framing, toy flows, integration contract, pedagogy |
 | 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |
+| 2026-05-03 | §1.3 endurance-first metaphor; §2 explicit \(\mathrm{d}S/\mathrm{d}t\) alongside \(\mathbf{u}\); \(\tau_C(\texttt{stamina},\texttt{tempo})\); literacy hooks |

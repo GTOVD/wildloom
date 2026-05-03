@@ -5,7 +5,8 @@ export type Affinity = string;
 export type MoveCategory = 'strike' | 'surge' | 'true';
 
 export interface CoreStats {
-  vitality: number;
+  /** Maximum endurance capacity — maps to battle pool size; see COMBAT-MODEL §2.1 */
+  stamina: number;
   might: number;
   bulwark: number;
   insight: number;
@@ -50,7 +51,8 @@ export interface Move {
   tags: string[];
   /** Fraction in `[0, 1]` — armor bypass; strongest on piercing modality by default */
   pierce: number;
-  damage_kind: 'hp' | 'status' | 'utility';
+  /** `endurance` — depletes defender's battle stamina pool (legacy docs may say “HP”). */
+  damage_kind: 'endurance' | 'status' | 'utility';
   /** 0–100 optional; if omitted treat as automatic hit */
   accuracy?: number;
   /** §5.4b — omit for legacy single-path strike saturation */
@@ -93,6 +95,7 @@ export interface DamageBreakdown {
 
 export interface HitResult {
   hit: boolean;
-  damage_hp: number;
+  /** Loss applied to defender's current endurance pool for this resolution step */
+  stamina_loss: number;
   breakdown: DamageBreakdown;
 }
