@@ -11,19 +11,7 @@ This project is **not affiliated with, endorsed by, or derived from** any third-
 
 ## Design documentation (planning)
 
-**Authoritative game design lives under [`docs/`](docs/).** Other folders may hold experiments or future implementation — they are **not** part of the planning contract unless a design doc says so.
-
-| Doc | Contents |
-|-----|----------|
-| [`docs/PROJECT-BRIEF.md`](docs/PROJECT-BRIEF.md) | Vision and guardrails |
-| [`docs/TECHNICAL-DESIGN.md`](docs/TECHNICAL-DESIGN.md) | Architecture and product assumptions |
-| [**`docs/GAMEPLAY-MASTER.md`**](docs/GAMEPLAY-MASTER.md) | **Gameplay, combat, abilities, pipeline, Layer 2–3** (single master spec) |
-| [`docs/DESIGN-SUPPLEMENT.md`](docs/DESIGN-SUPPLEMENT.md) | Expanded tables (chart, biomes, stances, statuses, …) |
-| [`docs/SIMULATION-AND-PEDAGOGY.md`](docs/SIMULATION-AND-PEDAGOGY.md) | Continuous sim + teaching layers |
-| [`docs/PROCEDURAL-GENERATION.md`](docs/PROCEDURAL-GENERATION.md) | Spawn and instance rolls |
-| [`docs/SPECIES-INSTANCE-EXAMPLES.md`](docs/SPECIES-INSTANCE-EXAMPLES.md) | Instance examples |
-
-Shorter redirects (bookmarks): [`COMBAT-MODEL.md`](docs/COMBAT-MODEL.md), [`ATTACK-CATALOG.md`](docs/ATTACK-CATALOG.md), [`GAMEPLAY-SYSTEMS.md`](docs/GAMEPLAY-SYSTEMS.md), [`LAYER3-ACCUMULATORS.md`](docs/LAYER3-ACCUMULATORS.md) → **`GAMEPLAY-MASTER.md`**.
+Planning spec: **[`docs/GAMEPLAY-MASTER.md`](docs/GAMEPLAY-MASTER.md)** — gameplay, combat, abilities, pipeline, Layer 2–3, accumulators.
 
 ## License
 
