@@ -179,7 +179,7 @@ For scalar KPI \(J\) (expected damage, win-rate surrogate):
 \frac{\partial J}{\partial \theta} \approx \text{finite difference or adjoint-lite Monte Carlo}
 \]
 
-Where \(\theta\) includes \(\kappa\), pierce \(\lambda_p\), relaxation \(\tau\), chart entries. Surfaces **which knobs bend the curve**—consistent with COMBAT-MODEL accessibility vs depth goals. Single-hit **elasticities** of the saturation core (`coreSaturationOffenseLogElasticity` in `packages/combat`) and **mean damage before floor** (`expectedDamageMeanBeforeFloor`, COMBAT-MODEL §5.8) complement turn-scale Monte Carlo.
+Where \(\theta\) includes \(\kappa\), pierce \(\lambda_p\), relaxation \(\tau\), chart entries. Surfaces **which knobs bend the curve**—aligned with [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) accessibility-vs-depth goals. Single-hit **elasticities** of the saturation core and **mean damage before floor** (§5.8 in [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)) complement turn-scale Monte Carlo when you build balance tooling.
 
 ---
 
@@ -214,4 +214,4 @@ Marketing avoids implying laboratory-grade simulation.
 | 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.4b) |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |
 | 2026-05-03 | §1.2 Layer 1 described as dynamic \(m_1\) + collapsed UI; aligns with [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5 |
-| 2026-05-03 | §7: COMBAT-MODEL §5.0 / §5.8 expectation helpers + saturation elasticities in `packages/combat`. |
+| 2026-05-03 | §7: expectation / elasticity helpers — implement alongside resolver tests when build starts ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.0 / §5.8). |

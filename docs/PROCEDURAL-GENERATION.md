@@ -2,19 +2,19 @@
 
 **Status:** Design spec (implementation hooks — not yet coded). Aligns with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) (creature spawn vs player-authored moves), and [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md).
 
-**Reference parameters:** [`data/procedural/spawn_model.reference.json`](../data/procedural/spawn_model.reference.json) — versioned knobs; replace with live balance without rewriting prose.
+**Reference parameters:** A **spawn parameter** artifact (working name **`spawn_model.reference`**) will hold versioned knobs when implementation starts; this doc defines intent only—no repo file is required for planning.
 
 ---
 
 ## 1. Goals
 
 1. **Biome-conditioned typing:** Wild spawns receive **`biome_id`** in context — rolled **`affinity_emphasis`** is **biased toward that biome's elemental palette** so "what biome you're in" reads as the **prior** for the creature's primary elemental identity (still stochastic; rare off-biome natives possible at low odds).
-2. **Neutral-primary possibility:** Some spawns roll **no dominant elemental affinity** (near-flat emphasis / authored neutral simplex) — corresponds to **`p_neutral_primary`** in [`spawn_model.reference.json`](../data/procedural/spawn_model.reference.json); contributes to **rarity / collector** axes alongside aptitude tier.
+2. **Neutral-primary possibility:** Some spawns roll **no dominant elemental affinity** (near-flat emphasis / authored neutral simplex) — corresponds to **`p_neutral_primary`** in the spawn parameter set; contributes to **rarity / collector** axes alongside aptitude tier.
 3. **Secondary chip as rarity axis:** Distinct **secondary** affinity may be **absent** or **present** — `secondary_present_probability` and tier masses jointly define how often dual-chip creatures appear ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §1).
 4. **Bell-curve aptitude stats:** Nine stats draw from **tier-gated distributions** (truncated normal / Beta-on-bracket) so most individuals cluster **mid spread**, with **low tail** and **high tail** outcomes — rarity tier shifts the whole bracket (**Pokémon-like effective stats**, inspectable percentiles).
 5. **Inspectable instances:** Persist **`spawn_roll`** metadata (seed slice, biome, tier, neutral flag, dual-chip flag, percentile snapshot) for UI, trades, trophies.
 
-**Contrast — abilities vs creatures:** **Creatures** receive rolls from **biome + RNG** at spawn. **Moves** are **player-resolved templates** — every hook that can apply to a creature (statuses, accumulators, passive affinity knobs, …) is **authored as selectable bands** on ability templates ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md); [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §3).
+**Contrast — abilities vs creatures:** **Creatures** receive rolls from **biome + RNG** at spawn. **Moves** are **player-resolved templates** — every hook that can apply to a creature (statuses, accumulators, passive affinity knobs, …) is **authored as selectable bands** on ability templates ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) composer + §3).
 
 ---
 
@@ -62,7 +62,7 @@ On spawn, **do not read** `species.primary_affinity` / `secondary_affinity` / `a
 
 ### 3.4 Neutral-primary (“no elemental hometown”)
 
-With probability **`p_neutral_primary`** ([`spawn_model.reference.json`](../data/procedural/spawn_model.reference.json)):
+With probability **`p_neutral_primary`** (from the spawn parameter set):
 
 - Skip biome-peaked draw; emit **near-uniform** emphasis or an authored **neutral simplex** so **no affinity dominates** for Layer 1 collapse.
 - Dex may show **blank primary**, “wild-type,” or omniplex copy — **design copy TBD**.
@@ -109,7 +109,7 @@ Exact `α` vectors and biome tables ship in data — blend η from moves remains
 
 ### 4.2 Tiered aptitude + bell curve within tier
 
-1. Roll **`aptitude_tier`** categorical (`common` … `stellar`) using masses in [`spawn_model.reference.json`](../data/procedural/spawn_model.reference.json).
+1. Roll **`aptitude_tier`** categorical (`common` … `stellar`) using masses from the spawn parameter set.
 2. **Within tier**, draw each of the **nine stats** from a **truncated normal** (or Beta rescaled to `[low_tier, high_tier]`) so:
    - Most rolls sit near the tier **mean** (fat middle),
    - **Low** and **high** effective values remain possible (tails),
@@ -140,7 +140,7 @@ For each stat, estimate **empirical percentile** vs spawn population at same **l
 - **`aptitude_floor_percentile`:** minimum across nine stats — “weakest link” strict collectors.
 - **`joint_proxy`:** naive independence disclaimer for “~1 in *N*” tooltips; publish honest Monte Carlo for joint tails when balancing.
 
-Example YAML fields: [`data/species/examples/rolled_instances.sample.yaml`](../data/species/examples/rolled_instances.sample.yaml) under `spawn_roll.rarity_annotation`.
+Example instance payloads may include **`spawn_roll.rarity_annotation`** metadata for inspect UI (concrete sample files are optional during planning).
 
 ---
 

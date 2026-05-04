@@ -2,7 +2,7 @@
 
 **Companion:** [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 & §5 (**no species-fixed stats**), [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §§1–4 (twelve affinities, rolled aptitudes, Resonance), [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) (spawn typing independent of catalog, aptitude tiers, rarity odds), [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§3–4 (nine stats, twelve material axes).
 
-[`data/species/catalog.json`](../data/species/catalog.json) lists **100 species lines**: display names, three stages, habitat string. **`primary_affinity`**, **`secondary_affinity`**, and **`affinity_emphasis_hint`** are **optional** — the generated catalog keeps **`null`** typing on the row so nothing reads as “this species is Thermal.” **Combat authority** is always the **instance**: rolled **`affinity_emphasis`** (none / one / two dominant IDs as collapsed UI allows), stats, and materials.
+A **species identity catalog** (on the order of **100** dex lines: names, three stages, habitat) is **not** combat-authoritative. Optional row fields like **`primary_affinity`**, **`secondary_affinity`**, and **`affinity_emphasis_hint`** are flavor or tooling only — **`null`** typing on the row is fine so the dex never overrides **`affinity_emphasis`** on instances. **Combat authority** is always the **instance**: rolled **`affinity_emphasis`**, stats, and materials.
 
 ---
 
@@ -70,7 +70,7 @@ Full **twelve-weight** `affinity_emphasis` objects (sum **1.0**) live in the YAM
 The YAML samples attach a **`spawn_roll`** block per instance (authoring-only until the encounter pipeline ships). It records:
 
 - **Affinity branch:** Whether a **secondary dex chip** rolled present (~65% reference) or absent (~35%); when both chips exist, **exact ordered pair** odds follow `p_secondary_present × (1/12) × (1/11)` under a uniform twelve-way primary and distinct secondary draw ([`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) §3).
-- **Stat branch:** **`aptitude_tier_spawn_only_label`** plus **`approximate_probability_exact_tier_spawn_only_mass_reference_table`** from [`data/procedural/spawn_model.reference.json`](../data/procedural/spawn_model.reference.json) (e.g. common ~52%, stellar ~1%).
+- **Stat branch:** **`aptitude_tier_spawn_only_label`** plus reference tier masses (e.g. common ~52%, stellar ~1%) from the spawn parameter set — illustrative until balance tables land.
 - **Per-axis readability:** **`population_percentiles_higher_stat_means_higher_percentile`** and **`weakest_axis_percentile`** are illustrative stand-ins for IV-like spreads once Monte Carlo tables exist.
 
 An additional row **`example_primary_only_no_secondary_chip`** in the same YAML shows **`secondary_affinity: null`** with emphasis still spread across the simplex — dual-chip geometry does not apply for that spawn’s dex presentation.
@@ -79,6 +79,4 @@ An additional row **`example_primary_only_no_secondary_chip`** in the same YAML 
 
 ## 3. Machine-readable samples
 
-[`data/species/examples/rolled_instances.sample.yaml`](../data/species/examples/rolled_instances.sample.yaml) → **`tortoise_comparison`** (four rolls) and **`example_primary_only_no_secondary_chip`** (null secondary illustration).
-
-Numbers are **balance placeholders** ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §16).
+**Planning:** tables above are the artifact; exporting shared YAML/JSON fixtures is optional and can wait until build.

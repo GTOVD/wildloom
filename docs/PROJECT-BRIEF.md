@@ -21,6 +21,6 @@ Wildloom is an independent work. Do not use trademarks, distinctive character na
 - Gameplay / combat / abilities (single spec): [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md).
 - Continuous dynamics & pedagogy: [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md).
 - Post-MVP combat expansion (twelve affinities, biomes, combos): [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md).
-- Monorepo layout (`apps/web`, `apps/server`, `packages/*`).
+- Monorepo layout (`apps/web`, `apps/server`, shared packages) when implementation begins.
 - Protocol and room server MVP.
 - Shared battle engine (deterministic, tested).

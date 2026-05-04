@@ -2,7 +2,7 @@
 
 **Status:** Planning document. Additions and revisions land here until implementation kickoff. Treat sections marked **Open decision** as unresolved.
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) — **single spec** for combat pipeline, affinities, abilities, field/progression. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — biome-conditioned spawn, neutral-primary and secondary-chip rarity, tier-gated bell-curve aptitudes, composite rarity on instances. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — twelve-affinity expansion, chart, biomes, combos, extended artifacts. Reference code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) — **single spec** for combat pipeline, affinities, abilities, field/progression. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — biome-conditioned spawn, neutral-primary and secondary-chip rarity, tier-gated bell-curve aptitudes, composite rarity on instances. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — twelve-affinity expansion, chart, biomes, combos, extended artifacts.
 
 ---
 
@@ -39,7 +39,7 @@ Wildloom is a large, multi-subsystem game: sessions, world sync, combat authorit
 
 **Bell-curve aptitudes:** Nine stats draw from **tier-gated truncated normals** (or Beta-on-bracket) — Pokémon-like **effective stat spreads** with fat middles and rare highs/lows inside each **`aptitude_tier`**.
 
-**No species-fixed stat sheet (hard rule):** A **species line** (`catalog.json` row) does **not** define canonical base stats, substats, material means, or guaranteed affinity weights for combat. Those live only on **creature instances** (rolled at spawn/capture/hatch). Optional catalog fields `primary_affinity`, `secondary_affinity`, and `affinity_emphasis_hint` exist only for **legacy dex tooling** or hand-authored flavor—the shipped generator leaves affinities **`null`** on the row so catalog ≠ typing. They must **not** be treated as the instance’s true build; the server’s persisted instance record overrides them. Spawn-time knobs are versioned in [`data/procedural/spawn_model.reference.json`](../data/procedural/spawn_model.reference.json).
+**No species-fixed stat sheet (hard rule):** A **species line** (dex / catalog row) does **not** define canonical base stats, substats, material means, or guaranteed affinity weights for combat. Those live only on **creature instances** (rolled at spawn/capture/hatch). Optional catalog fields `primary_affinity`, `secondary_affinity`, and `affinity_emphasis_hint` are flavor or tooling only — affinities may be **`null`** on the row so catalog ≠ typing. Spawn-time knobs will live in a **versioned parameter set** when implementation starts (see [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md)).
 
 **Abilities contrast:** Players **compose** moves from templates — statuses, accumulators, passive affinity hooks are **bounded customization**, not biome RNG ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)).
 
@@ -93,7 +93,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 | Auth | OAuth + invite codes (e.g. Auth.js / Clerk + short room codes) | Friends join; guest mode possible later |
 | Deploy | Fly.io, Railway, or small VPS | Web + WebSocket on same host initially |
 
-**Why this stack:** One TypeScript codebase can share `packages/combat`, `packages/protocol`, `packages/creatures` between browser and server so core simulation is **not** implemented twice (a common source of bugs in MMO-like games).
+**Why this stack:** One TypeScript codebase can share **simulation packages** (combat resolver, protocol, spawn helpers) between browser and server so core simulation is **not** implemented twice (a common source of bugs in MMO-like games).
 
 ### Alternatives (trade-offs)
 
@@ -117,7 +117,7 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 6. **Creature model** — species line (**identity only**), stage, level; **spawn context** (`biome_id`, seed, band) drives **rolled** emphasis (**biome-primary bias**, optional **neutral primary**, optional **secondary** as rarity), **bell-curve aptitudes** within tier, materials, training vectors, **appearance seed**, variant flags; **moves** are player-composed templates (status / accumulator / passive hooks bounded per frame — [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)); held item.
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
-9. **Content pipeline** — [`data/species/catalog.json`](../data/species/catalog.json) (100 **identity** lines + schema [`species.schema.json`](../data/species/species.schema.json)); moves; **reaction rules**; balance tooling. **Combat stats are not authored per catalog row** — they live on instances.
+9. **Content pipeline** — species **identity** table (~100 lines), move content, **reaction rules**, balance tooling — formats TBD at build. **Combat stats are not authored per catalog row** — they live on instances.
 10. **Rendering hooks** — shader/uniform pipeline driven by **appearance genes** (§7); optional quality tiers for low-end devices.
 
 ---
@@ -271,9 +271,9 @@ Choose one to lock into design before heavy implementation:
 | Date | Change |
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
-| 2026-05-03 | Infinite progression; scaling; procedural genes; [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) incl. strike modalities §5.4b; [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |
+| 2026-05-03 | Infinite progression; scaling; procedural genes; [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) incl. strike modalities §5.4b; [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); §4 pedagogy |
 | 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
 | 2026-05-03 | §4 endurance-first framing: DoT as \(\mathrm{d}S/\mathrm{d}t\); core stat **`stamina`** (replaces HP metaphor in progression spread). |
 | 2026-05-03 | Creatures: procedural per-instance stats/materials/typing composition; broad ability learning; compositional moves. Battles: procedural biome assembly. Layer 1: stat-shaped multiplier (not flat-only chart). |
-| 2026-05-03 | Content: [`data/species/catalog.json`](../data/species/catalog.json) (100 **identity** lines, twelve affinity IDs on dex cards) + [`species.schema.json`](../data/species/species.schema.json); `npm run gen:species` from [`scripts/gen-species-catalog.mjs`](../scripts/gen-species-catalog.mjs). |
+| 2026-05-03 | Species **identity** catalog intent (~100 dex lines); generator/tooling deferred until implementation. |
 | 2026-05-03 | §1/§5: **No species-fixed stats** — all combat numbers roll per instance; catalog affinity fields are flavor-only. §6: twelve-affinity target + emphasis note. |
