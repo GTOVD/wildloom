@@ -1,6 +1,6 @@
 # Wildloom — procedural generation & spawn rarity
 
-**Status:** Design spec (implementation hooks — not yet coded). Aligns with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md), [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) (creature spawn vs player-authored moves), and [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md).
+**Status:** Design spec (implementation hooks — not yet coded). Aligns with [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) (creature spawn vs player-authored moves), and [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md).
 
 **Reference parameters:** [`data/procedural/spawn_model.reference.json`](../data/procedural/spawn_model.reference.json) — versioned knobs; replace with live balance without rewriting prose.
 
@@ -10,11 +10,11 @@
 
 1. **Biome-conditioned typing:** Wild spawns receive **`biome_id`** in context — rolled **`affinity_emphasis`** is **biased toward that biome's elemental palette** so "what biome you're in" reads as the **prior** for the creature's primary elemental identity (still stochastic; rare off-biome natives possible at low odds).
 2. **Neutral-primary possibility:** Some spawns roll **no dominant elemental affinity** (near-flat emphasis / authored neutral simplex) — corresponds to **`p_neutral_primary`** in [`spawn_model.reference.json`](../data/procedural/spawn_model.reference.json); contributes to **rarity / collector** axes alongside aptitude tier.
-3. **Secondary chip as rarity axis:** Distinct **secondary** affinity may be **absent** or **present** — `secondary_present_probability` and tier masses jointly define how often dual-chip creatures appear ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1).
+3. **Secondary chip as rarity axis:** Distinct **secondary** affinity may be **absent** or **present** — `secondary_present_probability` and tier masses jointly define how often dual-chip creatures appear ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §1).
 4. **Bell-curve aptitude stats:** Nine stats draw from **tier-gated distributions** (truncated normal / Beta-on-bracket) so most individuals cluster **mid spread**, with **low tail** and **high tail** outcomes — rarity tier shifts the whole bracket (**Pokémon-like effective stats**, inspectable percentiles).
 5. **Inspectable instances:** Persist **`spawn_roll`** metadata (seed slice, biome, tier, neutral flag, dual-chip flag, percentile snapshot) for UI, trades, trophies.
 
-**Contrast — abilities vs creatures:** **Creatures** receive rolls from **biome + RNG** at spawn. **Moves** are **player-resolved templates** — every hook that can apply to a creature (statuses, accumulators, passive affinity knobs, …) is **authored as selectable bands** on ability templates ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md); [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
+**Contrast — abilities vs creatures:** **Creatures** receive rolls from **biome + RNG** at spawn. **Moves** are **player-resolved templates** — every hook that can apply to a creature (statuses, accumulators, passive affinity knobs, …) is **authored as selectable bands** on ability templates ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md); [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §3).
 
 ---
 
@@ -48,7 +48,7 @@ seed ─► species_line_id (identity / art / cry / dex slot)
 - **Primary chip:** typically the biome-favored dominant mass — or **omitted / “none”** when neutral-primary roll fires (emphasis below authored prominence threshold).
 - **Secondary chip:** optional — see §3.5.
 
-Layer 1 **`m1`** consumes **`affinity_emphasis`** + reshape rules ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5), not the species catalog row.
+Layer 1 **`m1`** consumes **`affinity_emphasis`** + reshape rules ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5), not the species catalog row.
 
 ### 3.2 Species catalog is never authoritative
 
@@ -92,7 +92,7 @@ Two-phase sketch (tunable):
 2. **Chip phase:** If secondary present, allocate mass between primary and secondary per rules; remainder is tail.
 3. **Tail phase:** Sample tail from **Dirichlet(α)** over remaining affinities.
 
-Exact `α` vectors and biome tables ship in data — blend η from moves remains separate ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3).
+Exact `α` vectors and biome tables ship in data — blend η from moves remains separate ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §3).
 
 ---
 
@@ -128,7 +128,7 @@ Exact `α` vectors and biome tables ship in data — blend η from moves remains
 - **`lustrous` / gene** flags,
 - Optional **material tier** (backlog §5).
 
-Surface **transparent odds** per axis in inspect UI where possible ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §4).
+Surface **transparent odds** per axis in inspect UI where possible ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §4).
 
 ### 4.4 Percentiles & joint rarity (UI)
 
@@ -167,5 +167,5 @@ Same philosophy: roll **twelve axes** in `[0,1]` with optional **material tier**
 
 | Date | Change |
 |------|--------|
-| 2026-05-03 | Biome-conditioned primary affinity, **`p_neutral_primary`**, bell-curve tier stats, composite rarity; contrast creature spawn vs customizable abilities ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
+| 2026-05-03 | Biome-conditioned primary affinity, **`p_neutral_primary`**, bell-curve tier stats, composite rarity; contrast creature spawn vs customizable abilities ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)). |
 | 2026-05-03 | Initial spec: independent affinity spawn, nullable secondary chip, tiered aptitudes, percentile/rarity annotations |

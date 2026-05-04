@@ -2,7 +2,7 @@
 
 **Purpose:** Expand **why** Wildloom leans on continuous mathematics—not as trivia or algebra homework—and **how** we encode calculus-flavored dynamics in a **deterministic, server-authoritative** engine players can learn from organically.
 
-**Related:** [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (pipeline), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) (affinities & accumulators), [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4, [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) (extended accumulators, statuses, stance coupling, biome pedagogy).
+**Related:** [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) (pipeline, affinities, accumulators), [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §4, [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) (extended accumulators, statuses, stance coupling, biome pedagogy).
 
 ---
 
@@ -16,7 +16,7 @@
 
 ### 1.2 “Calculus-forward” vs linear bookkeeping
 
-Layer 1 in **full simulation** is a **smooth function** of matchup priors + creature vectors (see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5); **novice HUD** may still show a **single collapsed multiplier** (“sharp / neutral / weak”) computed from the same resolver output—algebraic **lookup-only** charts are a teaching shortcut, not the authority boundary.
+Layer 1 in **full simulation** is a **smooth function** of matchup priors + creature vectors (see [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5); **novice HUD** may still show a **single collapsed multiplier** (“sharp / neutral / weak”) computed from the same resolver output—algebraic **lookup-only** charts are a teaching shortcut, not the authority boundary.
 
 - **Accumulators** evolve over subticks as flows (sources − sinks ± coupling).
 - **Damage saturation** is a smooth nonlinear map (already in COMBAT-MODEL §5.4).
@@ -32,7 +32,7 @@ Real organisms usually stop fighting because **they cannot sustain effort**—sh
 - **Defeat** at \(S \le 0\) is **incapacity** (collapse / cannot continue), which reads more honestly than a detached “HP fatality” bar—lore can still describe lethality without making “hit points” the headline metaphor.
 - Teaching payoff: players reason about **rates** (\(\mathrm{d}S/\mathrm{d}t\)) and **impulses** (\(\Delta S\) from a connected strike) the same way physics problems separate continuous flows from sudden kicks.
 
-Full coupled equations and integration contract: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6, [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §2–§4.
+Full coupled equations and integration contract: [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §6, [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) §2–§4.
 
 ---
 
@@ -40,7 +40,7 @@ Full coupled equations and integration contract: [`COMBAT-MODEL.md`](./COMBAT-MO
 
 Let \(S_i(t)\) be combatant \(i\)'s **current endurance** (depleted by hits and DoTs; capped by **`stamina`**). Pack Layer 3 scalars into \(\mathbf{u}_i \in \mathbb{R}^k\) (e.g. `fracture`, `heat_load`, `wetness`, `charge_buildup`, `concussion`, `laceration`, …). Pack field scalars into \(\mathbf{f}\).
 
-Between discrete player actions, advance \(S_i\) and \(\mathbf{u}_i\) on the **same** subtick grid ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6): integrate \(\mathrm{d}S_i/\mathrm{d}t\) alongside \(\mathrm{d}\mathbf{u}_i/\mathrm{d}t\).
+Between discrete player actions, advance \(S_i\) and \(\mathbf{u}_i\) on the **same** subtick grid ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §6): integrate \(\mathrm{d}S_i/\mathrm{d}t\) alongside \(\mathrm{d}\mathbf{u}_i/\mathrm{d}t\).
 
 \[
 \frac{d\mathbf{u}_i}{dt} = \mathbf{g}_i(\mathbf{u}_1,\ldots,\mathbf{u}_n,\mathbf{f},\text{materials},\text{terrain})
@@ -50,7 +50,7 @@ Between discrete player actions, advance \(S_i\) and \(\mathbf{u}_i\) on the **s
 \frac{d S_i}{dt} = -\sum_k \mathrm{potency}_{i,k}(\mathbf{u}_i,\ldots) + \mathrm{recovery}_i(S_i,\mathbf{u}_i)
 \]
 
-Discrete moves inject **impulses** \(\Delta \mathbf{u}_i\) and \(\Delta S_i\) (from resolved move potency — [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.9), plus discrete rule firings at Layer 2. Conceptually:
+Discrete moves inject **impulses** \(\Delta \mathbf{u}_i\) and \(\Delta S_i\) (from resolved move potency — [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.9), plus discrete rule firings at Layer 2. Conceptually:
 
 \[
 \mathbf{u}_i(t^+) = \mathbf{u}_i(t^-) + \Delta \mathbf{u}_i[\text{hit}] + \int_{t^-}^{t^+} \mathbf{g}_i\, dt,\qquad
@@ -211,7 +211,7 @@ Marketing avoids implying laboratory-grade simulation.
 | Date | Change |
 |------|--------|
 | 2026-05-03 | Initial pass: dynamical systems framing, toy flows, integration contract, pedagogy |
-| 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b) |
+| 2026-05-03 | §3.5 concussion flow; §3.6 laceration/bleed driver — ties to strike modalities ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.4b) |
 | 2026-05-03 | Related [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) for extended accumulators / statuses / biome pedagogy |
-| 2026-05-03 | §1.2 Layer 1 described as dynamic \(m_1\) + collapsed UI; aligns with [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 |
+| 2026-05-03 | §1.2 Layer 1 described as dynamic \(m_1\) + collapsed UI; aligns with [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5 |
 | 2026-05-03 | §7: COMBAT-MODEL §5.0 / §5.8 expectation helpers + saturation elasticities in `packages/combat`. |

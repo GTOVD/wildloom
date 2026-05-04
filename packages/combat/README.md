@@ -1,6 +1,6 @@
 # `@wildloom/combat`
 
-Pure, deterministic combat math aligned with [`docs/COMBAT-MODEL.md`](../../docs/COMBAT-MODEL.md).
+Pure, deterministic combat math aligned with [`docs/GAMEPLAY-MASTER.md`](../../docs/GAMEPLAY-MASTER.md).
 
 - **`types.ts`** — immutable snapshot interfaces (`Combatant` with `CoreStats`; `Move` including optional **`affinity`**, **`strike_modalities`**, **`delivery_modalities`**, **`cooldown_turns`**, planned **`status_payloads` / `accumulator_impulses` / `passive_hooks`**, and optional **`system_display_title` / `move_nickname`** for UI — hydrated from [`attack_templates.catalog.json`](../../data/moves/attack_templates.catalog.json); `HitResult.stamina_loss`, …).
 - **`math.ts`** — level scaling, pierce, saturation (`σ`, `D_core`); **`MODALITY_TUNING`**, `calcStrikeResistanceTriplet`, `normalizeStrikeModalities`; **`resolveCooldownTurnsFromPower`** (cooldown vs **`base_power`**); **`expectedDamageMeanBeforeFloor`**, **`coreSaturationOffenseLogElasticity`** / **`coreSaturationDefenseLogElasticity`** (§5.8 / §13).
@@ -17,7 +17,7 @@ const result = resolveHit(attacker, defender, move, ctx);
 // result.stamina_loss — subtract from defender's current endurance pool S
 ```
 
-Hydrate `lookupAffinityChart` and `evaluateReactionRules` from `affinities.json`, `affinity_chart.json`, and `reaction_rules/*` (see gameplay catalog in [`docs/GAMEPLAY-SYSTEMS.md`](../../docs/GAMEPLAY-SYSTEMS.md)).
+Hydrate `lookupAffinityChart` and `evaluateReactionRules` from `affinities.json`, `affinity_chart.json`, and `reaction_rules/*` (see gameplay catalog in [`docs/GAMEPLAY-MASTER.md`](../../docs/GAMEPLAY-MASTER.md)).
 
 ## Build
 

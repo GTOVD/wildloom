@@ -2,7 +2,7 @@
 
 **Status:** Planning document. Additions and revisions land here until implementation kickoff. Treat sections marked **Open decision** as unresolved.
 
-**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) — attributes, affinities, damage pipeline. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) — nine affinities, reactions/field, resonance progression. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — biome-conditioned spawn, neutral-primary and secondary-chip rarity, tier-gated bell-curve aptitudes, composite rarity on instances. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — twelve-affinity expansion, chart, biomes, combos, extended artifacts. Reference code: [`packages/combat`](../packages/combat/README.md).
+**Related:** [`PROJECT-BRIEF.md`](./PROJECT-BRIEF.md) — vision and guardrails. [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) — **single spec** for combat pipeline, affinities, abilities, field/progression. [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) — biome-conditioned spawn, neutral-primary and secondary-chip rarity, tier-gated bell-curve aptitudes, composite rarity on instances. [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — continuous dynamics & stealth physics literacy. [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — twelve-affinity expansion, chart, biomes, combos, extended artifacts. Reference code: [`packages/combat`](../packages/combat/README.md).
 
 ---
 
@@ -41,11 +41,11 @@ Wildloom is a large, multi-subsystem game: sessions, world sync, combat authorit
 
 **No species-fixed stat sheet (hard rule):** A **species line** (`catalog.json` row) does **not** define canonical base stats, substats, material means, or guaranteed affinity weights for combat. Those live only on **creature instances** (rolled at spawn/capture/hatch). Optional catalog fields `primary_affinity`, `secondary_affinity`, and `affinity_emphasis_hint` exist only for **legacy dex tooling** or hand-authored flavor—the shipped generator leaves affinities **`null`** on the row so catalog ≠ typing. They must **not** be treated as the instance’s true build; the server’s persisted instance record overrides them. Spawn-time knobs are versioned in [`data/procedural/spawn_model.reference.json`](../data/procedural/spawn_model.reference.json).
 
-**Abilities contrast:** Players **compose** moves from templates — statuses, accumulators, passive affinity hooks are **bounded customization**, not biome RNG ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)).
+**Abilities contrast:** Players **compose** moves from templates — statuses, accumulators, passive affinity hooks are **bounded customization**, not biome RNG ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)).
 
 - **Typing as composition, not a preset pair:** Display labels combine biology/flavor + **rolled affinity_emphasis** vectors (e.g. “floral–luminous jellyfish”). Optional `primary`/`secondary` summaries are **collapsed views** derived from the vector or omitted.
 - **Ability acquisition:** Moves and passives come from a **broad learnable pool**; soft gates use stats, materials, and affinity emphasis (e.g. high `conductivity` + Galvanic tendency unlocks chain arcs faster)—not a single rigid tree per species. Players and procedural trainers both assign **sliding coefficients** within authored bounds (`base_power`, modality weights, tag intensities).
-- **Moves as authored compositions:** **Templates** (e.g. **Blast**, **Slam**) expose numeric bands + optional affinity slots; **surges** add **`delivery_modalities`** (concussive / piercing / slashing ω) like strikes; **`cooldown_scaling`** ties recharge wait to **`base_power`**. Players bind sliders at resolve time — including future **status**, **accumulator impulse**, and **passive hook** slots aligned with creature battle state ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b, §3 and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md)). **Display:** untouched frame ⇒ **`system_display_title`** is just **Blast**; tokens (**Plasmic**, **Channeled**, **Corrosive**, …) append **only** from explicit selections + composer thresholds — never from **`damage_kind_default`**, uniform ω, or catalog slider defaults ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) *Dynamic display names & nicknames*); optional **nickname** above subtitle.
+- **Moves as authored compositions:** **Templates** (e.g. **Blast**, **Slam**) expose numeric bands + optional affinity slots; **surges** add **`delivery_modalities`** (concussive / piercing / slashing ω) like strikes; **`cooldown_scaling`** ties recharge wait to **`base_power`**. Players bind sliders at resolve time — including future **status**, **accumulator impulse**, and **passive hook** slots aligned with creature battle state ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.4b, §3 and [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)). **Display:** untouched frame ⇒ **`system_display_title`** is just **Blast**; tokens (**Plasmic**, **Channeled**, **Corrosive**, …) append **only** from explicit selections + composer thresholds — never from **`damage_kind_default`**, uniform ω, or catalog slider defaults ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) *Dynamic display names & nicknames*); optional **nickname** above subtitle.
 
 ### World & battles
 
@@ -113,8 +113,8 @@ Rooms expose **scaling metadata** chosen at creation (and optionally adjusted be
 2. **Room server** — tick loop (e.g. 10–20 Hz simulation), interest management (who sees whom), anti-cheat (server validates movement).
 3. **World state** — tiles, collisions, spawns (species, rarity), interactables; **room scaling config** feeding spawn resolution.
 4. **Encounter model** — wild encounters optional; **PvP:** propose → accept → battle instance.
-5. **Battle engine** — deterministic, server-authoritative, seedable RNG; resolver [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) (dynamic **`m1`**, continuous flows [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md)); **arena field state** from procedural biome composition.
-6. **Creature model** — species line (**identity only**), stage, level; **spawn context** (`biome_id`, seed, band) drives **rolled** emphasis (**biome-primary bias**, optional **neutral primary**, optional **secondary** as rarity), **bell-curve aptitudes** within tier, materials, training vectors, **appearance seed**, variant flags; **moves** are player-composed templates (status / accumulator / passive hooks bounded per frame — [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)); held item.
+5. **Battle engine** — deterministic, server-authoritative, seedable RNG; resolver [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) (dynamic **`m1`**, continuous flows [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md)); **arena field state** from procedural biome composition.
+6. **Creature model** — species line (**identity only**), stage, level; **spawn context** (`biome_id`, seed, band) drives **rolled** emphasis (**biome-primary bias**, optional **neutral primary**, optional **secondary** as rarity), **bell-curve aptitudes** within tier, materials, training vectors, **appearance seed**, variant flags; **moves** are player-composed templates (status / accumulator / passive hooks bounded per frame — [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md)); held item.
 7. **Trading** — two-phase commit (offer → confirm) + server journal so duplication exploits are not possible.
 8. **Persistence** — party, box, progression; reconnect to same room or global lobby (**product decision**).
 9. **Content pipeline** — [`data/species/catalog.json`](../data/species/catalog.json) (100 **identity** lines + schema [`species.schema.json`](../data/species/species.schema.json)); moves; **reaction rules**; balance tooling. **Combat stats are not authored per catalog row** — they live on instances.
@@ -146,7 +146,7 @@ Depth uses **calculus-flavored modeling** (flows between turns, smooth nonlinear
 
 **Full write-up:** [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md) — battle state as \(\mathbf{u}(t)\), subtick integration contract, exemplar rate laws (thermal storage, wetness exchange, charge leakage, fracture relaxation), ordering of threshold events vs Layer 2, multi-hit exposure interpretation, offline \(\partial J/\partial \theta\) sensitivities, UI tiers, honesty bar for marketing/engineering.
 
-Cross-links: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6–§7, §5.4b, §15–§16; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §5–§6.
+Cross-links: [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §6–§7, §5.4b, §15–§16; [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5–§6.
 
 ### Fairness vs nostalgia
 
@@ -172,18 +172,18 @@ Classic JRPG “feel” often conflicts with extreme realism (sleep RNG, crit sp
 
 ### Representation (technical)
 
-- **Affinity catalog:** Nine IDs ship first in code paths; **twelve** IDs (**Thermal … Void** plus **Sonic**, **Corrosive**, **Plasmic**) are the target set — IDs, `CHART₀`, and rationale in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2. [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1 summarizes both tiers.
-- **Instance emphasis:** Resolver consumes **rolled `affinity_emphasis`** over active affinity IDs + dynamic **`m1`** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5); catalog “primary” is not authoritative (§1 *Creatures*).
+- **Affinity catalog:** Nine IDs ship first in code paths; **twelve** IDs (**Thermal … Void** plus **Sonic**, **Corrosive**, **Plasmic**) are the target set — IDs, `CHART₀`, and rationale in [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§1–2. [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §1 summarizes both tiers.
+- **Instance emphasis:** Resolver consumes **rolled `affinity_emphasis`** over active affinity IDs + dynamic **`m1`** ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5); catalog “primary” is not authoritative (§1 *Creatures*).
 - **Latent traits:** Material vector + Layer 3 accumulators (`thermal_mass`, `rigidity`, `wetness`, `sonic_stress`, `corrosion`, `ionization`, … — full list [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§4, §9) — surfaced gradually via inspect UI / meters.
 - **Battle state fields:** Ambient and local scalars the resolver reads (`wetness`, `temperature_delta`, `stress_fracture_accumulator`, …) updated by moves, weather, terrain, and reactions.
 
 ### Resolver shape
 
-**Detailed ordering, formulas, stacking policy, and data artifacts:** [`COMBAT-MODEL.md`](./COMBAT-MODEL.md).
+**Detailed ordering, formulas, stacking policy, and data artifacts:** [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md).
 
 Summary:
 
-- **Layer 1:** Effectiveness is **not** only a flat table lookup: a **baseline chart** (optional prior) is **reshaped by creature stats, material profiles, affinity emphasis vectors, move composition, and field state** into a bounded multiplier—typically **smooth in inputs** so “super effective” **slides** with build and context (details [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5). Beginner UI may still show a single collapsed chip.
+- **Layer 1:** Effectiveness is **not** only a flat table lookup: a **baseline chart** (optional prior) is **reshaped by creature stats, material profiles, affinity emphasis vectors, move composition, and field state** into a bounded multiplier—typically **smooth in inputs** so “super effective” **slides** with build and context (details [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5). Beginner UI may still show a single collapsed chip.
 - **Layer 2:** **Predicate → modifier** rules authored in data: e.g. `(affinity_fire ∧ surface_glass ∧ ΔT > θ) ⇒ bonus_shatter_chance + armor_saturation drop`.
 - **Layer 3:** Small integrated **ODE-ish accumulators** for cracks, corrosion, overheating—reuse patterns from §4.
 
@@ -191,7 +191,7 @@ Summary:
 
 **Legal/branding:** All affinity names, charts, and metaphors are original—no reuse of proprietary type sets.
 
-**Concrete affinity catalog & example Layer 2 rules:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md).
+**Concrete affinity catalog & example Layer 2 rules:** [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md).
 
 ---
 
@@ -220,7 +220,7 @@ Inspired by **inspectable float ranges** in competitive shooters (every instance
 
 1. Monorepo (`apps/web`, `apps/server`, `packages/*`) + shared types.
 2. Room join + movement sync on a tiny test map (no creatures yet); **`RoomConfig` stub** for future scaling.
-3. Battle engine v0 (1v1, shared TS, unit tests, logging); **`CHART₀` baseline** + (later) **dynamic `m1` reshape** per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5 before relying on tournament fairness.
+3. Battle engine v0 (1v1, shared TS, unit tests, logging); **`CHART₀` baseline** + (later) **dynamic `m1` reshape** per [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5 before relying on tournament fairness.
 4. Creatures v0 (~10 species × 3 stages); **`appearanceGene` persisted** with placeholder rendering.
 5. PvP challenge flow wired to battle.
 6. Trading v0 (items/creatures with server journal); **lustrous flag + gene** in trade payloads.
@@ -271,7 +271,7 @@ Choose one to lock into design before heavy implementation:
 | Date | Change |
 |------|--------|
 | Planning | Initial consolidation from planning chat into repo |
-| 2026-05-03 | Infinite progression; scaling; procedural genes; [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) incl. strike modalities §5.4b; [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |
+| 2026-05-03 | Infinite progression; scaling; procedural genes; [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) incl. strike modalities §5.4b; [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md); [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md); [`packages/combat`](../packages/combat/README.md); §4 pedagogy |
 | 2026-05-03 | Linked [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) — post-MVP systems (12 affinities, biomes, combos, artifacts) |
 | 2026-05-03 | §4 endurance-first framing: DoT as \(\mathrm{d}S/\mathrm{d}t\); core stat **`stamina`** (replaces HP metaphor in progression spread). |
 | 2026-05-03 | Creatures: procedural per-instance stats/materials/typing composition; broad ability learning; compositional moves. Battles: procedural biome assembly. Layer 1: stat-shaped multiplier (not flat-only chart). |

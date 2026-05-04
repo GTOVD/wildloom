@@ -1,6 +1,6 @@
 # Species catalog → procedural instances (examples)
 
-**Companion:** [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 & §5 (**no species-fixed stats**), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §§1–4 (twelve affinities, rolled aptitudes, Resonance), [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) (spawn typing independent of catalog, aptitude tiers, rarity odds), [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§3–4 (nine stats, twelve material axes).
+**Companion:** [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1 & §5 (**no species-fixed stats**), [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §§1–4 (twelve affinities, rolled aptitudes, Resonance), [`PROCEDURAL-GENERATION.md`](./PROCEDURAL-GENERATION.md) (spawn typing independent of catalog, aptitude tiers, rarity odds), [`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §§3–4 (nine stats, twelve material axes).
 
 [`data/species/catalog.json`](../data/species/catalog.json) lists **100 species lines**: display names, three stages, habitat string. **`primary_affinity`**, **`secondary_affinity`**, and **`affinity_emphasis_hint`** are **optional** — the generated catalog keeps **`null`** typing on the row so nothing reads as “this species is Thermal.” **Combat authority** is always the **instance**: rolled **`affinity_emphasis`** (none / one / two dominant IDs as collapsed UI allows), stats, and materials.
 
@@ -22,11 +22,11 @@
 
 They **are** different quantities:
 
-- **`stats`** — all nine live in the **same combat-budget family** (effective ratings after level curve). Fixtures use **integers** for readability; the resolver may still use floats after modifiers ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2.1, §8).
+- **`stats`** — all nine live in the **same combat-budget family** (effective ratings after level curve). Fixtures use **integers** for readability; the resolver may still use floats after modifiers ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §2.1, §8).
 - **`affinity_emphasis`** — **composition**: weights **≥ 0** that **sum to 1** across affinities (a simplex). Not comparable to “+71 **`physical_offense`**.”
 - **`material_profile`** — **normalized material axes** in **`[0, 1]`** for physics-flavored predicates ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §4). Again, not the same unit as stamina.
 
-Layer 1 **`m1`** uses **`CHART₀`** inside dynamic reshape ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5); matchup feel follows **`affinity_emphasis`**, not the catalog dex row.
+Layer 1 **`m1`** uses **`CHART₀`** inside dynamic reshape ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5); matchup feel follows **`affinity_emphasis`**, not the catalog dex row.
 
 ---
 

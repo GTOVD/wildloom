@@ -1,10 +1,10 @@
 # Wildloom — expanded design supplement
 
-**Companion to:** [`COMBAT-MODEL.md`](./COMBAT-MODEL.md), [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md), [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md), [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md)
+**Companion to:** [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) (gameplay + combat master spec), [`SIMULATION-AND-PEDAGOGY.md`](./SIMULATION-AND-PEDAGOGY.md), [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md)
 
 **Purpose:** Fills gaps and expands systems that are framework-only elsewhere. Sections are organized for implementation. Where existing docs define structure, this doc adds concrete first-pass targets, extra mechanics, and extended physics-education hooks.
 
-**Scope:** [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) describes the **nine-affinity MVP** and **twelve-ID** roster. This supplement defines the **twelve-affinity** chart (`CHART₀`), nine core stats (+ three extended), twelve material axes, extended move categories, stances, statuses, biomes, combos, and data artifacts—**phase in**; numbers require Monte Carlo before shipping. Stat naming follows [`COMBAT-MODEL.md`](./COMBAT-MODEL.md): schema ids **`stamina`** (endurance capacity), **`physical_offense`**, **`physical_mitigation`**, **`special_offense`**, **`special_mitigation`**, **`initiative`**, plus **`precision`**, **`recovery`**, **`coupling`** — plus **endurance** \(S(t)\), DoTs as \(\mathrm{d}S/\mathrm{d}t\).
+**Scope:** [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) describes the **nine-affinity MVP** and **twelve-ID** roster. This supplement defines the **twelve-affinity** chart (`CHART₀`), nine core stats (+ three extended), twelve material axes, extended move categories, stances, statuses, biomes, combos, and data artifacts—**phase in**; numbers require Monte Carlo before shipping. Stat naming follows [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md): schema ids **`stamina`** (endurance capacity), **`physical_offense`**, **`physical_mitigation`**, **`special_offense`**, **`special_mitigation`**, **`initiative`**, plus **`precision`**, **`recovery`**, **`coupling`** — plus **endurance** \(S(t)\), DoTs as \(\mathrm{d}S/\mathrm{d}t\).
 
 **Creature data rule:** Species catalog rows **never** author fixed stats, materials, or combat affinity weights — those properties exist **only** on rolled **instances** ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1, §5). Examples: [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md).
 
@@ -72,7 +72,7 @@ The original nine affinities cover thermodynamics, electromagnetism, matter phas
 
 ## 2. The complete 12×12 affinity chart
 
-**Resolver contract:** This matrix is **`CHART₀` — a baseline prior** for physics metaphors and spreadsheet tuning. **Shipped `m1`** is **`reshape(CHART₀, attacker_stats, defender_stats, materials, affinity_emphasis, move fusion weights, field)`** per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5, typically **bounded** in a band such as **`[0, 2]`** (exact clamps balance-owned). Beginner UI may **collapse** the outcome to “weak / neutral / sharp.”
+**Resolver contract:** This matrix is **`CHART₀` — a baseline prior** for physics metaphors and spreadsheet tuning. **Shipped `m1`** is **`reshape(CHART₀, attacker_stats, defender_stats, materials, affinity_emphasis, move fusion weights, field)`** per [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5, typically **bounded** in a band such as **`[0, 2]`** (exact clamps balance-owned). Beginner UI may **collapse** the outcome to “weak / neutral / sharp.”
 
 `CHART₀[attacker_affinity][defender_primary]` — tendency **before** dynamic reshape (used inside §5.5’s `B` / `blend_chart` step).
 
@@ -111,7 +111,7 @@ Values: `2.0` super effective · `1.5` effective · `1.0` neutral · `0.75` resi
 
 ### 2.2 Dual-affinity blend (secondary)
 
-Suggested **baseline blend** before dynamic **`m1`** reshape — default \(\eta = 0.35\) ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5):
+Suggested **baseline blend** before dynamic **`m1`** reshape — default \(\eta = 0.35\) ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5):
 
 ```
 B = CHART₀[attack][def_primary] * (1 - η) + CHART₀[attack][def_secondary] * η
@@ -237,7 +237,7 @@ void_compression_factor ≈ density * (1 - elasticity)
 
 ### 5.2 Extended move fields
 
-Add to [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3 when implementing: `priority_tier`, `channel_duration`, `catalyst_id`, `resonance_scale`, `stance_required`, `stance_sets`, `contact`, `focused_bonus`, `combo_setup`, `combo_detonate`, etc.
+Add to [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §3 when implementing: `priority_tier`, `channel_duration`, `catalyst_id`, `resonance_scale`, `stance_required`, `stance_sets`, `contact`, `focused_bonus`, `combo_setup`, `combo_detonate`, etc.
 
 ### 5.3 Field moves (examples)
 
@@ -309,7 +309,7 @@ Reactive resolutions **do not** consume the declared primary action slot; power 
 
 ### 5.5 Channel moves
 
-Continuous beam / sustain: each subtick runs a **partial** pipeline hit with `base_power / channel_duration`. Accuracy once at channel start; miss ends channel. Exposure ramp [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §7 applies.
+Continuous beam / sustain: each subtick runs a **partial** pipeline hit with `base_power / channel_duration`. Accuracy once at channel start; miss ends channel. Exposure ramp [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §7 applies.
 
 ```yaml
 id: sustained_plasma_beam
@@ -358,7 +358,7 @@ physics_note: "Stress concentration in pre-corroded material"
 
 ### 5.8 Strike modalities vs “force profile” (alignment note)
 
-Canonical shipped schema uses **`strike_modalities`** `{ concussive, piercing, slashing }` as a **simplex** on strikes ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.4b). Older drafts sometimes call this `force_profile` + scalar \(\phi_{\mathrm{mode}}\); **do not** fork two saturation pipelines — treat `force_profile` language as narrative shorthand for **which modality weight dominates**.
+Canonical shipped schema uses **`strike_modalities`** `{ concussive, piercing, slashing }` as a **simplex** on strikes ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.4b). Older drafts sometimes call this `force_profile` + scalar \(\phi_{\mathrm{mode}}\); **do not** fork two saturation pipelines — treat `force_profile` language as narrative shorthand for **which modality weight dominates**.
 
 ---
 
@@ -463,7 +463,7 @@ Full predicates ship in `abilities/*.yaml`.
 
 ## 8. Status condition registry — 12 named thresholds
 
-**Philosophy:** Accumulators are continuous; statuses are **threshold-crossing** modifiers applied to [`BattleContext`](./COMBAT-MODEL.md) Layer 2; endurance drains (\(\mathrm{d}S/\mathrm{d}t\)) are explicit where noted ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §6).
+**Philosophy:** Accumulators are continuous; statuses are **threshold-crossing** modifiers applied to `BattleContext` at Layer 2; endurance drains (\(\mathrm{d}S/\mathrm{d}t\)) are explicit where noted ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §6).
 
 | ID | Trigger | Active effects | Cure | Physics hook |
 |----|---------|----------------|------|----------------|
@@ -569,7 +569,7 @@ PRIORITY RESOLUTION
 EXECUTION (per resolved action in priority order)
   1. Accuracy check (channel: once at start)
   2. Miss → Miss event; skip on-hit hooks
-  3. Hit → category dispatch → endurance pipeline ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5)
+  3. Hit → category dispatch → endurance pipeline ([`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5)
   4. Apply Layer 3 impulses target (+ self recoil)
   5. Evaluate Layer 2 rules post-impulse
   6. Defender reactive checks (insert immediately after triggering step completes)
@@ -577,7 +577,7 @@ EXECUTION (per resolved action in priority order)
   8. Status threshold evaluations / queue stable ordering
 
 END-OF-TURN
-  1. Apply explicit endurance DoT / recovery moves (dS/dt terms per COMBAT-MODEL §6)
+  1. Apply explicit endurance DoT / recovery moves (dS/dt terms per [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §6)
   2. Subtick integrate accumulators (Euler or RK stub): u ← u + Δt·g(u,field,materials)
   3. Drain catalyst timers (−1 turn remaining)
   4. Decrement timed statuses; purge expired
@@ -892,7 +892,7 @@ Author in `combos.json`; tie to `catalyst_id` / `combo_detonate` fields (`§5`).
 
 ## 15. Updated data artifacts checklist
 
-**Extends [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §9:**
+**Extends [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §9:**
 
 | Artifact | Role |
 |----------|------|
@@ -944,6 +944,6 @@ Chart symmetry, \(\kappa\) saturation bounds, status permanence without reinvest
 | 2026-05-03 | Initial comprehensive expansion imported into repo (affinities 12, chart, stats, materials, moves, stances, abilities, statuses, accumulators, phases, team, biomes, combos, pedagogy, artifacts, balance) |
 | 2026-05-03 | Biome schema + preset bullets; full combo table §13; cross-links from TECH/COMBAT/GAMEPLAY/SIMULATION/README/PROJECT-BRIEF |
 | 2026-05-03 | Aligned with endurance-first combat: **`stamina`**, \(\mathrm{d}S/\mathrm{d}t\) DoT language; faint → incapacitation |
-| 2026-05-03 | §2: `CHART₀` = baseline prior; shipped **`m1`** dynamic per [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5.5; artifact split (`layer1_shape`); **catalog = identity only**, instances roll builds |
+| 2026-05-03 | §2: `CHART₀` = baseline prior; shipped **`m1`** dynamic per [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §5.5; artifact split (`layer1_shape`); **catalog = identity only**, instances roll builds |
 | 2026-05-03 | Restored paste-depth §§5.3–5.7 YAML, §§6.2–6.4, §7 tables, §8–11 detail, §12 biome blobs, §14 tables; §5.8 modalities alignment; §15 artifact rows; link [`SPECIES-INSTANCE-EXAMPLES.md`](./SPECIES-INSTANCE-EXAMPLES.md) |
-| 2026-05-03 | **Stat schema ids** renamed for clarity — see [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §2.1 changelog; §3 tables & dependent prose updated (`physical_offense`, `physical_mitigation`, `special_offense`, `special_mitigation`, `initiative`, `precision`, `recovery`, `coupling`). |
+| 2026-05-03 | **Stat schema ids** renamed for clarity — see [`GAMEPLAY-MASTER.md`](./GAMEPLAY-MASTER.md) §2.1 changelog; §3 tables & dependent prose updated (`physical_offense`, `physical_mitigation`, `special_offense`, `special_mitigation`, `initiative`, `precision`, `recovery`, `coupling`). |
