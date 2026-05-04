@@ -76,6 +76,10 @@ export interface Move {
   accumulator_impulses?: unknown;
   /** Slot-bound passive affinity ε / stance coupling; optional. */
   passive_hooks?: unknown;
+  /** Deterministic composed UI title from frame + build (cache optional). See ATTACK-CATALOG “Dynamic display names”. */
+  system_display_title?: string;
+  /** Player headline; subtitle still shows system_display_title when both set. */
+  move_nickname?: string;
 }
 
 export interface BattleContext {

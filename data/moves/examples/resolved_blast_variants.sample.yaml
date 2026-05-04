@@ -1,23 +1,20 @@
 # -----------------------------------------------------------------------------
-# Resolved Blast (surge_blast) — four player-built variants
+# Resolved Blast (surge_blast) — four player-built variants (regenerated)
 # -----------------------------------------------------------------------------
 # NOT loaded by runtime today: authoring / fixtures / UI mocks only.
 #
-# Frame + numeric bands live in:
+# Frame + numeric bands:
 #   data/moves/attack_templates.catalog.json → template_id: surge_blast
 #
-# Each variant below is one legal *resolved* build: knobs the player (or resolver)
-# locks in at equip time. Compare to creatures in data/species/examples/, which roll
-# from biome+seed; moves only pull from template bounds + loadout budget (design).
+# Naming (docs/ATTACK-CATALOG.md — Dynamic display names & nicknames):
+#   • system_display_title is authored here as the expected composer output until
+#     move_display_composer.rules.json ships; ordering is illustrative.
+#   • Frame-only title requires: null affinity, ω within modality prominence dead-zone
+#     (~uniform ⅓³), no status assignments, impulses at 0 (or below composer floor).
+#   • player_label is commentary only.
 #
-# Glossary (resolved_move block):
-#   • affinity / affinity_weights — Layer 1 chart inputs (COMBAT-MODEL §5.5).
-#   • delivery_modalities — ω simplex on surge path (concussive / piercing / slashing).
-#   • infusion_coeffs — frame-specific scalars from template (tag_pressure, …).
-#   • cooldown_turns — hydrated from cooldown_scaling × base_power (catalog help text).
-#   • status_payloads.assignments — placeholder status_id strings until status_catalog ships.
-#   • accumulator_impulses.on_hit — Layer 3 deltas on connect (GAMEPLAY-SYSTEMS §2.1).
-#   • passive_hooks — slot passive affinity ε + optional emphasis vector tail.
+# damage_outcome_partition: explicit shares (COMBAT-MODEL §3.1); surge_blast defaults
+#   to full endurance on these fixtures — no utility_field / utility_pressure on surge.
 # -----------------------------------------------------------------------------
 
 meta:
@@ -29,96 +26,105 @@ meta:
     - ../../docs/ATTACK-CATALOG.md
     - ../../docs/COMBAT-MODEL.md
   notes:
-    - Status IDs prefixed PLACEHOLDER_ — replace when data/status/status_catalog.json exists.
-    - Values chosen to sit inside surge_blast customization min/max bands in catalog v1.1.0.
+    - Status IDs are PLACEHOLDER_* until status_catalog + composer tokens exist.
+    - system_display_title strings are fixture targets for the title composer.
+    - Values sit inside surge_blast customization bands (catalog schema_version 1.1.0).
 
-# Quick scan: what differs between the four rows (see full payloads under variants).
 cross_variant_axes:
   columns:
     - variant_key
+    - system_display_title
     - elemental_identity
     - base_power
     - cooldown_turns
     - pierce
-    - delivery_shape
+    - delivery_notes
     - status_count
-    - impulses_highlight
-    - passive_emphasis_budget
+    - modality_tokens
   rows:
-    - variant_key: neutral_shock_core
-      elemental_identity: none (neutral vertex)
-      base_power: 48
+    - variant_key: bare_blast
+      system_display_title: Blast
+      elemental_identity: none
+      base_power: 45
       cooldown_turns: 1
-      pierce: 0.12
-      delivery_shape: blunt-heavy ω
+      pierce: 0.08
+      delivery_notes: uniform ω — no modality adjective
       status_count: 0
-      impulses_highlight: concussion only
-      passive_emphasis_budget: "0 (no slot tail)"
-    - variant_key: thermal_needle_burn
+      modality_tokens: ""
+    - variant_key: thermal_piercing_burn
+      system_display_title: Burning Piercing Thermal Blast
       elemental_identity: thermal mono
       base_power: 82
       cooldown_turns: 3
       pierce: 0.22
-      delivery_shape: pierce-heavy ω
+      delivery_notes: pierce-skew ω — Piercing token
       status_count: 1
-      impulses_highlight: heat_load + tiny wetness
-      passive_emphasis_budget: "0.08 → thermal tail"
+      modality_tokens: Piercing
     - variant_key: storm_surge_fusion
+      system_display_title: Primed Conductive Galvanic–Aqueous Blast
       elemental_identity: galvanic + aqueous (η=0.28)
       base_power: 64
       cooldown_turns: 2
       pierce: 0.14
-      delivery_shape: balanced ω
+      delivery_notes: near-uniform ω — no modality adjective
       status_count: 2
-      impulses_highlight: wetness + charge_buildup
-      passive_emphasis_budget: "0.04 split two affinities"
+      modality_tokens: ""
     - variant_key: vitriol_glass_push
+      system_display_title: Rupturing Slashing Corrosive Blast
       elemental_identity: corrosive mono
       base_power: 108
       cooldown_turns: 5
       pierce: 0.38
-      delivery_shape: slash-skew ω
+      delivery_notes: slash-skew ω — Slashing token
       status_count: 2
-      impulses_highlight: corrosion + fracture + heat
-      passive_emphasis_budget: "0.14 → corrosive tail"
+      modality_tokens: Slashing
 
 variants:
-  neutral_shock_core:
-    player_label: Neutral shock-core Blast
+  bare_blast:
+    player_label: Frame-only Blast — no elemental, balanced delivery, no riders
     intent: >-
-      Non-elemental pressure: skew delivery to concussive (shockwave read),
-      no riders, tiny concussion impulse — trades chart scaling for tempo.
+      Player leaves defaults that do not qualify for composer tokens: null affinity,
+      ω ≈ uniform so no Concussive/Piercing/Slashing adjective, zero impulses, no statuses.
+      Title stays exactly the catalog frame name.
 
     resolved_move:
       template_id: surge_blast
-      instance_id: ex_blast_neutral_shock_01
+      instance_id: ex_blast_bare_01
       category: surge
       damage_kind: endurance
+      system_display_title: Blast
+      move_nickname: null
+
       tags:
         - ranged
         - surge
-        - neutral_build
-        - shockwave_shape
 
       primary_affinity: null
       secondary_affinity: null
       blend_eta: null
       affinity_weights: {}
 
-      base_power: 48
-      pierce: 0.12
-      accuracy: 88
+      base_power: 45
+      pierce: 0.08
+      accuracy: 90
 
       infusion_coeffs:
-        tag_pressure: 0.38
+        tag_pressure: 0.35
         layer1_soft_amp: 0
 
       delivery_modalities:
-        concussive: 0.62
-        piercing: 0.26
-        slashing: 0.12
+        concussive: 0.34
+        piercing: 0.33
+        slashing: 0.33
 
       cooldown_turns: 1
+
+      damage_outcome_partition:
+        endurance_share: 1
+        status_guard_shred_share: 0
+        status_delivery_share: 0
+        utility_field_share: 0
+        utility_pressure_share: 0
 
       status_payloads:
         max_attachments_allowed_by_frame: 2
@@ -126,11 +132,11 @@ variants:
 
       accumulator_impulses:
         on_hit:
-          concussion: 10
           heat_load: 0
           wetness: 0
           fracture: 0
           corrosion: 0
+          concussion: 0
           laceration: 0
           charge_buildup: 0
 
@@ -139,20 +145,23 @@ variants:
         passive_affinity_emphasis: {}
 
     tradeoffs_note: >-
-      Low base_power ⇒ shortest cooldown on this frame; zero status budget spent;
-      passive ε unused — room for loadout budget elsewhere on the creature.
+      Lowest commitment demo on this frame; title does not gain Neutral/Endurance/Concussive
+      from silent template defaults — only Blast.
 
-  thermal_needle_burn:
-    player_label: Thermal needle + ignite rider
+  thermal_piercing_burn:
+    player_label: Piercing thermal blast + burn rider + passive thermal tail
     intent: >-
-      Mono thermal with pierce-skew ω — stacks an on-hit burn rider (placeholder id),
-      pumps heat_load, spends passive ε into thermal tail.
+      Player picks thermal, skews ω toward piercing, attaches burn payload and heat impulse,
+      spends passive ε on thermal — composer adds Thermal + Piercing + status token.
 
     resolved_move:
       template_id: surge_blast
       instance_id: ex_blast_thermal_burn_01
       category: surge
       damage_kind: endurance
+      system_display_title: Burning Piercing Thermal Blast
+      move_nickname: null
+
       tags:
         - ranged
         - surge
@@ -180,6 +189,13 @@ variants:
 
       cooldown_turns: 3
 
+      damage_outcome_partition:
+        endurance_share: 0.72
+        status_guard_shred_share: 0.08
+        status_delivery_share: 0.2
+        utility_field_share: 0
+        utility_pressure_share: 0
+
       status_payloads:
         max_attachments_allowed_by_frame: 2
         assignments:
@@ -206,20 +222,23 @@ variants:
           thermal: 0.08
 
     tradeoffs_note: >-
-      Higher tag_pressure + rider competes with raw poke builds on same budget;
-      cooldown_steps up vs neutral variant because base_power is higher.
+      Partition spends measurable budget on status_delivery + small guard shred;
+      pierce-skew triggers modality token under planned prominence rules.
 
   storm_surge_fusion:
-    player_label: Galvanic–aqueous fusion Blast
+    player_label: Galvanic–aqueous fusion + dual statuses + split passive ε
     intent: >-
-      Dual emphasis via blend η — two lightweight statuses (chain humidity + self polarity),
-      impulses push wetness and charge for Layer 2/3 interactions.
+      Fusion typing + two composer-eligible statuses; ω kept near-uniform so modality
+      words stay off the title unless rules later tighten spacing.
 
     resolved_move:
       template_id: surge_blast
       instance_id: ex_blast_storm_fusion_01
       category: surge
       damage_kind: endurance
+      system_display_title: Primed Conductive Galvanic–Aqueous Blast
+      move_nickname: "Storm Sign"
+
       tags:
         - ranged
         - surge
@@ -243,11 +262,18 @@ variants:
         layer1_soft_amp: 0.02
 
       delivery_modalities:
-        concussive: 0.32
-        piercing: 0.34
-        slashing: 0.34
+        concussive: 0.34
+        piercing: 0.33
+        slashing: 0.33
 
       cooldown_turns: 2
+
+      damage_outcome_partition:
+        endurance_share: 0.55
+        status_guard_shred_share: 0.15
+        status_delivery_share: 0.3
+        utility_field_share: 0
+        utility_pressure_share: 0
 
       status_payloads:
         max_attachments_allowed_by_frame: 2
@@ -282,20 +308,23 @@ variants:
           aqueous: 0.015
 
     tradeoffs_note: >-
-      Uses both attachment slots; self lane status can impose opportunity cost in UI copy.
-      Split passive ε shows how small tails span multiple affinities under normalization rules.
+      move_nickname illustrates HUD headline over subtitle system_display_title.
+      Dual statuses supply multiple composer adjectives when catalog tokens land.
 
   vitriol_glass_push:
-    player_label: Corrosive glass push (high commitment)
+    player_label: High-commit corrosive blast — slash-skew, shred + rupture riders
     intent: >-
-      Near-max base_power on frame ⇒ longest cooldown; heavy pierce + slash-skew;
-      double target statuses; impulses chip corrosion/fracture/heat together.
+      Near-max power / cooldown; corrosive vertex; slash-heavy ω; crit + on-hit statuses;
+      illustrates modality + dual status stacking on title.
 
     resolved_move:
       template_id: surge_blast
       instance_id: ex_blast_vitriol_glass_01
       category: surge
       damage_kind: endurance
+      system_display_title: Rupturing Slashing Corrosive Blast
+      move_nickname: null
+
       tags:
         - ranged
         - surge
@@ -322,6 +351,13 @@ variants:
         slashing: 0.4
 
       cooldown_turns: 5
+
+      damage_outcome_partition:
+        endurance_share: 0.5
+        status_guard_shred_share: 0.22
+        status_delivery_share: 0.28
+        utility_field_share: 0
+        utility_pressure_share: 0
 
       status_payloads:
         max_attachments_allowed_by_frame: 2
@@ -355,5 +391,5 @@ variants:
           corrosive: 0.14
 
     tradeoffs_note: >-
-      Accuracy slid down to fund tag_pressure / pierce / riders within an imaginary budget;
-      longest cooldown on surge_blast band — illustrates anti-spam coupling with base_power.
+      Heavy status_delivery + guard shred partition; Slashing token from ω skew;
+      Rupturing from crit-only status composer token (placeholder).

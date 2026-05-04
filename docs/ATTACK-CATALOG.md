@@ -26,10 +26,49 @@ There is **no** separate “abilities catalog” with hundreds of pre-filled row
 | **`status_payloads`** | **`max_attachments`**, potency / duration / proc bands, **`allowed_proc_lanes`** — attaches **`status_catalog`** effects within template ceilings ([COMBAT-MODEL §3](./COMBAT-MODEL.md)) |
 | **`accumulator_impulses`** | Per-hit Layer 3 Δ bands (`heat_load`, `wetness`, `fracture`, …) — same keys as creature accumulators ([GAMEPLAY-SYSTEMS §2.1](./GAMEPLAY-SYSTEMS.md)) |
 | **`passive_hooks`** | Slot **`emphasis_tail_budget`** ε for passive affinity shaping — optional shell bound to the move ([GAMEPLAY-SYSTEMS §1.3](./GAMEPLAY-SYSTEMS.md)) |
+| **`damage_outcome_partition`** | How the resolved coupling budget splits across stamina loss, **status guard** shred, status payload delivery, and (on utility frames) **field shift** vs **foe stat pressure** — [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3.1 |
 
-**`damage_kind`** for resolved combat payloads follows **`damage_kind_default`** on the template (`endurance`, `status`, `utility`) unless extended pipelines remap it.
+**`damage_kind`** sets the move’s **primary lane** (`endurance`, `status`, `utility`) — UI chip + default routing. It does **not** mean “only stamina” vs “only terrain”: players also tune **`damage_outcome_partition`** shares so a **`status`** blast can still **take a slice of endurance**, spend another slice **shredding fire resist / status guard**, and pour the rest into **DoT potency** on the same hit ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3.1). **`utility`** frames split budget between **field transition** (e.g. grassland → fire bias) and **on-opponent stat pressure** during the shift. Slider names (template-bounded): **`endurance_share`**, **`status_guard_shred_share`**, **`status_delivery_share`**, plus on utility frames **`utility_field_share`** and **`utility_pressure_share`**.
 
-Flavor titles (**Thermal blast**, **Void spike**) are **generated labels** from chosen affinities + template — they are not authored rows in JSON.
+---
+
+## Dynamic display names & nicknames
+
+**Goals**
+
+1. **Frame names stay basic** — Each template ships a short **base frame label** from catalog **`display_name`** (e.g. **Blast**, **Slam**, **Lance**) — see [`attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json).
+2. **Default title = frame only** — If the player has **not** selected anything that maps to a composer token, **`system_display_title`** is exactly **`display_name`**: e.g. **Blast** — **not** “Neutral Concussive Endurance Blast”. Catalog **`customization.default`** values for ω, **`damage_kind_default`**, etc. are **resolver math only**; they **do not** add adjectives to the name.
+3. **Additive tokens only from selections** — Each extra word comes from something the player **chose** on the saved instance (and passes composer gates below): elemental chips (**Plasmic Blast**), fusion order (**Plasmic–Aqueous Blast**), attached statuses (**Stunning …** via **`status_catalog`** tokens), **skewed** modality ω (**Concussive Blast** only above prominence), channel/field/reactive **archetype** when template or infusion flags qualify (**Channeled Plasmic Blast**), optional accumulator/partition chips **only** where rules explicitly tie non-default numbers to a token.
+4. **No lane vocabulary from defaults** — Words like **Endurance**, **Status**, **Utility** **never** appear just because the template’s **`damage_kind_default`** says so. If **`damage_kind`** (or **`damage_outcome_partition`**) ever contributes a word, it is **only** when the resolved build **differs** from the template default **and** **`move_display_composer.rules.json`** enables that chip — otherwise omit lane language entirely from titles.
+5. **Not ephemeral RNG naming** — Same persisted **`MoveInstance`** ⇒ same composed title (recompute on save/edit or cache **`system_display_title`**).
+6. **Optional nickname** — **`move_nickname`** as HUD headline when set; **`system_display_title`** stays visible **underneath**.
+
+**Composer gates (normative)**
+
+| Dimension | When it adds a token |
+|-----------|----------------------|
+| **Affinity** | **`primary_affinity`** non-null → elemental token(s); fusion / **`affinity_weights`** → multi-token forms per rules. **`null`** primary ⇒ **no** “Neutral” / “Non-elemental” prefix unless product explicitly opts in — default is **silent** (title stays **Blast**). |
+| **Modality (Concussive / Piercing / Slashing)** | **Only** if dominant ω exceeds **`modality_prominence_floor`** vs uniform (⅓,⅓,⅓) — tuned in **`move_display_composer.rules.json`**. Balanced ω ⇒ **no** modality adjective. |
+| **Statuses / DoTs** | **`status_payloads.assignments`** non-empty with composer-eligible rows → **`status_catalog`** tokens (*Corrosive*, *Stunning*, …). |
+| **Schedule archetype** | Template **`category`** is **`channel`**, **`field`**, or **`reactive`** → authored archetype token (**Channeled**, **Field**, …). **Surge/strike/true** frames stay **silent** unless infusion keys (e.g. **`channel_ticks`**) cross a **player-authored** threshold defined in rules — enables **Channeled Plasmic Blast**–style names without labeling every surge “channeled”. |
+| **`damage_kind` / partition** | **Default** ⇒ **omit**. Non-default chips **only** if rules explicitly map elevated **`utility_field_share`**, etc., to a short token — avoid spamming mechanical lane names. |
+
+**Examples (illustrative)**
+
+- Nothing chosen beyond frame → **Blast**.
+- Aqueous primary only → **Aqua Blast** (exact strings from affinity display table).
+- Plasmic primary + channel archetype qualifies → **Channeled Plasmic Blast**.
+- Add corrosive status token → **Corrosive Channeled Plasmic Blast** (order from rules file).
+
+**Persistence (resolved instance)**
+
+| Field | Role |
+|-------|------|
+| **`template_id`** | Frame key — maps to catalog **`display_name`** for base token. |
+| **`system_display_title`** | Cached composed string (optional if always recomputed server-side). |
+| **`move_nickname`** | Optional user label; does **not** replace resolver identity or logs. |
+
+Details on move payload fields: [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3.
 
 ---
 
@@ -39,7 +78,7 @@ Flavor titles (**Thermal blast**, **Void spike**) are **generated labels** from 
 
 | Slot (conceptual) | Player control | Bounded by |
 |-------------------|----------------|------------|
-| **Status payloads** | Pick proc lane (`on_hit`, `on_crit`, `channel_tick`, `self`, `target`), effect id, duration subticks, potency, stacking rule ref | Per-template **status budget** + catalog caps (`status_catalog` — [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §9) |
+| **Status payloads** | Pick proc lane (`on_hit`, `on_crit`, `channel_tick`, `self`, `target`), effect id, duration subticks, potency, stacking rule ref | Per-template **status budget** + catalog caps (`status_catalog` — [`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §9); status rows expose **composer tokens** for dynamic move titles ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) *Dynamic display names & nicknames*) |
 | **Accumulator impulses** | Structured Δ on `heat_load`, `wetness`, `fracture`, `corrosion`, … tied to hit events | Impulse magnitude bands + compatibility with move frame ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §2.1) |
 | **Passive affinity / shell** | Optional **`passive_affinity_emphasis`** or stance coupling on a **passive shell** bound to the slot | Simplex normalization + intensity caps matching creature passive rules |
 
@@ -57,7 +96,7 @@ At runtime / persistence, legal builds still need **economy and validation** lay
 
 | Mechanism | Role |
 |-----------|------|
-| **Loadout / tuning budget** | Each equipped move (or each customization session) spends from a finite budget — raising **`base_power`** leaves fewer points for **`pierce`**, **`accuracy`**, **`infusion_coeffs`**, modality emphasis, **status slots**, **accumulator impulses**, **passive shell** intensity, etc. Server rejects over-budget payloads. |
+| **Loadout / tuning budget** | Each equipped move (or each customization session) spends from a finite budget — raising **`base_power`** leaves fewer points for **`pierce`**, **`accuracy`**, **`infusion_coeffs`**, modality emphasis, **partition shares** (**`damage_outcome_partition`** —§3.1 [`COMBAT-MODEL.md`](./COMBAT-MODEL.md)), **status slots**, **accumulator impulses**, **passive shell** intensity, etc. Server rejects over-budget payloads. |
 | **Meta costs** | Using a “fully juiced” variant can cost more **stamina / tempo / cooldown** (template **`cooldown_scaling`** grows with **`base_power`**), **Resonance**, etc. ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md); [`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
 | **Trade-offs in data (optional)** | Future authoring can add explicit **couplings** (e.g. power vs accuracy ceilings within the same template) so the envelope is not a flat rectangle of independent maxes. |
 | **Combat saturation** | Even high **`base_power`** faces diminishing returns through **`σ`** / saturation in the damage pipeline ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §5), so outcome is not linear in “always pick max.” |
@@ -89,7 +128,7 @@ So: **nothing “hidden” in `attack_templates.catalog.json` stops someone from
 
 ## Resolved instances (examples)
 
-Four fully-filled **Blast** (`surge_blast`) builds — neutral vs mono vs fusion vs high-commit — live in [`data/moves/examples/resolved_blast_variants.sample.yaml`](../data/moves/examples/resolved_blast_variants.sample.yaml). Same template frame; different **`affinity_weights`**, **`delivery_modalities`**, **`status_payloads`**, **`accumulator_impulses`**, and **`passive_hooks`** so you can diff what players can tune. **`PLACEHOLDER_*`** status ids stand in until `status_catalog` ships.
+Four fully-filled **Blast** (`surge_blast`) builds live in [`data/moves/examples/resolved_blast_variants.sample.yaml`](../data/moves/examples/resolved_blast_variants.sample.yaml): **bare frame-only title** (**Blast**), thermal pierce + burn, dual-status fusion (with sample **nickname**), and high-commit corrosive shred. Each row includes **`system_display_title`**, optional **`move_nickname`**, **`damage_outcome_partition`**, **`delivery_modalities`**, **`status_payloads`**, **`accumulator_impulses`**, and **`passive_hooks`**. **`PLACEHOLDER_*`** status ids stand in until `status_catalog` ships.
 
 ---
 

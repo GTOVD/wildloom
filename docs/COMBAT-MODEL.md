@@ -93,9 +93,31 @@ Each move carries:
 | **`status_payloads`** (planned hydrate) | Optional **`on_hit` / `on_tick` / `self`** status applications — effect id, duration subticks, potency, stacking rule ref, proc chance — **bounded per template** like other sliders ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.3). |
 | **`accumulator_impulses`** (planned hydrate) | Optional structured deltas on Layer 3 keys (`heat_load`, `wetness`, `fracture`, …) triggered on hit / crit / channel tick — same accumulator vocabulary creatures use ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §2.1). |
 | **`passive_hooks`** (planned hydrate) | Optional slot-bound **passive affinity emphasis**, aura ticks, or stance coupling — player selects within authored simplex / intensity bands; mirrors passive-ish creature traits without duplicating math. |
-| `damage_kind` | Usually `endurance` (depletes \(S\)); some moves only tick accumulators or apply disables (`status`, `utility`). |
+| `damage_kind` | Declares the move’s **primary outcome lane** for UX and resolver routing — see [**§3.1**](#31-damage-kind--outcome-partition-endurance--status-guard--utility-field). **`endurance`** is the default full coupling-to-\(S\) path; **`status`** and **`utility`** still use strike/surge/true geometry when authored to produce a **single coupling budget**, then **partition** that budget across endurance loss, resist shredding, status delivery, and/or field mutation (template bounds + loadout economy). |
+| **`damage_outcome_partition`** (planned hydrate) | Normalized shares (simplex or authored clamped tuple) that split the move’s **resolved coupling budget** after saturation / \(m_1\) / Layer 2 — see §3.1. |
+| **`system_display_title`** (planned) | Deterministic **composed label** from **frame + player-selected tokens only** — see [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) *Dynamic display names & nicknames*. No words for template **`damage_kind_default`**, balanced modality ω, or other **silent defaults**. |
+| **`move_nickname`** (planned) | Optional player headline; **subtitle** still shows **`system_display_title`**. |
 
 **True damage:** Skips **saturation path using `physical_mitigation` / `special_mitigation`** but may still be altered by global shields or scripted absorbs—declare explicitly per effect.
+
+### 3.1 Damage kind · outcome partition (endurance · status guard · utility field)
+
+**Plain English:** Most attacks compute one **potency package** from offense, mitigation, modalities, Layer 1 \(m_1\), and RNG — a “how hard did this connect?” budget. **`damage_kind`** says what the move is *about* in UI and which resolver branch runs first; **`damage_outcome_partition`** (player-slidable within template bands) says **where that budget lands**: fighting stamina (**endurance**), peeling **status defenses**, powering **DoTs / disables**, and/or **rewriting the arena field** while optionally pinching the foe’s stats.
+
+| Symbol / field | Meaning |
+|----------------|---------|
+| **`damage_kind`** | **`endurance`** — chip emphasizes stamina loss; **`status`** — chip emphasizes riders / guard break; **`utility`** — chip emphasizes **field** mutation; resolver still honors explicit partition shares (below), so kinds are not mutually exclusive “silos” once partitioning ships. |
+| **`α` · `endurance_share`** | Fraction of the move’s **budget** applied as **`stamina_loss`** (↓ \(S\)) — the familiar “HP-like” chunk. |
+| **`β` · `status_guard_shred_share`** | Fraction spent attacking **status resist infrastructure** on the defender — abstractly “how hard you negate fire resist / cleanse buffers / ward stacks,” implemented as smooth deltas on **`status_guard`** stats (per affinity family and/or global wash). Higher \(\beta\) makes **subsequent** burns, poisons, stuns, etc. land heavier **without** doubling raw stamina chip unless \(\alpha\) is also high. Thematic example: a **Thermal** rider-heavy blast can slide \(\beta\) up to specialize as a **“fire resist negating”** opener. |
+| **`γ` · `status_delivery_share`** | Fraction allocated to **amplifying status payloads on this swing** — proc reliability, potency ceilings, stack progression, or pierce-through-cleanse hooks tied to **`status_payloads`** ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.3). Think “same animation, more of the budget goes into making the DoT stick.” |
+| **`φ` · `utility_field_share`** | (**`utility`** moves) Fraction pushing **arena transition** — shifting **`terrain_id`** flavor, **`field_flags`**, ambient scalars (`ambient_temp`, `humidity`, ionization, …) toward an authored target profile ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12). Example: **grassland → fire-field** bias increases thermal coupling field-wide over subsequent subticks. |
+| **`ψ` · `utility_pressure_share`** | (**`utility`** moves) Fraction that **still pressures combatants’ stats** during the transition — e.g. brief **`initiative`**, **`coupling`**, or **`special_mitigation`** penalties on foes while the field “catches fire,” so terrain shifts are not free stapled passes. \(\psi\) answers “you changed the weather — does it also **hit their footing**?” |
+
+**Constraints (design intent):** \(\alpha+\beta+\gamma+\phi+\psi = 1\) on moves that declare a **full partition**; templates may fix \(\phi=\psi=0\) for pure brawlers or \(\alpha=0\) for pure field seeds until economy dictates otherwise. **Loadout budget** competes: raising \(\beta\) or \(\gamma\) usually trades against \(\alpha\) within the same **`base_power`** band unless the player pays extra tempo / cooldown / resonance ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) bounds vs balance).
+
+**Resolver sketch:** One coupling sample \(B\) from §5 pipeline (possibly scaled when **`damage_kind`** biases weights). Apply \(\alpha B \rightarrow \Delta S\); \(\beta B \rightarrow\) defender **`status_guard`** vector (smooth, logged); \(\gamma B \rightarrow\) scale **`status_payloads`** effective potency / proc layer; \(\phi B \rightarrow\) integrate **`field_state`** toward target; \(\psi B \rightarrow\) apply scripted transient debuffs on targeted foes’ **`stats_eff`** or accumulator influx. Exact maps live in balance JSON when implemented — **the contract here** is player-visible **sliders** and replay-stable decomposition.
+
+**Creature symmetry:** Spawned creatures can expose **`status_guard`** and field interaction stats the same way — player moves mirror that vocabulary ([`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.3).
 
 **Compositional moves:** Players and designers assemble **display names** from template + infusions (“Void Blast”, “Floral Surge”, …). Mechanics depend on **`affinity_weights`**, **`infusion_coeffs`**, and stats—not on the display string alone.
 
@@ -441,10 +463,11 @@ Document in schema so tools can simulate.
 | `species/species.schema.json` | JSON Schema for catalog entries. |
 | `affinity_chart.json` | **`CHART₀` baseline** matrix — feeds §5.5; not final `m1` alone. |
 | `scaling_curves.json` | `S_L`, saturation `κ`, `λ`, pierce `λ_p`, modality ψ; **plus Layer 1 reshape** (`κ₁`, `κ₂`, `m_min`, `m_max`, `stab_factor`, resist kernels). |
-| `moves.json` | Hydrated **instances** from templates — §3 fields including modalities, **`cooldown_turns`**, planned **`status_payloads`** / **`accumulator_impulses`** / **`passive_hooks`**, versioning hash per patch. |
-| `data/moves/attack_templates.catalog.json` | **Authoring library** — frames + customization bands; **extend** with status / accumulator / passive slots per [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md). |
-| `status_catalog.json` (planned) | Status definitions — stacking rules, cleanse families, icon ids — consumed by move payloads & terrain. |
+| `moves.json` | Hydrated **instances** — §3 fields; **`system_display_title`** / **`move_nickname`** (optional); modalities; **`cooldown_turns`**; planned effect payloads; versioning hash per patch. |
+| `data/moves/attack_templates.catalog.json` | **Authoring library** — frames + customization bands; base **`display_name`** token for title composer ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) *Dynamic display names*). |
+| `status_catalog.json` (planned) | Status definitions — stacking rules, cleanse families, icon ids, **`composer_label`** / category tokens for dynamic move titles — consumed by move payloads & terrain. |
 | `move_effect_extensions.schema.json` (planned) | JSON Schema sketch for §3 effect payloads — keep aligned with `attack_template.schema.json`. |
+| `move_display_composer.rules.json` (planned) | Token ordering, dedupe, **prominence thresholds** (modalities / infusions / partitions), schedule archetype hooks — **`system_display_title`** never invents **Concussive**, **Endurance**, **Status**, etc. from defaults alone. |
 
 Version every artifact; bake hash into replay header.
 
@@ -567,3 +590,6 @@ Offline, estimate how small parameter moves \(\theta\) (chart entries, \(\kappa\
 | 2026-05-03 | **Procedural / compositional design:** emphasis vectors, fused moves (`affinity_weights`, `infusion_coeffs`), dynamic **`m1`** (§5.5) with **`CHART₀`** baseline; **materials/stats roll per instance** (§2.2), not per catalog row ([`TECHNICAL-DESIGN.md`](./TECHNICAL-DESIGN.md) §1). |
 | 2026-05-03 | **Species lines & move frames:** catalog species default **`null`** typing; moves authored only as [`attack_templates.catalog.json`](../data/moves/attack_templates.catalog.json) (removed flat abilities roster); **`Move.affinity`** optional ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |
 | 2026-05-03 | §3 / §4 / §9: documented planned **`status_payloads`**, **`accumulator_impulses`**, **`passive_hooks`** on moves; volatile/status bags in §4 context; artifact rows for `status_catalog` + effect schema — aligned with [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) status/accumulator/passive section and [`GAMEPLAY-SYSTEMS.md`](./GAMEPLAY-SYSTEMS.md) §1.3. |
+| 2026-05-03 | **§3.1 Outcome partition:** `damage_kind` vs splittable budget — **`endurance_share`**, **`status_guard_shred_share`** (e.g. negate fire resist), **`status_delivery_share`**, **`utility_field_share`**, **`utility_pressure_share`**; planned **`damage_outcome_partition`** on moves. |
+| 2026-05-03 | **§3 display naming:** **`system_display_title`**, **`move_nickname`**; §9 **`move_display_composer.rules.json`**, **`status_catalog`** composer tokens — see [`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md) *Dynamic display names & nicknames*. |
+| 2026-05-03 | **Naming:** **`system_display_title`** is **frame-only** unless selections trigger tokens — no **Concussive** / **Endurance** / **Status** from silent template defaults; modality prominence floor + lane vocabulary rules ([`ATTACK-CATALOG.md`](./ATTACK-CATALOG.md)). |

@@ -73,7 +73,9 @@ To keep the matchup chart readable during onboarding, tutorials may **collapse**
 |-------------|--------------|------------------------------------------|
 | Elemental emphasis | Rolled at spawn from biome + RNG | Player picks **`primary` / `secondary` / `affinity_weights`** within template |
 | Stats | Rolled aptitudes + growth | N/A directly — abilities scale off **attacker stats** via resolver |
+| **Status guard** (resist / cleanse buffers) | Creature **`status_guard`** (per-family + global) softens incoming disables / DoTs | Moves allocate **`status_guard_shred_share`** to attack those defenses on the same swing as **`status_delivery_share`** and optional **`endurance_share`** ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3.1) |
 | Statuses | Boss auras, terrain, items apply | **`on_hit_status`**, **`self_status`**, **`target_status`** payloads with potency/duration/chance bands |
+| **Field identity** | Arena **`terrain_id`**, **`field_flags`**, ambient scalars ([`DESIGN-SUPPLEMENT.md`](./DESIGN-SUPPLEMENT.md) §12) | **`utility_field_share`** transitions field toward authored targets; **`utility_pressure_share`** applies transient foe stat hooks during the shift ([`COMBAT-MODEL.md`](./COMBAT-MODEL.md) §3.1) |
 | Accumulators | Trait passives integrate \(\mathrm{d}u/\mathrm{d}t\) | **`accumulator_impulses`** — e.g. +\(\Delta\)heat_load, +\(\Delta\)wetness on hit; decay rules data-owned |
 | Passive affinity | Species/flavor can bias Layer 2 | **`passive_affinity_emphasis`** optional vector on **passive shell** tied to ability slot |
 
