@@ -11,7 +11,7 @@ This project is **not affiliated with, endorsed by, or derived from** any third-
 
 ## Design documentation (planning)
 
-Planning spec: **[`docs/GAMEPLAY-MASTER.md`](docs/GAMEPLAY-MASTER.md)** — gameplay, combat, abilities, pipeline, Layer 2–3, accumulators.
+Planning spec: **[`docs/WILDLOOM-MASTER.md`](docs/WILDLOOM-MASTER.md)** — gameplay, combat, world/product context, abilities, pipeline, Layer 2–3, accumulators.
 
 ## License
 
