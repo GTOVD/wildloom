@@ -1,0 +1,34 @@
+{
+  "_doc": "5 stances per §17. Multipliers applied to effective stats. Special bullets handled by rule hooks.",
+
+  "grounded": {
+    "physical_offense": 1.00, "physical_mitigation": 1.00,
+    "special_offense": 1.00, "special_mitigation": 1.00,
+    "initiative": 1.00, "precision": 1.00,
+    "extras": {}
+  },
+  "assault": {
+    "physical_offense": 1.20, "physical_mitigation": 0.80,
+    "special_offense": 1.20, "special_mitigation": 0.80,
+    "initiative": 1.05, "precision": 0.90,
+    "extras": { "crit_bonus": 0.08, "blocks_reactive": true, "outgoing_impulse_mult": 1.15 }
+  },
+  "fortified": {
+    "physical_offense": 0.85, "physical_mitigation": 1.30,
+    "special_offense": 0.85, "special_mitigation": 1.30,
+    "initiative": 0.80, "precision": 1.10,
+    "extras": { "incoming_impulse_mult": 0.70, "status_threshold_offset": 0.15 }
+  },
+  "fluid": {
+    "physical_offense": 0.90, "physical_mitigation": 0.90,
+    "special_offense": 0.90, "special_mitigation": 0.90,
+    "initiative": 1.25, "precision": 1.10,
+    "extras": { "evasion_bonus": 0.15, "free_switch": true, "wetness_decay_per_turn": 0.03, "sonic_decay_per_turn": 0.04 }
+  },
+  "primed": {
+    "physical_offense": 1.00, "physical_mitigation": 0.85,
+    "special_offense": 1.00, "special_mitigation": 0.85,
+    "initiative": 0.95, "precision": 1.20,
+    "extras": { "enables_reactive": true, "crit_bonus": 0.10, "ionization_self_per_turn": 0.02 }
+  }
+}

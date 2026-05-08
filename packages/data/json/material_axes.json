@@ -1,0 +1,23 @@
+{
+  "_doc": "12 material axes per §5. Beta-distributed at spawn from biome-shaped (α, β). Composite shortcuts cached per tick.",
+
+  "axes": [
+    "thermal_mass", "conductivity", "rigidity", "porosity",
+    "polarity", "density", "elasticity", "reflectivity",
+    "acoustic_impedance", "chemical_reactivity", "magnetization", "permeability"
+  ],
+
+  "default_beta": { "alpha": 1.5, "beta": 1.5 },
+
+  "composite_shortcuts": {
+    "_": "Computed once per tick. See §5 of master doc.",
+    "acoustic_transparency":   "1 - acoustic_impedance",
+    "fracture_susceptibility": "rigidity * (1 - elasticity)",
+    "corrosion_rate":          "chemical_reactivity * porosity",
+    "ionic_coupling":          "conductivity * polarity",
+    "thermal_stability":       "thermal_mass * (1 - conductivity)",
+    "void_compression_factor": "density * (1 - elasticity)",
+    "yield_strength":          "0.6 * rigidity + 0.4 * density",
+    "cohesion":                "(1 - porosity) * (1 - fracture)"
+  }
+}

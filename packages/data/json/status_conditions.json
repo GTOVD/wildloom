@@ -1,0 +1,97 @@
+{
+  "_doc": "12 statuses per §15. Triggered by accumulator threshold crossings. Each modifies stats_eff, accumulators, or hit math while active. Cure conditions and escalations included.",
+
+  "seared": {
+    "trigger": { "accumulator": "heat_load", "above": 0.85 },
+    "duration_turns": 4,
+    "dot_per_turn": 0.03,
+    "stat_mods": { "physical_offense": 0.90 },
+    "regen_disabled": true,
+    "cure": ["aq_move_hit", "ambient_cool_3_turns"]
+  },
+  "hypothermic": {
+    "trigger": { "accumulator": "heat_load", "below": -0.60 },
+    "duration_turns": 4,
+    "dot_per_turn": 0.02,
+    "stat_mods": { "initiative": 0.75, "special_offense": 0.85 },
+    "cure": ["th_move_hit", "ambient_warm_3_turns"]
+  },
+  "frozen": {
+    "trigger": { "compound": "hypothermic_and_cryo_load_above_0_70" },
+    "duration_turns": 2,
+    "skip_turn_chance": 0.50,
+    "stat_mods": { "physical_mitigation": 1.20, "special_mitigation": 0.70 },
+    "cure": ["th_move_hit_x1_5", "duration_expire"]
+  },
+  "waterlogged": {
+    "trigger": { "accumulator": "wetness", "above": 0.90 },
+    "duration_turns": 5,
+    "incoming_mods": { "GA": 1.50, "AE": 1.30, "SO": 1.25 },
+    "stat_mods": { "initiative": 0.90 },
+    "cure": ["ae_field", "heat_2_turns"]
+  },
+  "paralyzed": {
+    "trigger": { "accumulator": "charge_buildup", "above": 0.80 },
+    "duration_turns": 4,
+    "stat_mods": { "initiative": 0.50 },
+    "fail_move_chance": 0.25,
+    "cure": ["mi_grounding", "duration_expire"]
+  },
+  "fractured": {
+    "trigger": { "accumulator": "fracture", "above": 0.75 },
+    "duration_turns": 5,
+    "stat_mods": { "physical_mitigation": 0.70 },
+    "incoming_mods": { "piercing": 1.30, "slashing": 1.20 },
+    "cure": ["mend_move", "duration_expire"]
+  },
+  "concussed": {
+    "trigger": { "accumulator": "concussion", "above": 0.70 },
+    "duration_turns": 3,
+    "stat_mods": { "precision": 0.50, "initiative": 0.80 },
+    "accuracy_mod": 0.70,
+    "cure": ["recovery_dependent", "focus_move"]
+  },
+  "bleeding": {
+    "trigger": { "accumulator": "laceration", "above": 0.65 },
+    "duration_turns": 4,
+    "dot_per_turn": 0.025,
+    "wet_extends_duration": true,
+    "cure": ["cy_clot", "cauterize", "duration_expire"]
+  },
+  "corroded": {
+    "trigger": { "accumulator": "corrosion", "above": 0.75 },
+    "duration_turns": 5,
+    "stat_mods": { "physical_mitigation": 0.80, "special_mitigation": 0.80 },
+    "incoming_mods": { "CR": 1.35 },
+    "cure": ["aq_flush", "duration_expire"]
+  },
+  "irradiated": {
+    "trigger": { "accumulator": "radiation", "above": 0.60 },
+    "duration_turns": 6,
+    "dot_per_turn": 0.015,
+    "stat_mods": { "special_mitigation": 0.75, "recovery": 0.50 },
+    "cure": ["duration_expire"]
+  },
+  "deafened": {
+    "trigger": { "accumulator": "sonic_stress", "above": 0.70 },
+    "duration_turns": 3,
+    "outgoing_mods": { "SO": 0.0 },
+    "incoming_mods": { "SO": 0.50 },
+    "stat_mods": { "precision": 0.50 },
+    "cure": ["vo_move", "duration_expire"]
+  },
+  "ionized": {
+    "trigger": { "accumulator": "ionization", "above": 0.50 },
+    "duration_turns": 5,
+    "incoming_mods": { "GA": 1.25, "PL": 1.25 },
+    "passive_per_turn": { "all_charge": 0.01 },
+    "ally_outgoing_mods": { "GA": 1.10, "PL": 1.10 },
+    "cure": ["mi_grounding", "aq_flush"]
+  },
+
+  "_escalations": [
+    { "from": "hypothermic", "to": "frozen", "when": "cryo_load > 0.70 while hypothermic" },
+    { "from": "bleeding", "to": "hemorrhage", "when": "laceration > 0.90", "extra": "DoT doubles" },
+    { "from": "paralyzed", "to": "locked", "when": "initiative reaches 0", "extra": "1 full turn loss" }
+  ]
+}

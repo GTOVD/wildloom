@@ -1,0 +1,187 @@
+{
+  "_doc": "10 biomes per §21. Dirichlet α (12 affinity) + Beta (α,β) per material axis. Spawn weights for species. Field scalars and per-turn deltas.",
+
+  "_axis_order": ["TH","CY","AQ","GA","MI","FL","AE","LU","VO","SO","CR","PL"],
+
+  "biomes": {
+    "neutral_arena": {
+      "display_name": "Neutral Arena",
+      "tile_color_hex": "#7c8a9a",
+      "ambient_temp": 20,
+      "humidity": 0.50,
+      "luminance": 0.50,
+      "acoustic_reflection": 0.50,
+      "passive_per_turn": {},
+      "affinity_modifiers": {},
+      "dirichlet_alpha": { "TH":1.0,"CY":1.0,"AQ":1.0,"GA":1.0,"MI":1.0,"FL":1.0,"AE":1.0,"LU":1.0,"VO":1.0,"SO":0.4,"CR":0.4,"PL":0.4 },
+      "material_beta": {
+        "thermal_mass":[1.5,1.5],"conductivity":[1.5,1.5],"rigidity":[1.5,1.5],"porosity":[1.5,1.5],
+        "polarity":[1.5,1.5],"density":[1.5,1.5],"elasticity":[1.5,1.5],"reflectivity":[1.5,1.5],
+        "acoustic_impedance":[1.5,1.5],"chemical_reactivity":[1.5,1.5],"magnetization":[1.5,1.5],"permeability":[1.5,1.5]
+      },
+      "encounter_rate": 0.0
+    },
+
+    "volcanic_rift": {
+      "display_name": "Volcanic Rift",
+      "tile_color_hex": "#b8341a",
+      "ambient_temp": 55,
+      "humidity": 0.20,
+      "luminance": 0.60,
+      "acoustic_reflection": 0.45,
+      "passive_per_turn": { "heat_load": 0.04 },
+      "affinity_modifiers": { "TH": 1.15, "PL": 1.20, "CY": 0.85 },
+      "dirichlet_alpha": { "TH":3.5,"CY":0.1,"AQ":0.3,"GA":0.7,"MI":1.8,"FL":0.4,"AE":0.7,"LU":1.0,"VO":0.6,"SO":0.4,"CR":1.2,"PL":2.4 },
+      "material_beta": {
+        "thermal_mass":[2.5,1.5],"conductivity":[1.7,1.4],"rigidity":[2.0,1.2],"porosity":[1.6,1.4],
+        "polarity":[1.4,1.6],"density":[2.2,1.3],"elasticity":[1.2,1.8],"reflectivity":[1.4,1.6],
+        "acoustic_impedance":[1.7,1.3],"chemical_reactivity":[1.8,1.2],"magnetization":[1.4,1.6],"permeability":[1.5,1.5]
+      },
+      "encounter_rate": 0.10
+    },
+
+    "tundra_shelf": {
+      "display_name": "Tundra Shelf",
+      "tile_color_hex": "#cfe5f0",
+      "ambient_temp": -5,
+      "humidity": 0.30,
+      "luminance": 0.55,
+      "acoustic_reflection": 0.50,
+      "passive_per_turn": { "heat_load": -0.035, "cryo_load": 0.02 },
+      "affinity_modifiers": { "CY": 1.15, "TH": 0.85 },
+      "dirichlet_alpha": { "TH":0.2,"CY":3.5,"AQ":1.5,"GA":0.8,"MI":2.0,"FL":0.5,"AE":1.2,"LU":1.0,"VO":0.7,"SO":1.0,"CR":0.4,"PL":0.2 },
+      "material_beta": {
+        "thermal_mass":[2.4,1.6],"conductivity":[1.4,1.6],"rigidity":[2.2,1.4],"porosity":[1.3,1.7],
+        "polarity":[1.5,1.5],"density":[2.0,1.4],"elasticity":[1.0,2.0],"reflectivity":[2.0,1.3],
+        "acoustic_impedance":[1.7,1.4],"chemical_reactivity":[1.2,1.8],"magnetization":[1.4,1.6],"permeability":[1.3,1.7]
+      },
+      "encounter_rate": 0.10
+    },
+
+    "deep_ocean_trench": {
+      "display_name": "Deep Ocean Trench",
+      "tile_color_hex": "#1c3a78",
+      "ambient_temp": 5,
+      "humidity": 1.00,
+      "luminance": 0.20,
+      "acoustic_reflection": 0.70,
+      "passive_per_turn": { "wetness": 0.05 },
+      "affinity_modifiers": { "GA": 1.40, "SO": 1.35, "AQ": 1.20, "TH": 0.50 },
+      "dirichlet_alpha": { "TH":0.2,"CY":1.5,"AQ":3.5,"GA":2.0,"MI":1.0,"FL":1.0,"AE":0.4,"LU":0.4,"VO":0.8,"SO":2.0,"CR":1.0,"PL":0.8 },
+      "material_beta": {
+        "thermal_mass":[1.8,1.5],"conductivity":[2.0,1.4],"rigidity":[1.4,1.8],"porosity":[2.0,1.3],
+        "polarity":[1.7,1.4],"density":[2.0,1.4],"elasticity":[1.6,1.4],"reflectivity":[1.0,2.0],
+        "acoustic_impedance":[2.0,1.3],"chemical_reactivity":[1.6,1.5],"magnetization":[1.5,1.5],"permeability":[1.8,1.4]
+      },
+      "encounter_rate": 0.10
+    },
+
+    "thunderhead_storm": {
+      "display_name": "Thunderhead Storm",
+      "tile_color_hex": "#3a3050",
+      "ambient_temp": 18,
+      "humidity": 0.80,
+      "luminance": 0.40,
+      "acoustic_reflection": 0.55,
+      "passive_per_turn": { "charge_buildup": 0.05 },
+      "affinity_modifiers": { "GA": 1.25, "AE": 1.10, "PL": 1.10 },
+      "dirichlet_alpha": { "TH":0.8,"CY":0.8,"AQ":1.4,"GA":3.5,"MI":0.8,"FL":0.5,"AE":2.4,"LU":1.4,"VO":0.6,"SO":1.6,"CR":0.5,"PL":1.4 },
+      "material_beta": {
+        "thermal_mass":[1.4,1.6],"conductivity":[2.2,1.3],"rigidity":[1.4,1.6],"porosity":[1.6,1.4],
+        "polarity":[2.2,1.3],"density":[1.4,1.7],"elasticity":[1.6,1.4],"reflectivity":[1.4,1.6],
+        "acoustic_impedance":[1.4,1.6],"chemical_reactivity":[1.4,1.6],"magnetization":[2.0,1.4],"permeability":[1.7,1.4]
+      },
+      "encounter_rate": 0.10
+    },
+
+    "crystalline_cavern": {
+      "display_name": "Crystalline Cavern",
+      "tile_color_hex": "#8a7ec8",
+      "ambient_temp": 14,
+      "humidity": 0.40,
+      "luminance": 0.45,
+      "acoustic_reflection": 0.95,
+      "passive_per_turn": { "sonic_stress": 0.03 },
+      "affinity_modifiers": { "SO": 1.35, "MI": 1.20, "LU": 1.10 },
+      "dirichlet_alpha": { "TH":0.4,"CY":0.8,"AQ":0.6,"GA":1.4,"MI":3.5,"FL":0.3,"AE":0.6,"LU":1.6,"VO":1.0,"SO":2.6,"CR":0.5,"PL":1.0 },
+      "material_beta": {
+        "thermal_mass":[1.8,1.5],"conductivity":[1.6,1.5],"rigidity":[2.6,1.2],"porosity":[1.0,2.0],
+        "polarity":[1.8,1.4],"density":[1.8,1.4],"elasticity":[1.0,2.2],"reflectivity":[1.8,1.4],
+        "acoustic_impedance":[2.4,1.3],"chemical_reactivity":[1.2,1.8],"magnetization":[1.5,1.5],"permeability":[1.2,1.8]
+      },
+      "encounter_rate": 0.10
+    },
+
+    "ancient_rainforest": {
+      "display_name": "Ancient Rainforest",
+      "tile_color_hex": "#2e7a3a",
+      "ambient_temp": 24,
+      "humidity": 0.95,
+      "luminance": 0.60,
+      "acoustic_reflection": 0.45,
+      "passive_per_turn": { "bio_resonance": 0.05, "wetness": 0.02 },
+      "affinity_modifiers": { "FL": 1.25, "GA": 1.10, "TH": 0.85 },
+      "dirichlet_alpha": { "TH":0.6,"CY":0.4,"AQ":1.4,"GA":1.0,"MI":0.6,"FL":3.5,"AE":1.2,"LU":1.4,"VO":0.5,"SO":0.8,"CR":1.0,"PL":0.4 },
+      "material_beta": {
+        "thermal_mass":[1.4,1.6],"conductivity":[1.4,1.6],"rigidity":[1.2,1.8],"porosity":[2.0,1.4],
+        "polarity":[1.4,1.6],"density":[1.3,1.7],"elasticity":[1.8,1.4],"reflectivity":[1.4,1.6],
+        "acoustic_impedance":[1.3,1.7],"chemical_reactivity":[1.7,1.4],"magnetization":[1.3,1.7],"permeability":[1.8,1.4]
+      },
+      "encounter_rate": 0.12
+    },
+
+    "near_vacuum_expanse": {
+      "display_name": "Near-Vacuum Expanse",
+      "tile_color_hex": "#1a1828",
+      "ambient_temp": -40,
+      "humidity": 0.0,
+      "luminance": 0.40,
+      "acoustic_reflection": 0.05,
+      "passive_per_turn": {},
+      "affinity_modifiers": { "VO": 1.30, "SO": 0.0, "AE": 0.0, "TH": 0.70, "AQ": 0.50 },
+      "dirichlet_alpha": { "TH":0.3,"CY":1.4,"AQ":0.1,"GA":1.0,"MI":1.4,"FL":0.2,"AE":0.1,"LU":2.0,"VO":3.5,"SO":0.1,"CR":0.4,"PL":1.4 },
+      "material_beta": {
+        "thermal_mass":[1.8,1.5],"conductivity":[1.4,1.6],"rigidity":[1.7,1.4],"porosity":[1.0,2.0],
+        "polarity":[1.6,1.5],"density":[2.0,1.4],"elasticity":[1.4,1.6],"reflectivity":[2.0,1.3],
+        "acoustic_impedance":[1.4,1.6],"chemical_reactivity":[1.0,2.0],"magnetization":[1.6,1.5],"permeability":[1.0,2.0]
+      },
+      "encounter_rate": 0.06
+    },
+
+    "magma_chamber": {
+      "display_name": "Magma Chamber",
+      "tile_color_hex": "#d8541e",
+      "ambient_temp": 95,
+      "humidity": 0.10,
+      "luminance": 0.65,
+      "acoustic_reflection": 0.50,
+      "passive_per_turn": { "heat_load": 0.06 },
+      "affinity_modifiers": { "PL": 1.30, "TH": 1.20, "CY": 0.70 },
+      "dirichlet_alpha": { "TH":3.5,"CY":0.1,"AQ":0.2,"GA":1.0,"MI":2.4,"FL":0.2,"AE":0.5,"LU":1.4,"VO":0.6,"SO":0.6,"CR":1.4,"PL":2.6 },
+      "material_beta": {
+        "thermal_mass":[2.6,1.3],"conductivity":[1.8,1.4],"rigidity":[2.0,1.4],"porosity":[1.4,1.6],
+        "polarity":[1.6,1.5],"density":[2.4,1.3],"elasticity":[1.0,2.0],"reflectivity":[1.4,1.7],
+        "acoustic_impedance":[1.8,1.4],"chemical_reactivity":[2.0,1.3],"magnetization":[1.6,1.5],"permeability":[1.6,1.5]
+      },
+      "encounter_rate": 0.08
+    },
+
+    "prismatic_salt_flat": {
+      "display_name": "Prismatic Salt Flat",
+      "tile_color_hex": "#e8d8a8",
+      "ambient_temp": 30,
+      "humidity": 0.20,
+      "luminance": 0.90,
+      "acoustic_reflection": 0.40,
+      "passive_per_turn": { "radiation": 0.03 },
+      "affinity_modifiers": { "LU": 1.25, "CR": 1.15 },
+      "dirichlet_alpha": { "TH":1.0,"CY":0.4,"AQ":0.4,"GA":1.4,"MI":2.0,"FL":0.3,"AE":1.0,"LU":3.0,"VO":0.5,"SO":0.6,"CR":2.4,"PL":1.0 },
+      "material_beta": {
+        "thermal_mass":[1.6,1.5],"conductivity":[1.4,1.6],"rigidity":[2.0,1.4],"porosity":[1.6,1.5],
+        "polarity":[1.8,1.4],"density":[1.6,1.5],"elasticity":[1.0,2.0],"reflectivity":[2.6,1.3],
+        "acoustic_impedance":[1.5,1.5],"chemical_reactivity":[1.8,1.4],"magnetization":[1.4,1.6],"permeability":[1.4,1.6]
+      },
+      "encounter_rate": 0.10
+    }
+  }
+}

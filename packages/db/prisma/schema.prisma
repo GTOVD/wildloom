@@ -1,0 +1,151 @@
+// Wildloom — Prisma schema
+// See §31.7 of docs/WILDLOOM-MASTER-V2.md
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// Auth.js v5 standard tables (Account, Session, VerificationToken) + User
+// =============================================================================
+
+model User {
+  id            String    @id @default(cuid())
+  googleSub     String?   @unique @map("google_sub")
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  displayName   String    @map("display_name")
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  lastSeen      DateTime  @default(now()) @map("last_seen")
+
+  accounts   Account[]
+  sessions   Session[]
+  creatures  Creature[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// =============================================================================
+// Wildloom domain tables — full instance payloads in JSONB per §31.7
+// =============================================================================
+
+/// One creature instance owned by a user.
+/// `payload` holds the full CreatureInstance (stats, material profile, affinity emphasis,
+/// appearance gene, passive selections, etc.) — see packages/types.
+model Creature {
+  instanceId  String   @id @default(cuid()) @map("instance_id")
+  ownerUserId String   @map("owner_user_id")
+  speciesId   String   @map("species_id")
+  stage       Int      @default(1)
+  level       Int      @default(5)
+  nickname    String?
+  isStarter   Boolean  @default(false) @map("is_starter")
+  partySlot   Int?     @map("party_slot") // 0-5 if in party, null on bench
+  payload     Json
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  owner User           @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  moves MoveInstance[]
+
+  @@index([ownerUserId])
+  @@index([ownerUserId, partySlot])
+  @@map("creatures")
+}
+
+/// One move instance owned by a creature. `payload` holds the full §9 MoveInstance.
+model MoveInstance {
+  moveId          String   @id @default(cuid()) @map("move_id")
+  ownerCreatureId String   @map("owner_creature_id")
+  slotIndex       Int      @map("slot_index") // 0-7
+  payload         Json
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  creature Creature @relation(fields: [ownerCreatureId], references: [instanceId], onDelete: Cascade)
+
+  @@unique([ownerCreatureId, slotIndex])
+  @@index([ownerCreatureId])
+  @@map("move_instances")
+}
+
+/// A persistent world room record. Generated chunks live in Redis / in-memory;
+/// this row tracks identity and metadata.
+model WorldSession {
+  roomId       String   @id @map("room_id")
+  seed         String
+  shortCode    String   @unique @map("short_code")
+  hostUserId   String?  @map("host_user_id")
+  biomeLayout  Json     @map("biome_layout")
+  playerCount  Int      @default(0) @map("player_count")
+  isPublic     Boolean  @default(true) @map("is_public")
+  createdAt    DateTime @default(now()) @map("created_at")
+  lastActiveAt DateTime @default(now()) @map("last_active_at")
+
+  @@map("world_sessions")
+}
+
+/// One battle record. `turns` is the full per-turn breakdown for replay/audit.
+model BattleLog {
+  battleId    String   @id @default(cuid()) @map("battle_id")
+  attackerId  String?  @map("attacker_user_id")
+  defenderId  String?  @map("defender_user_id")
+  isWildBattle Boolean @default(false) @map("is_wild_battle")
+  attackerCreatureIds String[] @map("attacker_creature_ids")
+  defenderCreatureIds String[] @map("defender_creature_ids")
+  biome       String
+  rngSeed     String   @map("rng_seed")
+  outcome     String   // "attacker_win" | "defender_win" | "draw" | "abandoned"
+  turns       Json
+  createdAt   DateTime @default(now()) @map("created_at")
+  endedAt     DateTime? @map("ended_at")
+
+  @@index([attackerId])
+  @@index([defenderId])
+  @@map("battle_logs")
+}

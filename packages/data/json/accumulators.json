@@ -1,0 +1,108 @@
+{
+  "_doc": "Layer 3 accumulator registry + ODE templates (§14). All values per-subtick. recovery_alpha and coupling_beta scale impulses per §14.3 / §14.4.",
+  "subticks_per_turn": 10,
+
+  "recovery_alpha": 0.012,
+  "coupling_beta": 0.012,
+
+  "registry": {
+    "fracture": {
+      "phase": "MVP", "u_min": 0, "u_max": 1.0,
+      "decay_lambda": 0.04,
+      "build_eta": 0.50,
+      "status_gate": "fractured", "threshold": 0.75
+    },
+    "heat_load": {
+      "phase": "MVP", "u_min": -1.0, "u_max": 1.0,
+      "tau_ref": 8.0,
+      "alpha_TH": 0.05,
+      "decay_to_ambient": true,
+      "status_gates": [
+        { "id": "seared", "above": 0.85 },
+        { "id": "hypothermic", "below": -0.60 }
+      ]
+    },
+    "wetness": {
+      "phase": "MVP", "u_min": 0, "u_max": 1.0,
+      "humidity_uptake_beta1": 0.025,
+      "drying_beta2": 0.018,
+      "aero_purge_beta3": 0.06,
+      "status_gate": "waterlogged", "threshold": 0.90
+    },
+    "concussion": {
+      "phase": "MVP", "u_min": 0, "u_max": 1.0,
+      "decay_tau": 6.0,
+      "build_zeta": 0.60,
+      "status_gate": "concussed", "threshold": 0.70
+    },
+    "laceration": {
+      "phase": "MVP", "u_min": 0, "u_max": 1.0,
+      "build_xi": 0.45,
+      "clot_gamma": 0.05,
+      "status_gate": "bleeding", "threshold": 0.65
+    },
+    "charge_buildup": {
+      "phase": "MVP", "u_min": 0, "u_max": 1.0,
+      "leak_rho": 0.06,
+      "build_gamma": 0.55,
+      "wet_leak_amp": 0.40,
+      "status_gate": "paralyzed", "threshold": 0.80
+    },
+    "cryo_load": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_mu": 0.04,
+      "build_alpha": 0.40,
+      "status_gate": "frozen", "threshold": 0.70
+    },
+    "corrosion": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_delta": 0.03,
+      "build_xi": 0.40,
+      "status_gate": "corroded", "threshold": 0.75
+    },
+    "radiation": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_mu": 0.04,
+      "build_phi": 0.40,
+      "status_gate": "irradiated", "threshold": 0.60
+    },
+    "sonic_stress": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "tau_base": 5.0,
+      "build_zeta": 0.55,
+      "status_gate": "deafened", "threshold": 0.70
+    },
+    "ionization": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_rho": 0.04,
+      "build_gamma": 0.45,
+      "status_gate": "ionized", "threshold": 0.50
+    },
+    "magnetic_flux": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_rho": 0.05,
+      "build_gamma": 0.30
+    },
+    "compression": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_rho": 0.04,
+      "build_gamma": 0.40
+    },
+    "bio_resonance": {
+      "phase": "P2", "u_min": 0, "u_max": 1.0,
+      "decay_eps": 0.03,
+      "build_rho": 0.30
+    }
+  },
+
+  "cross_couplings": {
+    "_": "Symbolic refs for §14.5. Numeric values applied at integrator level.",
+    "heat_evaporates_wetness": 0.04,
+    "wetness_amplifies_charge_leak": 0.40,
+    "fracture_amplifies_corrosion": 0.20,
+    "charge_overflow_to_ionization": 0.50,
+    "sonic_amplifies_fracture": 0.25
+  },
+
+  "bench_decay_multiplier": 3.0
+}

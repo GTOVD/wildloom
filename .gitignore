@@ -7,9 +7,11 @@ build/
 .next/
 out/
 .turbo/
+*.tsbuildinfo
 
 # Env
 .env
+.env.local
 .env.*.local
 
 # Logs / cache
@@ -27,7 +29,11 @@ Thumbs.db
 
 # Test / coverage
 coverage/
+.vitest/
 
-# Prisma (if added later)
+# Prisma
 prisma/*.db
 prisma/*.db-journal
+
+# Docker Postgres volume (repo root only — not packages/data)
+/data/

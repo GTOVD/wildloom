@@ -1,0 +1,165 @@
+{
+  "_doc": "Layer 2 smooth predicate rules (§13). Each `smooth_mult` is evaluated as 1 + α·tanh((x − x0)/Δ) products. Side effects fire after the m2 is applied.",
+
+  "rules": [
+    {
+      "rule_id": "thermal_shock",
+      "priority": 100,
+      "when": {
+        "tag_on_move": "cryo",
+        "ranges": [
+          { "kind": "accumulator", "key": "heat_load", "min": 0.40 },
+          { "kind": "material", "key": "rigidity", "min": 0.50 }
+        ]
+      },
+      "smooth_mult": {
+        "alpha": 0.60,
+        "factors": [
+          { "var": "heat_load", "x0": 0.40, "scale": 0.20 },
+          { "var": "rigidity",  "x0": 0.50, "scale": 0.15 }
+        ]
+      },
+      "accumulator_delta": {
+        "fracture": { "base": 0.10, "tanh": { "var": "heat_load", "x0": 0.0, "scale": 0.30, "amp": 0.15 } },
+        "heat_load": { "base": -0.25, "tanh": { "var": "heat_load", "x0": 0.70, "scale": 0.10, "amp": -0.25 } }
+      },
+      "log_line": "Thermal shock! Heat differential fractures the rigid surface."
+    },
+    {
+      "rule_id": "superconduct",
+      "priority": 90,
+      "when": {
+        "affinity_on_move": "GA",
+        "any": [
+          { "kind": "accumulator", "key": "wetness", "min": 0.40 },
+          { "kind": "material", "key": "conductivity", "min": 0.70 }
+        ]
+      },
+      "smooth_mult": {
+        "alpha": 0.40,
+        "factors": [
+          { "var": "wetness", "x0": 0.40, "scale": 0.15 }
+        ]
+      },
+      "side_effect": { "pierce_special": 0.20 },
+      "log_line": "Superconductive coupling — ward fails."
+    },
+    {
+      "rule_id": "steam_expansion",
+      "priority": 80,
+      "when": {
+        "tag_on_move": "thermal",
+        "ranges": [{ "kind": "accumulator", "key": "wetness", "min": 0.40 }]
+      },
+      "smooth_mult": {
+        "alpha": 0.30,
+        "factors": [{ "var": "wetness", "x0": 0.40, "scale": 0.15 }]
+      },
+      "accumulator_delta": { "wetness": { "base": -0.30, "tanh": null } },
+      "stat_debuff": { "initiative": 0.90 },
+      "log_line": "Steam expansion — pressure burst!"
+    },
+    {
+      "rule_id": "resonant_fracture",
+      "priority": 95,
+      "when": {
+        "affinity_on_move": "SO",
+        "ranges": [
+          { "kind": "accumulator", "key": "sonic_stress", "min": 0.25 },
+          { "kind": "material", "key": "rigidity", "min": 0.50 }
+        ]
+      },
+      "smooth_mult": {
+        "alpha": 0.80,
+        "factors": [
+          { "var": "sonic_stress", "x0": 0.25, "scale": 0.15 },
+          { "var": "rigidity",     "x0": 0.50, "scale": 0.15 }
+        ]
+      },
+      "accumulator_delta": { "fracture": { "base": 0.18, "tanh": null } },
+      "log_line": "Resonant fracture! Lattice gives way."
+    },
+    {
+      "rule_id": "open_shear",
+      "priority": 70,
+      "when": {
+        "modality_dominant": "slashing",
+        "ranges": [
+          { "kind": "accumulator", "key": "laceration", "min": 0.05 },
+          { "kind": "accumulator", "key": "wetness", "min": 0.35 }
+        ]
+      },
+      "smooth_mult": {
+        "alpha": 0.50,
+        "factors": [
+          { "var": "laceration", "x0": 0.0, "scale": 0.20 },
+          { "var": "wetness",   "x0": 0.35, "scale": 0.12 }
+        ]
+      },
+      "accumulator_delta": { "laceration": { "base": 0.10, "tanh": null } }
+    },
+    {
+      "rule_id": "acid_etch_det",
+      "priority": 60,
+      "when": {
+        "combo_detonate_id": "acid_etch"
+      },
+      "smooth_mult": {
+        "alpha": 0.80,
+        "factors": [{ "var": "corrosion", "x0": 0.0, "scale": 0.30 }]
+      },
+      "accumulator_delta": { "corrosion": { "base": 0.20, "tanh": null } },
+      "consume_combo_charge": "acid_primed"
+    },
+    {
+      "rule_id": "flash_freeze",
+      "priority": 95,
+      "when": {
+        "affinity_on_move": "CY",
+        "ranges": [{ "kind": "accumulator", "key": "wetness", "min": 0.55 }]
+      },
+      "smooth_mult": {
+        "alpha": 0.60,
+        "factors": [{ "var": "wetness", "x0": 0.55, "scale": 0.12 }]
+      },
+      "accumulator_delta": { "cryo_load": { "base": 0.30, "tanh": null } },
+      "force_status": "frozen"
+    },
+    {
+      "rule_id": "photoelectric",
+      "priority": 50,
+      "when": {
+        "affinity_on_move": "LU",
+        "flag_on_target": "exceeded_ward_last_turn"
+      },
+      "smooth_mult": {
+        "alpha": 0.45,
+        "factors": [{ "var": "radiation", "x0": 0.0, "scale": 0.20 }]
+      },
+      "accumulator_delta": { "charge_buildup": { "base": 0.25, "tanh": null } }
+    },
+    {
+      "rule_id": "concussion_spike",
+      "priority": 40,
+      "when": {
+        "ranges": [{ "kind": "accumulator", "key": "concussion", "min": 0.65 }],
+        "no_stance": "primed"
+      },
+      "accuracy_mult_attacker": {
+        "form": "1 - alpha * tanh((concussion - x0)/scale)",
+        "alpha": 0.35, "x0": 0.65, "scale": 0.12
+      },
+      "stat_debuff_target": { "initiative": 0.85 }
+    },
+    {
+      "rule_id": "armor_pierce_align",
+      "priority": 30,
+      "when": {
+        "tag_on_move": "armor_piercing",
+        "ranges": [{ "kind": "accumulator", "key": "fracture", "min": 0.55 }]
+      },
+      "pierce_boost": { "form": "0.20 * tanh((fracture - 0.55)/0.12)" },
+      "log_line": "Armor breach — fracture exposes core."
+    }
+  ]
+}

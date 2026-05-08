@@ -1,0 +1,24 @@
+{
+  "_doc": "Level budget B(L) — Phase A (1-100) quadratic, Phase B (>100) tanh-saturating soft cap. See §23.",
+  "phase_a": { "c0": 1.0, "c1": 0.020, "c2": 0.00006 },
+  "phase_b": { "B_cap": 0.50, "c_b": 0.50, "L_ref": 100 },
+  "smooth_window": [98, 102],
+
+  "stat_formula": {
+    "_": "S_final = (A_rolled + R_allocated) * f_growth(L)"
+  },
+
+  "resonance_economy": {
+    "_": "Resonance accrual rate per level (Phase A) and diminishing curve (Phase B).",
+    "per_level_phase_a": 6,
+    "per_level_phase_b_initial": 4,
+    "phase_b_decay_per_100_levels": 0.85,
+    "max_per_stat_fraction": 0.40
+  },
+
+  "resonance_move_factor": {
+    "_": "Resonance-frame multiplier: 1 + r_scale*tanh(R_alloc / R_ref)",
+    "r_scale": 1.20,
+    "R_ref": 200
+  }
+}

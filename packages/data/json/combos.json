@@ -1,0 +1,64 @@
+{
+  "_doc": "Named combos (§22). Prime → Detonate within window → bonus.",
+
+  "flash_freeze": {
+    "prime": { "type": "accumulator_above", "key": "wetness", "value": 0.60, "via_affinity": "AQ" },
+    "detonate": { "type": "affinity_move", "affinity": "CY", "within_turns": 1 },
+    "bonus": { "damage_mult": 1.60, "force_status": "frozen" },
+    "physics": "Explosive liquid→solid phase transition"
+  },
+  "thermal_runaway": {
+    "prime": { "type": "consecutive_affinity", "affinity": "TH", "count": 2 },
+    "detonate": { "type": "affinity_move", "affinity": "PL", "while": { "heat_load_above": 0.70 } },
+    "bonus": { "damage_mult": 1.50, "ionization_delta": 0.30 },
+    "physics": "Positive feedback: heat → more heat"
+  },
+  "lightning_rod": {
+    "prime": { "type": "tag_or_field", "tag": "mi_grounding", "field_flag": "conductive_stone" },
+    "detonate": { "type": "affinity_move", "affinity": "GA", "within_turns": 1 },
+    "bonus": { "damage_mult": 1.70, "charge_buildup_mult": 2.0 },
+    "physics": "Lowest electrical potential path"
+  },
+  "resonant_fracture": {
+    "prime": { "type": "accumulator_above", "key": "sonic_stress", "value": 0.30, "via_affinity": "SO" },
+    "detonate": { "type": "physical_strike_within", "turns": 1 },
+    "bonus": { "damage_mult": 1.80, "fracture_delta": 0.25 },
+    "physics": "Pre-stressed resonance → structural failure"
+  },
+  "acid_etch": {
+    "prime": { "type": "catalyst_id", "id": "acid_primed", "via_affinity": "CR" },
+    "detonate": { "type": "affinity_or_physical", "affinity": "MI", "physical_within": 3 },
+    "bonus": { "damage_mult": 1.80, "physical_mitigation_extra_debuff": 0.15 },
+    "physics": "Corrosion pre-weakens; stress concentrators"
+  },
+  "steam_explosion": {
+    "prime": { "type": "accumulator_above", "key": "wetness", "value": 0.70, "via_affinity": "AQ" },
+    "detonate": { "type": "affinity_move", "affinity": "TH", "while": { "ambient_temp_above": 20 } },
+    "bonus": { "damage_mult": 1.40, "initiative_debuff": 0.20 },
+    "physics": "Water→steam: 1600× volume expansion"
+  },
+  "void_silence": {
+    "prime": { "type": "field_move", "affinity": "VO" },
+    "detonate": { "type": "affinity_move", "affinity": "SO", "same_target": true },
+    "bonus": { "damage_mult_target": { "SO": 0.0, "VO": 1.50 } },
+    "physics": "No wave propagation in vacuum"
+  },
+  "photoelectric_strike": {
+    "prime": { "type": "exceeded_ward_last_turn", "affinity": "LU" },
+    "detonate": { "type": "affinity_move", "affinity": "GA", "within_turns": 2 },
+    "bonus": { "damage_mult": 1.45, "charge_delta": 0.25 },
+    "physics": "Freed electrons amplify subsequent injection"
+  },
+  "catalytic_oxidation": {
+    "prime": { "type": "field_marker", "marker": "oxygen", "via_affinity": "AE" },
+    "detonate": { "type": "affinity_move", "affinity": "CR", "within_turns": 1 },
+    "bonus": { "damage_mult": 1.60, "corrosion_rate_mult_2_turns": 2.0 },
+    "physics": "Oxygen as oxidizer; activation energy lowered"
+  },
+  "cryo_shock": {
+    "prime": { "type": "accumulator_above", "key": "cryo_load", "value": 0.50, "via_affinity": "CY" },
+    "detonate": { "type": "affinity_move", "affinity": "TH", "same_turn_doubles": true },
+    "bonus": { "damage_mult": 1.90, "fracture_delta": 0.30 },
+    "physics": "Rapid ΔT → catastrophic stress in brittle material"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "_doc": "Per-affinity ψ kernels for energetic delivery and resist_kernel R_def used in §12. All kernels return values in [0, 1]. Inputs are MaterialProfile axes + composite shortcuts.",
+
+  "resist_kernel": {
+    "_": "R_def(affinity, M) — high R_def means defender material resists this affinity. Bounded [0,1].",
+    "TH": { "form": "sigmoid", "expr": "thermal_stability * 1.6 - 0.4" },
+    "CY": { "form": "sigmoid", "expr": "(1 - thermal_stability) * 1.4 - 0.2" },
+    "AQ": { "form": "sigmoid", "expr": "(1 - porosity) * 1.4 - 0.4" },
+    "GA": { "form": "sigmoid", "expr": "(1 - conductivity) * 1.5 - 0.3" },
+    "MI": { "form": "sigmoid", "expr": "rigidity * 1.2 - 0.1" },
+    "FL": { "form": "sigmoid", "expr": "(1 - porosity) * 1.3 - 0.2" },
+    "AE": { "form": "sigmoid", "expr": "density * 1.4 - 0.3" },
+    "LU": { "form": "sigmoid", "expr": "reflectivity * 2.0 - 0.6" },
+    "VO": { "form": "sigmoid", "expr": "density * 1.0 - 0.2" },
+    "SO": { "form": "sigmoid", "expr": "acoustic_impedance * 1.6 - 0.3" },
+    "CR": { "form": "sigmoid", "expr": "(1 - chemical_reactivity) * 1.3 - 0.2" },
+    "PL": { "form": "sigmoid", "expr": "(1 - conductivity) * 0.8 + (1 - chemical_reactivity) * 0.4 - 0.3" }
+  },
+
+  "energetic_psi": {
+    "_": "ψ_e per affinity per delivery channel — sets per-channel resistance multiplier. Default 1.0 if unspecified. Bounded [0.4, 1.5] when applied.",
+    "TH": { "concussive": 1.10, "piercing": 0.95, "slashing": 1.05 },
+    "CY": { "concussive": 0.95, "piercing": 1.05, "slashing": 1.05 },
+    "AQ": { "concussive": 1.20, "piercing": 0.85, "slashing": 1.05 },
+    "GA": { "concussive": 0.95, "piercing": 1.05, "slashing": 1.20 },
+    "MI": { "concussive": 1.20, "piercing": 1.05, "slashing": 0.85 },
+    "FL": { "concussive": 1.05, "piercing": 0.95, "slashing": 1.10 },
+    "AE": { "concussive": 1.30, "piercing": 0.80, "slashing": 1.00 },
+    "LU": { "concussive": 0.85, "piercing": 1.30, "slashing": 1.05 },
+    "VO": { "concussive": 1.20, "piercing": 1.10, "slashing": 0.85 },
+    "SO": { "concussive": 1.40, "piercing": 0.85, "slashing": 0.95 },
+    "CR": { "concussive": 0.95, "piercing": 0.95, "slashing": 1.30 },
+    "PL": { "concussive": 1.05, "piercing": 1.20, "slashing": 1.05 }
+  }
+}

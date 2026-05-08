@@ -1,0 +1,88 @@
+{
+  "_doc": "All scaling coefficients for the §10 damage pipeline. Source: §10–§12 of WILDLOOM-MASTER-V2.md.",
+
+  "saturation": {
+    "_": "σ = 1 - exp(-κ / (1 + D_eff/A))",
+    "kappa": 1.80,
+    "F_scale": 0.45
+  },
+
+  "level_scaling": {
+    "_": "S_L = (c0 + c1*L_att) / (c2 + c3*L_def)",
+    "c0": 1.0, "c1": 0.020, "c2": 1.0, "c3": 0.020
+  },
+
+  "hit_resolution": {
+    "_": "p_hit = sigmoid(α + β*precision_eff - γ*initiative_def_eff). Beginner stub overrides this.",
+    "alpha_acc": -1.20,
+    "beta_acc": 0.040,
+    "gamma_acc": 0.030,
+    "use_sigmoid_form": true,
+    "min_p_hit": 0.05,
+    "max_p_hit": 0.99
+  },
+
+  "payload_scaling": {
+    "P_k_scale": 0.150,
+    "P_e_scale": 0.150
+  },
+
+  "deff_couplings": {
+    "_": "D_eff(u) = D · Π_j (1 - γ_j·tanh(u_j)). Listed per defense stat. Values from §10.3.",
+    "physical_mitigation": {
+      "fracture": 0.18,
+      "compression": 0.12,
+      "concussion": 0.08,
+      "laceration": 0.06
+    },
+    "special_mitigation": {
+      "radiation": 0.18,
+      "corrosion": 0.16,
+      "ionization": 0.10,
+      "wetness": 0.05
+    }
+  },
+
+  "pierce": {
+    "_": "Per-channel armor-bypass weighting (λ_k). pierce trim: D_k_channel × (1 − pierce·λ_k·λ_p). λ_p is unified to 1.0.",
+    "lambda_concussive": 0.40,
+    "lambda_piercing": 1.00,
+    "lambda_slashing": 0.60,
+    "lambda_p": 1.00
+  },
+
+  "psi_kinetic": {
+    "_": "Material kernels for kinetic stress geometry (§11). Used in stage 2 to shape D_k per channel. Bounded [0.5, 1.5] when applied.",
+    "concussive": { "alpha1_rigidity": 0.50, "alpha2_porosity": 0.45, "alpha3_thermal_mass": 0.20 },
+    "piercing":   { "Y_lambda1_rigidity": 0.55, "Y_lambda2_density": 0.45, "k_p_sharpness": 6.0, "min_psi": 0.50, "max_psi": 1.50 },
+    "slashing":   { "gamma1_porosity": 0.45, "gamma2_fracture": 0.55, "gamma3_elasticity": 0.55, "wet_amp_delta": 0.30, "W_ref": 0.50 }
+  },
+
+  "psi_energetic": {
+    "_": "Per-channel ψ for energetic delivery — kept simple at MVP; bounded [0.4, 1.4]. Authored in affinity_stress_kernels.json on a per-affinity basis as well.",
+    "concussive": 1.00,
+    "piercing":   1.00,
+    "slashing":   1.00
+  },
+
+  "m1_reshape": {
+    "kappa1_attacker_alignment": 0.30,
+    "kappa2_defender_resist": 0.30,
+    "stab_scale": 0.15,
+    "stab_ref": 0.40,
+    "m_min": 0.05,
+    "m_max": 2.00
+  },
+
+  "crit": {
+    "p_crit_default": 0.05,
+    "crit_mult_default": 1.50,
+    "variance_delta": 0.03
+  },
+
+  "stat_aggregation": {
+    "_": "Effective-stat caps applied after Π(active_modifiers).",
+    "min_mult": 0.20,
+    "max_mult": 5.00
+  }
+}

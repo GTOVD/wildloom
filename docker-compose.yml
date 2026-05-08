@@ -1,0 +1,95 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: wildloom_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-wildloom}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-wildloom_dev}
+      POSTGRES_DB: ${POSTGRES_DB:-wildloom}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-wildloom} -d ${POSTGRES_DB:-wildloom}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: wildloom_redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Optional full-stack containers — enable with `docker compose --profile full up`
+  nextjs:
+    profiles: ["full"]
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: wildloom_web
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-wildloom}:${POSTGRES_PASSWORD:-wildloom_dev}@postgres:5432/${POSTGRES_DB:-wildloom}?schema=public
+      REDIS_URL: redis://redis:6379
+      AUTH_SECRET: ${AUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      AUTH_DEV_BYPASS: ${AUTH_DEV_BYPASS:-0}
+      AUTH_DEV_USER_EMAIL: ${AUTH_DEV_USER_EMAIL:-dev@wildloom.local}
+      AUTH_DEV_USER_NAME: ${AUTH_DEV_USER_NAME:-Dev Player}
+      NEXT_PUBLIC_COLYSEUS_URL: ${NEXT_PUBLIC_COLYSEUS_URL:-ws://localhost:2567}
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  colyseus:
+    profiles: ["full"]
+    build:
+      context: .
+      dockerfile: apps/gameserver/Dockerfile
+    container_name: wildloom_gameserver
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-wildloom}:${POSTGRES_PASSWORD:-wildloom_dev}@postgres:5432/${POSTGRES_DB:-wildloom}?schema=public
+      REDIS_URL: redis://redis:6379
+      COLYSEUS_PORT: ${COLYSEUS_PORT:-2567}
+      NODE_ENV: production
+    ports:
+      - "${COLYSEUS_PORT:-2567}:2567"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  nginx:
+    profiles: ["full"]
+    image: nginx:alpine
+    container_name: wildloom_nginx
+    restart: unless-stopped
+    volumes:
+      - ./infra/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - nextjs
+      - colyseus

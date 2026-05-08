@@ -1,0 +1,71 @@
+{
+  "_doc": "Per-tier μ/σ for the 9 core stat aptitude rolls (§3.2 step 2). Wild encounter spawn pipeline draws Normal(μ,σ) clipped to [stat_min, stat_max].",
+  "stat_min": 30,
+  "stat_max": 200,
+
+  "tiers": {
+    "common": {
+      "stamina":             { "mu":  90, "sigma": 14 },
+      "physical_offense":    { "mu":  85, "sigma": 16 },
+      "physical_mitigation": { "mu":  85, "sigma": 16 },
+      "special_offense":     { "mu":  85, "sigma": 16 },
+      "special_mitigation":  { "mu":  85, "sigma": 16 },
+      "initiative":          { "mu":  80, "sigma": 18 },
+      "precision":           { "mu":  80, "sigma": 14 },
+      "recovery":            { "mu":  75, "sigma": 14 },
+      "coupling":            { "mu":  75, "sigma": 14 }
+    },
+    "uncommon": {
+      "stamina":             { "mu": 100, "sigma": 14 },
+      "physical_offense":    { "mu":  95, "sigma": 16 },
+      "physical_mitigation": { "mu":  95, "sigma": 16 },
+      "special_offense":     { "mu":  95, "sigma": 16 },
+      "special_mitigation":  { "mu":  95, "sigma": 16 },
+      "initiative":          { "mu":  90, "sigma": 18 },
+      "precision":           { "mu":  90, "sigma": 14 },
+      "recovery":            { "mu":  85, "sigma": 14 },
+      "coupling":            { "mu":  85, "sigma": 14 }
+    },
+    "rare": {
+      "stamina":             { "mu": 115, "sigma": 14 },
+      "physical_offense":    { "mu": 108, "sigma": 16 },
+      "physical_mitigation": { "mu": 108, "sigma": 16 },
+      "special_offense":     { "mu": 108, "sigma": 16 },
+      "special_mitigation":  { "mu": 108, "sigma": 16 },
+      "initiative":          { "mu": 100, "sigma": 18 },
+      "precision":           { "mu": 100, "sigma": 14 },
+      "recovery":            { "mu":  95, "sigma": 14 },
+      "coupling":            { "mu":  95, "sigma": 14 }
+    },
+    "epic": {
+      "stamina":             { "mu": 130, "sigma": 14 },
+      "physical_offense":    { "mu": 120, "sigma": 16 },
+      "physical_mitigation": { "mu": 120, "sigma": 16 },
+      "special_offense":     { "mu": 120, "sigma": 16 },
+      "special_mitigation":  { "mu": 120, "sigma": 16 },
+      "initiative":          { "mu": 110, "sigma": 18 },
+      "precision":           { "mu": 110, "sigma": 14 },
+      "recovery":            { "mu": 105, "sigma": 14 },
+      "coupling":            { "mu": 105, "sigma": 14 }
+    },
+    "legendary": {
+      "stamina":             { "mu": 150, "sigma": 12 },
+      "physical_offense":    { "mu": 140, "sigma": 14 },
+      "physical_mitigation": { "mu": 140, "sigma": 14 },
+      "special_offense":     { "mu": 140, "sigma": 14 },
+      "special_mitigation":  { "mu": 140, "sigma": 14 },
+      "initiative":          { "mu": 130, "sigma": 16 },
+      "precision":           { "mu": 130, "sigma": 12 },
+      "recovery":            { "mu": 125, "sigma": 12 },
+      "coupling":            { "mu": 125, "sigma": 12 }
+    }
+  },
+
+  "tier_weights": {
+    "common": 0.60,
+    "uncommon": 0.25,
+    "rare": 0.10,
+    "epic": 0.04,
+    "legendary": 0.01
+  }
+}
